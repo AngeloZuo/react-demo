@@ -1,0 +1,10 @@
+//Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+//Common styles
+@import './styles/utils';
+@import './styles/style';
+
+//Component Styles
+@import './components/header/Header';
+@import './components/footer/Footer';

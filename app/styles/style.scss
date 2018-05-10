@@ -1,0 +1,22 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+
+    .root {
+        width: $HunderdPercent;
+        height: $HunderdPercent;
+        background-color: #ececec;
+
+        .panel {
+            width: $HunderdPercent;
+            height: $HunderdPercent;
+            padding: 8px;
+
+            .main {
+                min-height: 80%;
+            }
+        }
+    }
+}

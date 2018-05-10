@@ -19,13 +19,22 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].bundle.js'
+        filename: './bundle.js'
     },
     module: {
-        rules: [
-            { test: /\.css$/, include: path.resolve(__dirname, 'app'), loader: 'style-loader!css-loader' },
-            { test: /\.js[x]?$/, include: path.resolve(__dirname, 'app'), exclude: /node_modules/, loader: 'babel-loader' }
-        ]
+        rules: [{
+            test: /\.scss$/,
+            loaders: [
+                "style-loader",
+                "css-loader",
+                "sass-loader",
+            ],
+        }, {
+            test: /\.js[x]?$/,
+            include: path.resolve(__dirname, 'app'),
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+        }]
     },
     resolve: {
         extensions: ['.js', '.jsx']

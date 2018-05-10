@@ -1,5 +1,5 @@
 import React from 'react';
-
+import CustomerSearch from "./customers/CustomerSearch";
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -7,7 +7,9 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <div>It's a Main Page</div>
+            <div className="main">
+                <CustomerSearch />
+            </div>
         )
     }
 };
