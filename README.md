@@ -1,0 +1,1 @@
+It's a React demo project I created from 0 for practice
