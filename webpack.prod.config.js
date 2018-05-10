@@ -2,32 +2,38 @@ const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
 const port = 9090;
-// function resolvePath(relativePath) {     return path.join(__dirname,`
-// relativePath); }
 
 module.exports = {
     mode: 'production',
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        progress: true,
+        contentBase: './app',
+        port: port
+    },
     entry: [
-        path.resolve(__dirname, './app')
+        path.resolve(__dirname, 'app/index.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        publicPath: '/',
+        filename: '[name].bundle.js'
     },
-    devtool: 'none',
     module: {
         rules: [
-            {
-                test: /(\.jsx|\.js)$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            }
+            { test: /\.js[x]?$/, include: path.resolve(__dirname, 'app'), loader: 'babel-loader', exclude: /node_modules/ },
+            { test: /\.css$/, include: path.resolve(__dirname, 'app'), loader: 'style-loader!css-loader' },
         ]
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     },
     plugins: [
         new UglifyJsPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new OpenBrowserPlugin({url: `http://localhost:${port}`})
     ]
 };

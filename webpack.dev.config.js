@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const port = 9090;
 
 module.exports = {
@@ -15,13 +14,12 @@ module.exports = {
         port: port
     },
     entry: [
-        // `webpack-dev-server/client?http://localhost:${port}`,
         path.resolve(__dirname, 'app/index.jsx')
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: './bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
