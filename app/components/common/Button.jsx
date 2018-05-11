@@ -11,6 +11,7 @@ export default class Button extends React.Component {
                 className="custom_button" 
                 type="button" 
                 value={this.props.btnValue}
+                onClick={this.props.onClick}
             />
         )
     }

@@ -9,8 +9,10 @@ export default class InputBox extends React.Component {
         return (
             <input 
                 className="custom_inputBox" 
-                type="text" 
+                type="text"
+                value={this.props.value}
                 placeholder={this.props.placeholder || ""}
+                onChange={this.props.onChange}
             />
         )
     }
