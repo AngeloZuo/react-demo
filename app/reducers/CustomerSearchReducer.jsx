@@ -1,6 +1,6 @@
 const initializeState = {};
 
-export function customerSearch(state = initializeState, action) {
+export default function CustomerSearchReducer(state = initializeState, action) {
     try {
         const newState = Object.assign({}, state);
         switch(action.type) {
