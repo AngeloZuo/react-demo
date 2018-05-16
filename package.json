@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "webpack-dev-server --config webpack.dev.config.js --devtool eval --progress --hot --content-base app",
+    "server": "node ./server/index.js",
     "build": "webpack --config webpack.dev.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +14,7 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "koa": "^2.5.1",
+    "koa-route": "^3.2.0",
     "lodash": "^4.17.10",
     "path": "^0.12.7",
     "react": "^16.3.2",
