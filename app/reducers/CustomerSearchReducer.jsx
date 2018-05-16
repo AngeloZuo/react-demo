@@ -4,8 +4,8 @@ export default function CustomerSearchReducer(state = initializeState, action) {
     try {
         const newState = Object.assign({}, state);
         switch(action.type) {
-            case 'test':
-                newState[action.containerKey] = action.state;
+            case 'CUSTOMER_SEARCH':
+                newState['customersDataResult'] = action.searchList;
                 return newState;
             default:
                 return state;

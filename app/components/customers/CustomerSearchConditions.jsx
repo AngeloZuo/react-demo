@@ -12,7 +12,6 @@ export default class CustomerSearchConditions extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.customerSearch = this.customerSearch.bind(this);
     }
 
     handleChange(e) {
@@ -21,15 +20,11 @@ export default class CustomerSearchConditions extends React.Component {
         })
     }
 
-    customerSearch() {
-        // TODO
-    }
-
     render() {
         return (
             <div>
                 Name: <InputBox placeholder="Please enter search condition" value={this.state.inputValue} onChange={this.handleChange}/>
-                <Button btnValue="Search" onClick={this.customerSearch}/>
+                <Button btnValue="Search" onClick={this.props.onClick}/>
             </div>
         )
     }

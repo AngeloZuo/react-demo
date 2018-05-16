@@ -7,28 +7,28 @@ import TableListBody from "./TableListBody";
 export default class TableList extends React.Component {
     constructor(props) {
         super(props);
+    }
 
-        this.tableHeader = [];
-        this.tableBody = [];//_concat([], this.props.lists);
+    render() {
+        let tableHeader = [];
+        let tableBody = [];
 
         _.forEach(this.props.lists, (arrayChild, arrayKey) => {
             let tempArray = [];
             _.forEach(arrayChild, (value, key) => {
-                if (this.tableHeader.indexOf(key) < 0) {
-                    this.tableHeader.push(key);
+                if (tableHeader.indexOf(key) < 0) {
+                    tableHeader.push(key);
                 }
                 tempArray.push(value);
             })
 
-            this.tableBody.push(tempArray);
+            tableBody.push(tempArray);
         })
-    }
 
-    render() {
         return (
             <div className="tableList">
-                <TableListHeader tableHeader={this.tableHeader}/>
-                <TableListBody tableBody={this.tableBody} />
+                <TableListHeader tableHeader={tableHeader}/>
+                <TableListBody tableBody={tableBody} />
             </div>
         )
     }
