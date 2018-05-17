@@ -40,11 +40,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         searchCustomerByCondition() {
-            searchCustomers().then((res) => {
-                dispatch({
-                    type: 'CUSTOMER_SEARCH',
-                    searchList: res.body
-                });
+            searchCustomers().then((actionObject) => {
+                dispatch(actionObject);
             });
         }
     }
