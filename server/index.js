@@ -1,10 +1,10 @@
 const Koa = require('koa');
 const app = new Koa();
 
-const index = require('./router');
-const customerRouter = require('./routers/customersRouter');
+const combineRouters = require('./router');
 
-app.use(router);
-app.use(customerRouter);
+for (let i = 0; i < combineRouters.length; i++) {
+    app.use(combineRouters[i]);
+}
 
 module.exports = app;

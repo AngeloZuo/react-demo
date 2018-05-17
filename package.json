@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "fs-extra": "^6.0.1",
     "koa": "^2.5.1",
     "koa-route": "^3.2.0",
     "lodash": "^4.17.10",
@@ -24,7 +25,8 @@
     "react-router": "^4.2.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "superagent": "^3.8.3"
   },
   "devDependencies": {
     "babel": "^6.23.0",

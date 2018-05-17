@@ -1,7 +1,14 @@
 const route = require('koa-route');
+const customerService = require("../services/customerService")
 
-const getCustomerRouter = route.get('/getCustomer', ctx => {
-    ctx.body = `getCustomer`;
-});
+const customerRouters = [
+    route.get('/getCustomer', async ctx => {
+        ctx.body = await customerService.getCustomersData();
+    }),
 
-module.exports = getCustomerRouter;
+    route.get('/getCustomer/:id', (ctx, id) => {
+        ctx.body = customerService.test(id);
+    })
+];
+
+module.exports = customerRouters;

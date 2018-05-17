@@ -11,28 +11,6 @@ class CustomerSearch extends React.Component {
         super(props);
 
         this.customersDataResult = [];
-        // this.customersDataResult = [{
-        //     id: '000001',
-        //     customerName: 'Customer_A',
-        //     createdData: '2018-05-01'
-        // }, {
-        //     id: '000002',
-        //     customerName: 'Customer_B',
-        //     createdData: '2018-05-02'
-        // }, {
-        //     id: '000003',
-        //     customerName: 'Customer_C',
-        //     createdData: '2018-05-03'
-        // }, {
-        //     id: '000004',
-        //     customerName: 'Customer_D',
-        //     createdData: '2018-05-04'
-        // }, {
-        //     id: '000005',
-        //     customerName: 'Customer_E',
-        //     createdData: '2018-05-05'
-        // }];
-
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
     }
 
@@ -62,7 +40,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         searchCustomerByCondition() {
-            dispatch(searchCustomers());
+            searchCustomers().then((res) => {
+                dispatch({
+                    type: 'CUSTOMER_SEARCH',
+                    searchList: res.body
+                });
+            });
         }
     }
 }

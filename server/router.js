@@ -1,7 +1,5 @@
-const route = require('koa-route');
+const _ = require("lodash");
+const indexRouter = require("./routers/indexRouter");
+const customersRouter = require("./routers/customersRouter")
 
-const index = route.get('/', ctx => {
-    ctx.body = `Homepage`;
-});
-
-module.exports = index;
+module.exports = _.concat(indexRouter, customersRouter);
