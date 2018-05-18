@@ -26,8 +26,8 @@ class CustomerSearch extends React.Component {
     render() {
         return (
             <div>
-                <CustomerSearchConditions onClick={this.searchCustomerByCondition} />
-                <CustomerList lists={this.customersDataResult} />
+                <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition} onInputChange/>
+                <CustomerList lists={this.customersDataResult}/>
             </div>
         )
     }
@@ -39,8 +39,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        searchCustomerByCondition() {
-            searchCustomers().then((actionObject) => {
+        searchCustomerByCondition(conditions) {
+            searchCustomers(conditions).then((actionObject) => {
                 dispatch(actionObject);
             });
         }
