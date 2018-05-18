@@ -5,7 +5,7 @@ export function searchCustomers() {
     const commonAjax = new CommonAjax();
 
     return new Promise((resolve, reject) => {
-        commonAjax.get('http://localhost:9091/getCustomer', {}).then((customersData) => {
+        commonAjax.get('http://localhost:9091/getCustomers', {}).then((customersData) => {
             resolve({
                 type: 'CUSTOMER_SEARCH',
                 searchList: customersData.body

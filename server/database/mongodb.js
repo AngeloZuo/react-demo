@@ -3,22 +3,24 @@ const config = require("../config/config");
 
 const url = config.dbUrl;
 
-const insertDocuments = (db, callback) => {
-    // Get the documents collection
-    const collection = db.collection('documents');
-    // Insert some documents
-    collection.insertMany([
-        { a: 1 }, { a: 2 }, { a: 3 }
-    ], (err, result) => {
-        console.log("Inserted 3 documents into the collection");
-        callback(result);
+const insertDocuments = (args, callback) => {
+    const { dbName, customerCollection, addData } = args;
+    createConnection(dbName, (db, closeConnection) => {
+        const collection = db.collection(customerCollection);
+        collection.insertMany(addData, (err, result) => {
+            console.log(`Inserted ${addData.length} documents into the collection`);
+            callback(result);
+            closeConnection();
+        });
     });
+    
 }
 
-const findDocuments = (dbName = "", collectionName = "", queryParams = {}, callback) => {
+const findDocuments = (args, callback) => {
+    const { dbName, customerCollection, queryParams } = args;
     createConnection(dbName, (db, closeConnection) => {
         // Get the documents collection
-        const collection = db.collection(collectionName);
+        const collection = db.collection(customerCollection);
         // Find some documents
         collection.find(queryParams).toArray((err, docs) => {
             console.log("Found the following records");
@@ -81,10 +83,7 @@ function createConnection(dbName, closeConnection) {
     });
 }
 
-// findDocuments("test", "documents", {}, (docs) => {
-//     console.log("-0-0-", docs);
-// })
-
 module.exports = {
-    findDocuments
+    findDocuments,
+    insertDocuments
 }
