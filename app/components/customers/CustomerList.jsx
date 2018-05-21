@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Paper from '@material-ui/core/Paper';
+
 import TableList from "../common/TableList";
 
 export default class CustomerList extends React.Component {
@@ -9,9 +11,9 @@ export default class CustomerList extends React.Component {
 
     render() {
         return (
-            <div>
+            <Paper>
                 <TableList lists={this.props.lists} />
-            </div>
+            </Paper>
         )
     }
 };

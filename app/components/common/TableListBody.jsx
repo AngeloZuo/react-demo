@@ -1,5 +1,7 @@
 import React from 'react';
-import TableCell from "./TableCell";
+import TableBody from '@material-ui/core/TableBody';
+
+import TableListCell from "./TableListCell";
 
 export default class TableListBody extends React.Component {
     constructor(props) {
@@ -8,9 +10,9 @@ export default class TableListBody extends React.Component {
 
     render() {
         return (
-            <div className="tableListBody">
-                <TableCell tableCellList={this.props.tableBody} />
-            </div>
+            <TableBody className="tableListBody">
+                <TableListCell tableCellList={this.props.tableBody} tableCellClass="tableBodyCell" />
+            </TableBody>
         )
     }
 };
