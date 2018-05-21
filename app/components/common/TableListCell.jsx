@@ -15,11 +15,12 @@ export default class TableListCell extends React.Component {
         return (
 
             tableCellList.map((tableCellValue, tableCellIndex) => {
+                let tableRowUuid = UuidUtils.getUuid();
                 return (() => (
-                    <TableRow key={`${tableCellClass}_row_${UuidUtils.getUuid()}`}>
+                    <TableRow key={`${tableCellClass}_row_${tableRowUuid}`}>
                         {
                             tableCellValue.map((options, offsetIndex) => {
-                                return <TableCell key={tableCellClass + '_' + tableCellIndex + '_' + offsetIndex}>{options}</TableCell>;
+                                return <TableCell key={tableCellClass + "_" + tableRowUuid + '_' + tableCellIndex + '_' + offsetIndex}>{options}</TableCell>;
                             })
                         }
                     </TableRow>
