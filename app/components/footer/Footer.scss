@@ -1,5 +1,7 @@
 .footer {
     width: $HunderdPercent;
-    height: 50px;
+    position: fixed;
+    bottom: 0;
+    min-height: 50px;
     background-color: darkcyan;
 }

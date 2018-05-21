@@ -12,10 +12,13 @@ body {
         .panel {
             width: $HunderdPercent;
             height: $HunderdPercent;
-            padding: 8px;
 
             .main {
-                min-height: 80%;
+                width: 90%;
+                height: 100%;
+                margin: 0 auto;
+                padding: 80px 0;
+                overflow-y: auto;
             }
         }
     }

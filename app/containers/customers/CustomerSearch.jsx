@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
+import Paper from '@material-ui/core/Paper';
 
 import { searchCustomers, testActions } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
@@ -25,10 +26,10 @@ class CustomerSearch extends React.Component {
 
     render() {
         return (
-            <div>
+            <Paper className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition} onInputChange/>
                 <CustomerList lists={this.customersDataResult}/>
-            </div>
+            </Paper>
         )
     }
 };

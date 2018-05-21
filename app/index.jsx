@@ -13,24 +13,10 @@ import './index.scss';
 ReactDOM.render(
     <Provider store={store}>
         <div className="panel">
-            <Grid container>
-                <Grid item xs={12}>
-                    <Grid
-                        container
-                        spacing={16}
-                        alignItems={'center'}
-                        direction={'column'}
-                        justify={'space-between'}
-                    >
-                        <Header />
-                        <Main />
-                        <Footer />
-                    </Grid>
-                </Grid>
-            </Grid>
+            <Header />
+            <Main />
+            <Footer />
         </div>
-
-    </Provider>
-    ,
+    </Provider>,
     document.querySelector("#root")
 );
