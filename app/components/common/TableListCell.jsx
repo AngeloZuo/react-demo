@@ -4,6 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import UuidUtils from "../../utils/UuidUtil";
+import formatTableCellUtil from "../../utils/tableCellUtil";
 
 export default class TableListCell extends React.Component {
     constructor(props) {
@@ -19,8 +20,14 @@ export default class TableListCell extends React.Component {
                 return (() => (
                     <TableRow key={`${tableCellClass}_row_${tableRowUuid}`}>
                         {
-                            tableCellValue.map((options, offsetIndex) => {
-                                return <TableCell key={tableCellClass + "_" + tableRowUuid + '_' + tableCellIndex + '_' + offsetIndex}>{options}</TableCell>;
+                            tableCellValue.map((value, offsetIndex) => {
+                                return (
+                                    <TableCell
+                                        key={tableCellClass + "_" + tableRowUuid + '_' + tableCellIndex + '_' + offsetIndex}
+                                    >
+                                        {formatTableCellUtil(value)}
+                                    </TableCell>
+                                );
                             })
                         }
                     </TableRow>

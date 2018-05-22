@@ -9,6 +9,7 @@ export default class TableListBody extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <TableBody className="tableListBody">
                 <TableListCell tableCellList={this.props.tableBody} tableCellClass="tableBodyCell" />

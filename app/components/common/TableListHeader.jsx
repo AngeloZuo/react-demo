@@ -8,9 +8,10 @@ export default class TableListHeader extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <TableHead className="tableListHeader">
-                <TableListCell tableCellList={this.props.tableHeader} tableCellClass="tableHeaderCell"/>
+                <TableListCell tableCellList={this.props.tableHeader} tableCellClass="tableHeaderCell" />
             </TableHead>
         )
     }

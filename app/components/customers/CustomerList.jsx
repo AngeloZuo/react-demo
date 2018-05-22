@@ -10,7 +10,7 @@ export default class CustomerList extends React.Component {
 
     render() {
         return (
-            <TableList lists={this.props.lists} />
+            <TableList {...this.props} />
         )
     }
 };
