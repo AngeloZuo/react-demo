@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Paper from '@material-ui/core/Paper';
 import _ from "lodash";
 
+import CustomizeUtils from "../../utils/CustomizeUtils";
 import { searchCustomers } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
@@ -36,7 +37,7 @@ class CustomerSearch extends React.Component {
         return (
             <Paper className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition}/>
-                <CustomerList lists={this.customersDataResult} tableConfig={tableConfig}/>
+                {this.customersDataResult.length !== 0 && <CustomerList lists={this.customersDataResult} tableConfig={tableConfig}/>}
             </Paper>
         )
     }
@@ -58,13 +59,12 @@ function customizeData(originData) {
     _.forEach(originData, (arrayChild) => {
         _.forEach(arrayChild, (arrayChildValue, arrayChildKey) => {
             if (arrayChildKey === 'id') {
-                arrayChild[arrayChildKey] = {
-                    type: 'link',
+                arrayChild[arrayChildKey] = CustomizeUtils.getLinkConfigObj({
                     value: arrayChildValue,
                     onActionFunc: function() {
                         getCustomerDetail({id: arrayChildValue})
                     }
-                }
+                })
             }
         });
     })

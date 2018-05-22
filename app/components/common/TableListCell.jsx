@@ -3,7 +3,7 @@ import _ from "lodash";
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import UuidUtils from "../../utils/UuidUtil";
+import CustomizeUtils from "../../utils/CustomizeUtils";
 import formatTableCellUtil from "../../utils/tableCellUtil";
 
 export default class TableListCell extends React.Component {
@@ -16,7 +16,7 @@ export default class TableListCell extends React.Component {
         return (
 
             tableCellList.map((tableCellValue, tableCellIndex) => {
-                let tableRowUuid = UuidUtils.getUuid();
+                let tableRowUuid = CustomizeUtils.getUuid();
                 return (() => (
                     <TableRow key={`${tableCellClass}_row_${tableRowUuid}`}>
                         {

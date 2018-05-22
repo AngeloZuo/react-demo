@@ -4,6 +4,8 @@ import Table from '@material-ui/core/Table';
 import TableListHeader from "./TableListHeader";
 import TableListBody from "./TableListBody";
 
+import CustomizeUtils from "../../utils/CustomizeUtils";
+
 export default class TableList extends React.Component {
     constructor(props) {
         super(props);
@@ -20,14 +22,12 @@ export default class TableList extends React.Component {
         let checkBoxObj = {};
 
         function createCheckBoxObj(value = "") {
-            return {
-                type: 'checkbox',
-                checked: false,
-                value: value,
-                onActionFunc: function(event) {
+            return CustomizeUtils.getCheckboxObj({
+                value,
+                onActionFunc: function (event) {
                     tableConfig.onCheckboxFunc(event)
                 }
-            }
+            })
         }
 
         _.forEach(this.props.lists, (arrayChild, arrayKey) => {
@@ -51,7 +51,7 @@ export default class TableList extends React.Component {
             if (tableConfig.hasCheckbox) {
                 tempHeaderArray = _.concat(createCheckBoxObj(`TableHeadChb`), tempHeaderArray)
             }
-            
+
             tableHeader.push(tempHeaderArray);
         }
 
@@ -60,8 +60,8 @@ export default class TableList extends React.Component {
 
         return (
             <Table className="tableList">
-                {tabelHeaderProps.tableHeader.length !== 0 && <TableListHeader {...tabelHeaderProps} />}
-                {tabelBodyProps.tableBody.length !== 0 && <TableListBody {...tabelBodyProps} />}
+                <TableListHeader {...tabelHeaderProps} />
+                <TableListBody {...tabelBodyProps} />
             </Table>
         )
     }
