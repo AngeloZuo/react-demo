@@ -49,7 +49,7 @@ class CustomerSearch extends React.Component {
             <Paper className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition}/>
                 {this.customersDataResult.length !== 0 && <CustomerList lists={this.customersDataResult} tableConfig={tableConfig}/>}
-                <AzDialog className="testAzDialog" dialogStatus={this.dialogStatus}>
+                <AzDialog className="testAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>
                     <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
                 </AzDialog>
             </Paper>

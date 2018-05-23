@@ -19,7 +19,7 @@ export default class CustomerDetail extends React.Component {
 
     componentWillMount() {
         console.log("CustomerDetail-2222--", this.props);
-        this.setState(this.props[0]);
+        this.setState(this.props.customerDetailData[0]);
     }
 
     render() {
@@ -27,16 +27,20 @@ export default class CustomerDetail extends React.Component {
         const formControlUuid = CustomizeUtils.getUuid();
         return (
             this.props.customerDetailData.length !== 0 &&
-            <FormControl disabled>
-                <InputLabel htmlFor={"Id_" + this.state.id + "_" + formControlUuid}>ID: </InputLabel>
-                <Input id={"Id_" + this.state.id + "_" + formControlUuid} value={this.state.id} />
-
-                <InputLabel htmlFor={"Name_" + this.state.customerName + "_" + formControlUuid}>Customer Name: </InputLabel>
-                <Input id={"Name_" + this.state.customerName + "_" + formControlUuid} value={this.state.customerName} />
-
-                <InputLabel htmlFor={"Date_" + this.state.createdDate + "_" + formControlUuid}>Created Date: </InputLabel>
-                <Input id={"Date_" + this.state.createdDate + "_" + formControlUuid} value={this.state.createdDate} />
-            </FormControl>
+            <div>
+                <FormControl disabled>
+                    <InputLabel htmlFor={"Id_" + this.state.id + "_" + formControlUuid}>ID: </InputLabel>
+                    <Input id={"Id_" + this.state.id + "_" + formControlUuid} value={this.state.id} />
+                </FormControl>
+                <FormControl disabled>
+                    <InputLabel htmlFor={"Name_" + this.state.customerName + "_" + formControlUuid}>Customer Name: </InputLabel>
+                    <Input id={"Name_" + this.state.customerName + "_" + formControlUuid} value={this.state.customerName} />
+                </FormControl>
+                <FormControl disabled>
+                    <InputLabel htmlFor={"Date_" + this.state.createdDate + "_" + formControlUuid}>Created Date: </InputLabel>
+                    <Input id={"Date_" + this.state.createdDate + "_" + formControlUuid} value={this.state.createdDate} />
+                </FormControl>
+            </div>
         )
     }
 }

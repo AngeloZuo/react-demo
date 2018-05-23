@@ -14,8 +14,8 @@ function getCustomersByCondition(queryParams = {}) {
         let formatData = [];
 
         _.forEach(data, (value, key) => {
-            let { id, customerName, createdData } = value;
-            formatData.push({ id, customerName, createdData });
+            let { id, customerName, createdDate } = value;
+            formatData.push({ id, customerName, createdDate });
         });
 
         return formatData;
@@ -26,23 +26,23 @@ function addCustomers(addData = {}) {
     addData = [{
         "id": "000001",
         "customerName": "Customer_A",
-        "createdData": "2018-05-01"
+        "createdDate": "2018-05-01"
     }, {
         "id": "000002",
         "customerName": "Customer_B",
-        "createdData": "2018-05-02"
+        "createdDate": "2018-05-02"
     }, {
         "id": "000003",
         "customerName": "Customer_C",
-        "createdData": "2018-05-03"
+        "createdDate": "2018-05-03"
     }, {
         "id": "000004",
         "customerName": "Customer_D",
-        "createdData": "2018-05-04"
+        "createdDate": "2018-05-04"
     }, {
         "id": "000005",
         "customerName": "Customer_E",
-        "createdData": "2018-05-05"
+        "createdDate": "2018-05-05"
     }];
     
     const { dbName, customerCollection } = config;

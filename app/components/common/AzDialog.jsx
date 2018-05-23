@@ -41,19 +41,22 @@ export default class AzDialog extends React.Component {
         return (
             this.state.open &&
             <Dialog open={this.state.open}>
-                <AppBar>
-                    <Toolbar>
-                        <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="title" color="inherit">
-                            Customer Detail
-                        </Typography>
-                        <Button color="inherit" onClick={this.handleClose}>
-                            Save
-                        </Button>
-                    </Toolbar>
-                </AppBar>
+                {
+                    this.props.hasToolbar &&
+                    <AppBar position="relative">
+                        <Toolbar>
+                            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                                <CloseIcon />
+                            </IconButton>
+                            <Typography variant="title" color="inherit">
+                                Customer Detail
+                            </Typography>
+                            <Button color="inherit" onClick={this.handleClose}>
+                                Save
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                }
                 {this.props.children}
             </Dialog>
         )
