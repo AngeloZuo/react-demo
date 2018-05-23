@@ -16,6 +16,10 @@ export default class CustomerSearchConditions extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchCustomer = this.handleSearchCustomer.bind(this);
+        this.searchConditions = {
+            searchType: "CUSTOMER_SEARCH",
+            conditions: {}
+        }
     }
 
     handleChange(e) {
@@ -29,15 +33,15 @@ export default class CustomerSearchConditions extends React.Component {
     }
 
     orgnizeConditions() {
-        let tempConditions = {};
+        let searchConditions = Object.assign({}, this.searchConditions);
 
         _.forEach(this.state, (value, key) => {
             if (value !== '') {
-                tempConditions[key] = value;
+                searchConditions.conditions[key] = value;
             }
         });
 
-        return tempConditions;
+        return searchConditions;
     }
 
     render() {

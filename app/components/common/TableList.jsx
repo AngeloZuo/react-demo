@@ -24,6 +24,7 @@ export default class TableList extends React.Component {
         function createCheckBoxObj(value = "") {
             return CustomizeUtils.getCheckboxObj({
                 value,
+                checked: false,
                 onActionFunc: function (event) {
                     tableConfig.onCheckboxFunc(event)
                 }
@@ -62,6 +63,7 @@ export default class TableList extends React.Component {
             <Table className="tableList">
                 <TableListHeader {...tabelHeaderProps} />
                 <TableListBody {...tabelBodyProps} />
+                {this.props.children}
             </Table>
         )
     }

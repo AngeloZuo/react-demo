@@ -1,13 +1,13 @@
 import _ from "lodash";
 import CommonAjax from "../../ajax/commonAjax";
+import { DEV_SERVER_ADDRESS } from "../../config/config";
 
-export function searchCustomers(conditions) {
+export function searchCustomers(searchConditions) {
     const commonAjax = new CommonAjax();
-
     return new Promise((resolve, reject) => {
-        commonAjax.get('http://localhost:9091/getCustomers', conditions).then((customersData) => {
+        commonAjax.get(`${DEV_SERVER_ADDRESS}getCustomers`, searchConditions.conditions).then((customersData) => {
             resolve({
-                type: 'CUSTOMER_SEARCH',
+                type: searchConditions.searchType,
                 searchList: customersData.body
             })
         });
