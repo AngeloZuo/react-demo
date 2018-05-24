@@ -8,6 +8,7 @@ export default function formatTableCellUtil(tableCellObj) {
             case "checkbox":
                 return (
                     <Checkbox
+                        id={tableCellObj.id}
                         checked={tableCellObj.checked}
                         onChange={tableCellObj.onActionFunc}
                         value={tableCellObj.value}

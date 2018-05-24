@@ -18,6 +18,16 @@ class CustomerSearch extends React.Component {
         this.customersDataResult = [];
         this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
+        this.customizeData = this.customizeData.bind(this);
+        this.selectCheckBox = this.selectCheckBox.bind(this);
+        this.tableConfig = {
+            hasCheckbox: true,
+            onCheckboxFunc: function(event) {
+                this.selectCheckBox(event)
+            },
+            sortable: true
+        }
+        this.state = {}
     }
 
     componentWillMount() {
@@ -28,7 +38,7 @@ class CustomerSearch extends React.Component {
     componentWillReceiveProps(nextProps) {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === 'CUSTOMER_SEARCH') {
-            this.customersDataResult = customizeData(nextProps.CustomerSearchReducer.customersDataResult, this.searchCustomerByCondition);
+            this.customersDataResult = this.customizeData(nextProps.CustomerSearchReducer.customersDataResult, this.searchCustomerByCondition);
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.dialogStatus = {
                 data: nextProps.CustomerSearchReducer.customersDetailResult,
@@ -37,53 +47,59 @@ class CustomerSearch extends React.Component {
         }
     }
 
+    customizeData(originData, actionFunc) {
+        _.forEach(originData, (arrayChild, arrayChildKey) => {
+            if (this.tableConfig.hasCheckbox) {
+                this.state[`TableBodyChb_${arrayChildKey}`] = false;
+                let checkBoxObj = CustomizeUtils.getCheckboxObj({
+                    value: `TableBodyChb_${arrayChildKey}`,
+                    id: `TableBodyChb_${arrayChild["id"]}`,
+                    checked: this.state[`TableBodyChb_${arrayChildKey}`],
+                    onActionFunc: function (event) {
+                        this.tableConfig.onCheckboxFunc(event)
+                    }
+                })
+                arrayChild["checkbox"] = checkBoxObj;
+            }
+
+            _.forEach(arrayChild, (arraySubValue, arraySubKey) => {
+                if (arraySubKey === 'id') {
+                    arrayChild[arraySubKey] = CustomizeUtils.getLinkConfigObj({
+                        value: arraySubValue,
+                        onActionFunc: function() {
+                            actionFunc({
+                                searchType: "CUSTOMER_DETAIL_SEARCH",
+                                conditions: {
+                                    id: arraySubValue
+                                }
+                            })
+                        }
+                    })
+                }
+            });
+        })
+        return originData;
+    }
+
+    //TODO Refactor
+    selectCheckBox(event) {
+        console.log("**selectCheckBox1*****", event.target.checked);
+        event.target.checked = !event.target.checked;
+        console.log("**selectCheckBox2*****", event.target.checked);
+    }
+
     render() {
-        const tableConfig = {
-            hasCheckbox: true,
-            onCheckboxFunc: function(event) {
-                selectCheckBox(event)
-            },
-            sortable: true
-        }
         return (
             <Paper className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition}/>
-                {this.customersDataResult.length !== 0 && <CustomerList lists={this.customersDataResult} tableConfig={tableConfig}/>}
-                <AzDialog className="testAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>
+                {this.customersDataResult.length !== 0 && <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig}/>}
+                <AzDialog classes="customerDetailAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>
                     <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
                 </AzDialog>
             </Paper>
         )
     }
 };
-
-//TODO Refactor
-function customizeData(originData, actionFunc) {
-    _.forEach(originData, (arrayChild) => {
-        _.forEach(arrayChild, (arrayChildValue, arrayChildKey) => {
-            if (arrayChildKey === 'id') {
-                arrayChild[arrayChildKey] = CustomizeUtils.getLinkConfigObj({
-                    value: arrayChildValue,
-                    onActionFunc: function() {
-                        actionFunc({
-                            searchType: "CUSTOMER_DETAIL_SEARCH",
-                            conditions: {
-                                id: arrayChildValue
-                            }
-                        })
-                    }
-                })
-            }
-        });
-    })
-    return originData;
-}
-
-function selectCheckBox(event) {
-    console.log("**selectCheckBox1*****", event.target.checked);
-    event.target.checked = !event.target.checked;
-    console.log("**selectCheckBox2*****", event.target.checked);
-}
 
 function mapStateToProps(state) {
     return state;

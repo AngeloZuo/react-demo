@@ -40,10 +40,10 @@ export default class AzDialog extends React.Component {
     render() {
         return (
             this.state.open &&
-            <Dialog open={this.state.open}>
+            <Dialog open={this.state.open} className={this.props.classes}>
                 {
                     this.props.hasToolbar &&
-                    <AppBar position="relative">
+                    <AppBar position="static">
                         <Toolbar>
                             <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
                                 <CloseIcon />

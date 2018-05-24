@@ -12,7 +12,7 @@ export default class TableList extends React.Component {
     }
 
     render() {
-        let tableConfig = this.props.tableConfig;
+        // let tableConfig = this.props.tableConfig;
 
         let tabelHeaderProps = {};
         let tabelBodyProps = {};
@@ -21,15 +21,16 @@ export default class TableList extends React.Component {
         let tempHeaderArray = [];
         let checkBoxObj = {};
 
-        function createCheckBoxObj(value = "") {
-            return CustomizeUtils.getCheckboxObj({
-                value,
-                checked: false,
-                onActionFunc: function (event) {
-                    tableConfig.onCheckboxFunc(event)
-                }
-            })
-        }
+        // function createCheckBoxObj(value = "") {
+        //     return CustomizeUtils.getCheckboxObj({
+        //         value,
+        //         id,
+        //         checked: false,
+        //         onActionFunc: function (event) {
+        //             tableConfig.onCheckboxFunc(event)
+        //         }
+        //     })
+        // }
 
         _.forEach(this.props.lists, (arrayChild, arrayKey) => {
             let tempBodyArray = [];
@@ -41,23 +42,23 @@ export default class TableList extends React.Component {
             })
 
             if (tempBodyArray.length !== 0) {
-                if (tableConfig.hasCheckbox) {
-                    tempBodyArray = _.concat(createCheckBoxObj(`TableBodyChb_${tableBody.length}`), tempBodyArray)
-                }
+                // if (tableConfig.hasCheckbox) {
+                //     tempBodyArray = _.concat(createCheckBoxObj(`TableBodyChb_${tableBody.length}`), tempBodyArray)
+                // }
                 tableBody.push(tempBodyArray);
             }
         })
 
         if (tempHeaderArray.length !== 0) {
-            if (tableConfig.hasCheckbox) {
-                tempHeaderArray = _.concat(createCheckBoxObj(`TableHeadChb`), tempHeaderArray)
-            }
+            // if (tableConfig.hasCheckbox) {
+            //     tempHeaderArray = _.concat(createCheckBoxObj(`TableHeadChb`), tempHeaderArray)
+            // }
 
             tableHeader.push(tempHeaderArray);
         }
 
-        tabelHeaderProps = { tableHeader, tableConfig };
-        tabelBodyProps = { tableBody, tableConfig };
+        tabelHeaderProps = { tableHeader };
+        tabelBodyProps = { tableBody };
 
         return (
             <Table className="tableList">

@@ -10,6 +10,7 @@ export default class CustomizeUtils {
     static getCheckboxObj(object) {
         return {
             type: 'checkbox',
+            id: object.id,
             checked: object.checked,
             value: object.value,
             onActionFunc: object.onActionFunc
