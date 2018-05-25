@@ -22,9 +22,6 @@ class CustomerSearch extends React.Component {
         this.selectCheckBox = this.selectCheckBox.bind(this);
         this.tableConfig = {
             hasCheckbox: true,
-            onCheckboxFunc: function(event) {
-                this.selectCheckBox(event)
-            },
             sortable: true
         }
         this.state = {}
@@ -48,15 +45,20 @@ class CustomerSearch extends React.Component {
     }
 
     customizeData(originData, actionFunc) {
+        const self = this;
         _.forEach(originData, (arrayChild, arrayChildKey) => {
             if (this.tableConfig.hasCheckbox) {
-                this.state[`TableBodyChb_${arrayChildKey}`] = false;
+                this.setState({
+                    [`TableBodyChb_${arrayChildKey}`]: false
+                });
                 let checkBoxObj = CustomizeUtils.getCheckboxObj({
                     value: `TableBodyChb_${arrayChildKey}`,
                     id: `TableBodyChb_${arrayChild["id"]}`,
                     checked: this.state[`TableBodyChb_${arrayChildKey}`],
                     onActionFunc: function (event) {
-                        this.tableConfig.onCheckboxFunc(event)
+                        (function(event) {
+                            self.selectCheckBox(event)
+                        })(event)
                     }
                 })
                 arrayChild["checkbox"] = checkBoxObj;
@@ -83,9 +85,11 @@ class CustomerSearch extends React.Component {
 
     //TODO Refactor
     selectCheckBox(event) {
-        console.log("**selectCheckBox1*****", event.target.checked);
-        event.target.checked = !event.target.checked;
-        console.log("**selectCheckBox2*****", event.target.checked);
+        const name = event.target.value;
+        this.setState = {
+            [name]: event.target.checked
+        }
+        console.log("**selectCheckBox1*****", this.state);
     }
 
     render() {
