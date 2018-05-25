@@ -22,9 +22,10 @@ class CustomerSearch extends React.Component {
         this.selectCheckBox = this.selectCheckBox.bind(this);
         this.tableConfig = {
             hasCheckbox: true,
-            sortable: true
-        }
-        this.state = {}
+            sortable: true,
+        };
+        this.state = {};
+        this.tableHeadCellId ='TableBodyChb_Header';
     }
 
     componentWillMount() {
@@ -46,10 +47,28 @@ class CustomerSearch extends React.Component {
 
     customizeData(originData, actionFunc) {
         const self = this;
+        let tableHeadCellConfig = {};
+        if (this.tableConfig.hasCheckbox) {
+            this.setState({
+                [this.tableHeadCellId]: false
+            });
+            tableHeadCellConfig = CustomizeUtils.getCheckboxObj({
+                value: this.tableHeadCellId,
+                id: this.tableHeadCellId,
+                checked: this.state[this.tableHeadCellId],
+                onActionFunc: function (event) {
+                    (function(event) {
+                        self.selectCheckBox(event)
+                    })(event)
+                }
+            })
+
+            this.tableConfig['tableHeadCellConfig'] = tableHeadCellConfig;
+        }
         _.forEach(originData, (arrayChild, arrayChildKey) => {
             if (this.tableConfig.hasCheckbox) {
                 this.setState({
-                    [`TableBodyChb_${arrayChildKey}`]: false
+                    [`TableBodyChb_${arrayChildKey}`]: true
                 });
                 let checkBoxObj = CustomizeUtils.getCheckboxObj({
                     value: `TableBodyChb_${arrayChildKey}`,
@@ -61,7 +80,8 @@ class CustomerSearch extends React.Component {
                         })(event)
                     }
                 })
-                arrayChild["checkbox"] = checkBoxObj;
+
+                arrayChild['tableCellConfig'] = checkBoxObj;
             }
 
             _.forEach(arrayChild, (arraySubValue, arraySubKey) => {
@@ -83,13 +103,18 @@ class CustomerSearch extends React.Component {
         return originData;
     }
 
-    //TODO Refactor
     selectCheckBox(event) {
         const name = event.target.value;
-        this.setState = {
-            [name]: event.target.checked
+        console.log(`*****Checkbox Name*****': ${name}, *****Checkbox Value*****': ${event.target.checked}`);
+        if (name === this.tableHeadCellId) {
+
+        } else {
+            this.setState({
+                [name]: event.target.checked
+            })
+            console.log(`*****States*****'`, this.state);
         }
-        console.log("**selectCheckBox1*****", this.state);
+        
     }
 
     render() {
