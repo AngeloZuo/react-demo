@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Home from '@material-ui/icons/Home';
 import { Link } from "react-router-dom";
 
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 1
+            value: 'Home'
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -24,19 +25,29 @@ export default class Header extends React.Component {
             <div className="header">
                 <AppBar>
                     <Tabs value={this.state.value} onChange={this.handleChange}>
-                        <Tab 
+                        <Tab
+                            label={
+                                <Link to={{
+                                    pathname: '/'
+                                }}>{<Home />}</Link>
+                            }
+                            value="Home"
+                        />
+                        <Tab
                             label={
                                 <Link to={{
                                     pathname: '/customerSearch'
                                 }}>Customer Search</Link>
                             }
+                            value="Customer Search"
                         />
-                        <Tab 
+                        <Tab
                             label={
                                 <Link to={{
                                     pathname: '/memberPoints'
                                 }}>Member Points</Link>
                             }
+                            value="Member Points"
                         />
                     </Tabs>
                 </AppBar>

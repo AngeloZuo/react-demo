@@ -9,7 +9,7 @@ Nodejs Server: Koa
 Database: MongoDB
 
 Plan:
-1. Add more features about React, such as router.
+1. Add more features about React, such as router, propType.
 2. Add Unit tests for React and Koa.
 3. Fix defects.
 Refactor all the time. 
