@@ -1,9 +1,7 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 
-import Home from "./Home";
-import CustomerSearch from "../containers/customers/CustomerSearch";
-import MemberPoints from "./memberPoints/MemberPoints";
+import { RouterConfig } from "../config/RouterConfig";
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
@@ -12,9 +10,17 @@ export default class Main extends React.Component {
     render() {
         return (
             <div className="main">
-                <Route exact path="/" component={() => <Home slogan="Welcome, HAHAHA"/>} />
-                <Route path="/customerSearch" component={CustomerSearch} />
-                <Route path="/memberPoints" component={MemberPoints} />
+                {
+                    RouterConfig.routes.map((route, routeKey) => {
+                        let tempComponent = route.component;
+                        return <Route
+                            exact
+                            key={routeKey}
+                            path={route.url}
+                            component={route.component}
+                        />
+                    })
+                }
             </div>
         )
     }
