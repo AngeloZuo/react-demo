@@ -10,17 +10,20 @@ export default class Header extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            tabValue: this.props.headerConfig.defaultTab
+        }
     }
 
-    handleChange = (event, value) => {
-        this.setState({ value });
+    handleChange = (event, tabValue) => {
+        this.setState({ tabValue });
     };
 
     render() {
         return (
             <div className="header">
                 <AppBar>
-                    <AzMenu defaultTab={this.props.headerConfig.defaultTab} onChange={this.handleChange} tabsList={this.props.headerConfig.tabsList} />
+                    <AzMenu defaultTab={this.state.tabValue} onChange={this.handleChange} tabsList={this.props.headerConfig.tabsList} />
                 </AppBar>
             </div>
         )

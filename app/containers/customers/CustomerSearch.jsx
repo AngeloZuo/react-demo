@@ -27,6 +27,7 @@ class CustomerSearch extends React.Component {
         };
         this.state = {};
         this.tableHeadCellId ='TableBodyChb_Header';
+        this.isSearched = false;
     }
 
     componentWillMount() {
@@ -122,7 +123,12 @@ class CustomerSearch extends React.Component {
         return (
             <Paper className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition}/>
-                {this.customersDataResult.length !== 0 && <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig}/>}
+                {
+                    this.customersDataResult.length !== 0
+                    ? <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig}/> 
+                    : this.isSearched && <div>Sorry, no results could be found ! </div>
+                }
+                {/* TODO: Refactor */}
                 <AzDialog classes="customerDetailAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>
                     <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
                 </AzDialog>
@@ -138,6 +144,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         searchCustomerByCondition(searchConditions) {
+            this.isSearched = true;
             searchCustomers(searchConditions).then((actionObject) => {
                 dispatch(actionObject);
             });
@@ -146,9 +153,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 CustomerSearch.propTypes = {
-    searchCustomerByCondition: PropTypes.func.isRequired,
-    customizeData: PropTypes.func.isRequired,
-    selectCheckBox: PropTypes.func.isRequired
+    searchCustomerByCondition: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerSearch);

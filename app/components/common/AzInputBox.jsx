@@ -1,23 +1,15 @@
 import React from 'react';
 import PropTypes from "prop-types";
 
-export default class AzInputBox extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <input 
-                className="custom_inputBox" 
-                type="text"
-                value={this.props.value}
-                placeholder={this.props.placeholder}
-                onChange={this.props.onChange}
-            />
-        )
-    }
-};
+const AzInputBox = (props) => (
+    <input
+        className="custom_inputBox"
+        type="text"
+        value={props.value}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+    />
+)
 
 AzInputBox.propTypes = {
     value: PropTypes.string.isRequired,
@@ -28,3 +20,5 @@ AzInputBox.propTypes = {
 AzInputBox.defaultProps = {
     placeholder: ""
 }
+
+export default AzInputBox;

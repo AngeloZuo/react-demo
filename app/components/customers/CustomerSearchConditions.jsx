@@ -36,6 +36,8 @@ export default class CustomerSearchConditions extends React.Component {
         _.forEach(this.state, (value, key) => {
             if (value !== '') {
                 searchConditions.conditions[key] = value;
+            } else {
+                _.unset(searchConditions.conditions, key);
             }
         });
 

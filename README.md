@@ -18,7 +18,12 @@ According to use React and eco-system techniques in this project to know well th
 
 I have finished the first step. Setup the environment and make project run. Add some basic components of React and Redux.
 
+#### *Customer Search*
+
+Currently Customer Search only contains one button for searching, one search result list.
+
 ### Next Step
+* Add more CRUD functions.
 * Add more features about React and redux, such as propType.
 * Add Unit tests for React and Koa.
 * Fix defects.

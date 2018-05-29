@@ -7,64 +7,59 @@ import TableListBody from "./TableListBody";
 
 import CustomizeUtils from "../../utils/CustomizeUtils";
 
-export default class TableList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const TableList = (props) => {
+    let { tableConfig, lists } = props;
 
-    render() {
-        let { tableConfig } = this.props;
-
-        let tabelHeaderProps = {};
-        let tabelBodyProps = {};
-        let tableHeader = [];
-        let tableBody = [];
-        let tempHeaderArray = [];
-
-        _.forEach(this.props.lists, (arrayChild, arrayKey) => {
-            let tempBodyArray = [];
-            let tempTableCellConfigObj = [];
-            _.forEach(arrayChild, (value, key) => {
-                if (key !== 'tableCellConfig') {
-                    if (tempHeaderArray.indexOf(key) < 0) {
-                        tempHeaderArray.push(key);
-                    }
-                    tempBodyArray.push(value);
-                } else {
-                    tempTableCellConfigObj.push(value);
+    let tabelHeaderProps = {};
+    let tabelBodyProps = {};
+    let tableHeader = [];
+    let tableBody = [];
+    let tempHeaderArray = [];
+    _.forEach(lists, (arrayChild, arrayKey) => {
+        let tempBodyArray = [];
+        let tempTableCellConfigObj = [];
+        _.forEach(arrayChild, (value, key) => {
+            if (key !== 'tableCellConfig') {
+                if (tempHeaderArray.indexOf(key) < 0) {
+                    tempHeaderArray.push(key);
                 }
-
-            })
-
-            if (tempBodyArray.length !== 0) {
-                if (tableConfig.hasCheckbox) {
-                    tempBodyArray = _.concat(tempTableCellConfigObj, tempBodyArray)
-                }
-                tableBody.push(tempBodyArray);
+                tempBodyArray.push(value);
+            } else {
+                tempTableCellConfigObj.push(value);
             }
+
         })
 
-        if (tempHeaderArray.length !== 0) {
+        if (tempBodyArray.length !== 0) {
             if (tableConfig.hasCheckbox) {
-                tempHeaderArray = _.concat([tableConfig.tableHeadCellConfig], tempHeaderArray)
+                tempBodyArray = _.concat(tempTableCellConfigObj, tempBodyArray)
             }
+            tableBody.push(tempBodyArray);
+        }
+    })
 
-            tableHeader.push(tempHeaderArray);
+    if (tempHeaderArray.length !== 0) {
+        if (tableConfig.hasCheckbox) {
+            tempHeaderArray = _.concat([tableConfig.tableHeadCellConfig], tempHeaderArray)
         }
 
-        tabelHeaderProps = { tableHeader };
-        tabelBodyProps = { tableBody };
-
-        return (
-            <Table className="tableList">
-                <TableListHeader {...tabelHeaderProps} />
-                <TableListBody {...tabelBodyProps} />
-                {this.props.children}
-            </Table>
-        )
+        tableHeader.push(tempHeaderArray);
     }
+
+    tabelHeaderProps = { tableHeader };
+    tabelBodyProps = { tableBody };
+
+    return (
+        <Table className="tableList">
+            <TableListHeader {...tabelHeaderProps} />
+            <TableListBody {...tabelBodyProps} />
+            {props.children}
+        </Table>
+    )
 };
 
 TableList.propTypes = {
     tableConfig: PropTypes.object.isRequired
 }
+
+export default TableList;

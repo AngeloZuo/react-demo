@@ -3,14 +3,6 @@ import ReactDOM from 'react-dom';
 
 import TableList from "../common/TableList";
 
-export default class CustomerList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const CustomerList = (props) => <TableList {...props} />;
 
-    render() {
-        return (
-            <TableList {...this.props} />
-        )
-    }
-};
+export default CustomerList;
