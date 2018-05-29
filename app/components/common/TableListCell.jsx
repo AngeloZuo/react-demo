@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import _ from "lodash";
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -37,3 +38,12 @@ export default class TableListCell extends React.Component {
         )
     }
 };
+
+TableListCell.propTypes = {
+    tableCellClass: PropTypes.string.isRequired,
+    tableCellList: PropTypes.array.isRequired
+}
+
+TableListCell.defaultProps = {
+    tableCellClass: ""
+}

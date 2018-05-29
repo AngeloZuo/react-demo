@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
-export default class Button extends React.Component {
+export default class AzButton extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -16,3 +17,12 @@ export default class Button extends React.Component {
         )
     }
 };
+
+AzButton.propTypes = {
+    btnValue: PropTypes.string.isRequired,
+    onClick: PropTypes.string.isRequired
+}
+
+AzButton.defaultProps = {
+    btnValue: ""
+}

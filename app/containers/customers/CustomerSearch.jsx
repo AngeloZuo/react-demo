@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Paper from '@material-ui/core/Paper';
 import _ from "lodash";
 
@@ -142,6 +143,12 @@ function mapDispatchToProps(dispatch) {
             });
         }
     }
+}
+
+CustomerSearch.propTypes = {
+    searchCustomerByCondition: PropTypes.func.isRequired,
+    customizeData: PropTypes.func.isRequired,
+    selectCheckBox: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerSearch);

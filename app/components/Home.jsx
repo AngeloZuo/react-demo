@@ -1,8 +1,10 @@
 import React from "react";
 
+import { Homepage_slogan } from "../config/config";
+
 export default function Hello(props) {
     return (
-        <div>{props.slogan}! This is Home Page!!!</div>
+        <div>{Homepage_slogan}</div>
     )
 }
 

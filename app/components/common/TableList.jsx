@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import _ from "lodash";
 import Table from '@material-ui/core/Table';
 import TableListHeader from "./TableListHeader";
@@ -12,7 +13,7 @@ export default class TableList extends React.Component {
     }
 
     render() {
-        let tableConfig = this.props.tableConfig;
+        let { tableConfig } = this.props;
 
         let tabelHeaderProps = {};
         let tabelBodyProps = {};
@@ -32,7 +33,7 @@ export default class TableList extends React.Component {
                 } else {
                     tempTableCellConfigObj.push(value);
                 }
-                
+
             })
 
             if (tempBodyArray.length !== 0) {
@@ -63,3 +64,7 @@ export default class TableList extends React.Component {
         )
     }
 };
+
+TableList.propTypes = {
+    tableConfig: PropTypes.object.isRequired
+}

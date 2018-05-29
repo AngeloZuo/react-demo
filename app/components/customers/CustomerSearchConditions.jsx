@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from "prop-types";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import _ from "lodash";
-
-// import Button from '../common/Button';
-// import InputBox from '../common/InputBox';
 
 export default class CustomerSearchConditions extends React.Component {
     constructor(props) {
@@ -62,3 +60,7 @@ export default class CustomerSearchConditions extends React.Component {
         )
     }
 };
+
+CustomerSearchConditions.propTypes = {
+    onSearchCustomers: PropTypes.func.isRequired
+}

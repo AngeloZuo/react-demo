@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import TableHead from '@material-ui/core/TableHead';
 
 import TableListCell from "./TableListCell";
@@ -8,7 +9,6 @@ export default class TableListHeader extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <TableHead className="tableListHeader">
                 <TableListCell tableCellList={this.props.tableHeader} tableCellClass="tableHeaderCell" />
@@ -16,3 +16,7 @@ export default class TableListHeader extends React.Component {
         )
     }
 };
+
+TableListHeader.propTypes = {
+    tableHeader: PropTypes.array.isRequired
+}

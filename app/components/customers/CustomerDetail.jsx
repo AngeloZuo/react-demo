@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,12 +19,10 @@ export default class CustomerDetail extends React.Component {
     }
 
     componentWillMount() {
-        console.log("CustomerDetail-2222--", this.props);
         this.setState(this.props.customerDetailData[0]);
     }
 
     render() {
-        console.log("CustomerDetail---", this.props);
         const formControlUuid = CustomizeUtils.getUuid();
         return (
             this.props.customerDetailData.length !== 0 &&
@@ -43,4 +42,12 @@ export default class CustomerDetail extends React.Component {
             </div>
         )
     }
+}
+
+CustomerDetail.propTypes = {
+    customerDetailData: PropTypes.array.isRequired
+}
+
+CustomerDetail.defaultProps = {
+    customerDetailData: []
 }
