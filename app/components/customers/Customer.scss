@@ -3,7 +3,12 @@
     height: $HunderdPercent;
     padding: 16px;
 
-
+    .customerSearchConditions {
+        .customerSearchConditions_Inputbox:not(:first-child) {
+            width: 200px;
+            margin-left: 16px;
+        }
+    }
 }
 .customerDetailAzDialog {
     width: 100%;

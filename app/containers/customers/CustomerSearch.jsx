@@ -11,6 +11,7 @@ import CustomerSearchConditions from "../../components/customers/CustomerSearchC
 import CustomerList from "../../components/customers/CustomerList";
 import AzDialog from "../../components/common/AzDialog";
 import CustomerDetail from "../../components/customers/CustomerDetail";
+import AzActionGroups from "../../components/common/AzActionGroups";
 
 class CustomerSearch extends React.Component {
     constructor(props) {
@@ -25,8 +26,13 @@ class CustomerSearch extends React.Component {
             hasCheckbox: true,
             sortable: true,
         };
+        this.actionGroupConfig = {
+            hasAddBtn: true,
+            hasEditBtn: true,
+            hasDeleteBtn: true
+        }
         this.state = {};
-        this.tableHeadCellId ='TableBodyChb_Header';
+        this.tableHeadCellId = 'TableBodyChb_Header';
         this.isSearched = false;
     }
 
@@ -59,7 +65,7 @@ class CustomerSearch extends React.Component {
                 id: this.tableHeadCellId,
                 checked: this.state[this.tableHeadCellId],
                 onActionFunc: function (event) {
-                    (function(event) {
+                    (function (event) {
                         self.selectCheckBox(event)
                     })(event)
                 }
@@ -77,7 +83,7 @@ class CustomerSearch extends React.Component {
                     id: `TableBodyChb_${arrayChild["id"]}`,
                     checked: this.state[`TableBodyChb_${arrayChildKey}`],
                     onActionFunc: function (event) {
-                        (function(event) {
+                        (function (event) {
                             self.selectCheckBox(event)
                         })(event)
                     }
@@ -90,7 +96,7 @@ class CustomerSearch extends React.Component {
                 if (arraySubKey === 'id') {
                     arrayChild[arraySubKey] = CustomizeUtils.getLinkConfigObj({
                         value: arraySubValue,
-                        onActionFunc: function() {
+                        onActionFunc: function () {
                             actionFunc({
                                 searchType: "CUSTOMER_DETAIL_SEARCH",
                                 conditions: {
@@ -116,17 +122,21 @@ class CustomerSearch extends React.Component {
             })
             console.log(`*****States*****'`, this.state);
         }
-        
+
     }
 
     render() {
         return (
             <Paper className="customerSearchPanel">
-                <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition}/>
+                <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition} />
+
                 {
                     this.customersDataResult.length !== 0
-                    ? <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig}/> 
-                    : this.isSearched && <div>Sorry, no results could be found ! </div>
+                        ? <div>
+                            <AzActionGroups {...this.actionGroupConfig} />
+                            <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig} />
+                        </div>
+                        : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
                 {/* TODO: Refactor */}
                 <AzDialog classes="customerDetailAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>

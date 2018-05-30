@@ -14,8 +14,8 @@ function getCustomersByCondition(queryParams = {}) {
         let formatData = [];
 
         _.forEach(data, (value, key) => {
-            let { id, customerName, createdDate } = value;
-            formatData.push({ id, customerName, createdDate });
+            let { id, customerName, createdDate, memberPoints } = value;
+            formatData.push({ id, customerName, createdDate, memberPoints });
         });
 
         return formatData;

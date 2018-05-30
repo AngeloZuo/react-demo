@@ -9,20 +9,21 @@ export default class CustomerSearchConditions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            customerName: ''
+            customerName: '',
+            customerID: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSearchCustomer = this.handleSearchCustomer.bind(this);
         this.searchConditions = {
-            searchType: "CUSTOMER_SEARCH",
+            searchType: 'CUSTOMER_SEARCH',
             conditions: {}
         }
     }
 
     handleChange(e) {
         this.setState({
-            customerName: e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -46,15 +47,27 @@ export default class CustomerSearchConditions extends React.Component {
 
     render() {
         return (
-            <form noValidate autoComplete="off">
-                <TextField
-                    id="with-placeholder"
-                    label="Name"
-                    placeholder="Please enter name"
-                    margin="normal"
-                    value={this.state.customerName}
-                    onChange={this.handleChange}
-                />
+            <form noValidate autoComplete="off" className="customerSearchConditions">
+                <div>
+                    <TextField 
+                        label="Customer ID"
+                        placeholder="Please enter ID"
+                        margin="normal"
+                        name="customerID"
+                        className="customerSearchConditions_Inputbox"
+                        value={this.state.customerID}
+                        onChange={this.handleChange}
+                    />
+                    <TextField
+                        label="Customer Name"
+                        placeholder="Please enter name"
+                        margin="normal"
+                        name="customerName"
+                        className="customerSearchConditions_Inputbox"
+                        value={this.state.customerName}
+                        onChange={this.handleChange}
+                    />
+                </div>
                 <Button variant="raised" color="primary" onClick={this.handleSearchCustomer}>
                     Search
                 </Button>
