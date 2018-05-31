@@ -20,7 +20,7 @@ class CustomerSearch extends React.Component {
         this.customersDataResult = [];
         this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
-        this.customizeData = this.customizeData.bind(this);
+        // this.customizeData = this.customizeData.bind(this);
         this.selectCheckBox = this.selectCheckBox.bind(this);
         this.tableConfig = {
             hasCheckbox: true,
@@ -122,14 +122,14 @@ class CustomerSearch extends React.Component {
             })
             console.log(`*****States*****'`, this.state);
         }
-
     }
 
     render() {
         return (
             <Paper className="customerSearchPanel">
-                <CustomerSearchConditions onSearchCustomers={this.searchCustomerByCondition} />
-
+                <CustomerSearchConditions 
+                    onSearchCustomers={this.searchCustomerByCondition}
+                />
                 {
                     this.customersDataResult.length !== 0
                         ? <div>
@@ -153,7 +153,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        searchCustomerByCondition(searchConditions) {
+        searchCustomerByCondition(conditions) {
+            let searchConditions = {
+                searchType: 'CUSTOMER_SEARCH',
+                conditions: conditions
+            }
+            
             this.isSearched = true;
             searchCustomers(searchConditions).then((actionObject) => {
                 dispatch(actionObject);

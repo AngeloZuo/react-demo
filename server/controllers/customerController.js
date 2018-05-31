@@ -9,7 +9,16 @@ function getCustomers() {
 
 function getCustomersByCondition(queryParams = {}) {
     const { dbName, customerCollection } = config;
-    return customerService.getCustomersDataFromDB({dbName, customerCollection, queryParams}).then((data) => {
+
+    _.forEach(queryParams, (value, key) => {
+        if (value !== '') {
+            queryParams[key] = value;
+        } else {
+            _.unset(queryParams, key);
+        }
+    });
+    
+    return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
 
         let formatData = [];
 
@@ -44,9 +53,9 @@ function addCustomers(addData = {}) {
         "customerName": "Customer_E",
         "createdDate": "2018-05-05"
     }];
-    
+
     const { dbName, customerCollection } = config;
-    return customerService.addCustomers({dbName, customerCollection, addData}).then((data) => {
+    return customerService.addCustomers({ dbName, customerCollection, addData }).then((data) => {
         return data;
     });
 }
