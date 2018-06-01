@@ -1,6 +1,13 @@
 const _ = require("lodash");
 const customerService = require("../services/customerService");
 const config = require("../config/config");
+const dataPropsMapping = {
+    key: "key",
+    id: "ID",
+    customerName: "Customer Name",
+    createdDate: "Created Date",
+    memberPoints: "Member Points"
+}
 
 function getCustomers() {
     return customerService.getCustomersDataFromFile();
@@ -19,16 +26,24 @@ function getCustomersByCondition(queryParams = {}) {
     });
     
     return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
-
         let formatData = [];
-
         _.forEach(data, (value, key) => {
-            let { id, customerName, createdDate, memberPoints } = value;
-            formatData.push({ id, customerName, createdDate, memberPoints });
+            let tempArray = {};
+            value["key"] = key;
+            _.forEach(value, (propValue, propName) => {
+                if (dataPropsMapping[propName]) {
+                    tempArray[dataPropsMapping[propName]] = propValue;
+                }
+            })
+            formatData.push(tempArray);
         });
 
         return formatData;
     });
+}
+
+function formatReturnData() {
+    
 }
 
 function addCustomers(addData = {}) {

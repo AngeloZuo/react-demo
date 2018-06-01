@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Button from 'antd/lib/button';
+import Input from 'antd/lib/input';
 import _ from "lodash";
 
 const CustomerSearchConditions = (props) => (
@@ -13,38 +13,20 @@ const CustomerSearchConditions = (props) => (
         render={props =>
             <Form noValidate className="customerSearchConditions">
                 <div>
-                    {/* <TextField
-                        label="Customer ID"
-                        placeholder="Please enter ID"
-                        margin="normal"
-                        name="customerID"
-                        className="customerSearchConditions_Inputbox"
-                        value={this.state.customerID}
-                        onChange={this.handleChange}
-                    />
-                    <TextField
-                        label="Customer Name"
-                        placeholder="Please enter name"
-                        margin="normal"
-                        name="customerName"
-                        className="customerSearchConditions_Inputbox"
-                        value={this.state.customerName}
-                        onChange={this.handleChange}
-                    /> */}
                     <Field
                         type="text"
                         name="customerID"
+                        component={() => <Input placeholder="Please enter ID" />}
                         onChange={props.handleChange}
                     />
                     <Field
                         type="text"
                         name="customerName"
+                        component={() => <Input placeholder="Please enter name" />}
                         onChange={props.handleChange}
                     />
                 </div>
-                <Button variant="raised" type="submit" color="primary" >
-                    Search
-                </Button>
+                <Button type="primary" shape="circle" icon="search" onClick={(e) => { props.handleSubmit(e) }} />
             </Form>
         }
     />

@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import Paper from '@material-ui/core/Paper';
 import _ from "lodash";
 
-import CustomizeUtils from "../../utils/CustomizeUtils";
 import { searchCustomers } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
@@ -20,19 +19,13 @@ class CustomerSearch extends React.Component {
         this.customersDataResult = [];
         this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
-        // this.customizeData = this.customizeData.bind(this);
         this.selectCheckBox = this.selectCheckBox.bind(this);
-        this.tableConfig = {
-            hasCheckbox: true,
-            sortable: true,
-        };
         this.actionGroupConfig = {
             hasAddBtn: true,
             hasEditBtn: true,
             hasDeleteBtn: true
         }
         this.state = {};
-        this.tableHeadCellId = 'TableBodyChb_Header';
         this.isSearched = false;
     }
 
@@ -44,71 +37,13 @@ class CustomerSearch extends React.Component {
     componentWillReceiveProps(nextProps) {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === 'CUSTOMER_SEARCH') {
-            this.customersDataResult = this.customizeData(nextProps.CustomerSearchReducer.customersDataResult, this.searchCustomerByCondition);
+            this.customersDataResult = nextProps.CustomerSearchReducer.customersDataResult;
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.dialogStatus = {
                 data: nextProps.CustomerSearchReducer.customersDetailResult,
                 open: true
             };
         }
-    }
-
-    customizeData(originData, actionFunc) {
-        const self = this;
-        let tableHeadCellConfig = {};
-        if (this.tableConfig.hasCheckbox) {
-            this.setState({
-                [this.tableHeadCellId]: false
-            });
-            tableHeadCellConfig = CustomizeUtils.getCheckboxObj({
-                value: this.tableHeadCellId,
-                id: this.tableHeadCellId,
-                checked: this.state[this.tableHeadCellId],
-                onActionFunc: function (event) {
-                    (function (event) {
-                        self.selectCheckBox(event)
-                    })(event)
-                }
-            })
-
-            this.tableConfig['tableHeadCellConfig'] = tableHeadCellConfig;
-        }
-        _.forEach(originData, (arrayChild, arrayChildKey) => {
-            if (this.tableConfig.hasCheckbox) {
-                this.setState({
-                    [`TableBodyChb_${arrayChildKey}`]: true
-                });
-                let checkBoxObj = CustomizeUtils.getCheckboxObj({
-                    value: `TableBodyChb_${arrayChildKey}`,
-                    id: `TableBodyChb_${arrayChild["id"]}`,
-                    checked: this.state[`TableBodyChb_${arrayChildKey}`],
-                    onActionFunc: function (event) {
-                        (function (event) {
-                            self.selectCheckBox(event)
-                        })(event)
-                    }
-                })
-
-                arrayChild['tableCellConfig'] = checkBoxObj;
-            }
-
-            _.forEach(arrayChild, (arraySubValue, arraySubKey) => {
-                if (arraySubKey === 'id') {
-                    arrayChild[arraySubKey] = CustomizeUtils.getLinkConfigObj({
-                        value: arraySubValue,
-                        onActionFunc: function () {
-                            actionFunc({
-                                searchType: "CUSTOMER_DETAIL_SEARCH",
-                                conditions: {
-                                    id: arraySubValue
-                                }
-                            })
-                        }
-                    })
-                }
-            });
-        })
-        return originData;
     }
 
     selectCheckBox(event) {
@@ -134,7 +69,7 @@ class CustomerSearch extends React.Component {
                     this.customersDataResult.length !== 0
                         ? <div>
                             <AzActionGroups {...this.actionGroupConfig} />
-                            <CustomerList lists={this.customersDataResult} tableConfig={this.tableConfig} />
+                            <CustomerList lists={this.customersDataResult} onClickIdLink={this.searchCustomerByCondition}/>
                         </div>
                         : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
@@ -155,8 +90,8 @@ function mapDispatchToProps(dispatch) {
     return {
         searchCustomerByCondition(conditions) {
             let searchConditions = {
-                searchType: 'CUSTOMER_SEARCH',
-                conditions: conditions
+                searchType: conditions.searchType || 'CUSTOMER_SEARCH',
+                conditions: conditions.conditions || conditions
             }
             
             this.isSearched = true;
