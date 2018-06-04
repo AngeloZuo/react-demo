@@ -24,26 +24,17 @@ function getCustomersByCondition(queryParams = {}) {
             _.unset(queryParams, key);
         }
     });
-    
-    return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
-        let formatData = [];
-        _.forEach(data, (value, key) => {
-            let tempArray = {};
-            value["key"] = key;
-            _.forEach(value, (propValue, propName) => {
-                if (dataPropsMapping[propName]) {
-                    tempArray[dataPropsMapping[propName]] = propValue;
-                }
-            })
-            formatData.push(tempArray);
-        });
 
-        return formatData;
+    return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
+        _.forEach(data, (value, key) => {
+            _.unset(value, "_id");
+        });
+        return data;
     });
 }
 
 function formatReturnData() {
-    
+
 }
 
 function addCustomers(addData = {}) {

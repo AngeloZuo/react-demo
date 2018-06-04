@@ -16,28 +16,38 @@ class CustomerSearch extends React.Component {
     constructor(props) {
         super(props);
 
-        this.customersDataResult = [];
         this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
-        this.selectCheckBox = this.selectCheckBox.bind(this);
-        this.actionGroupConfig = {
-            hasAddBtn: true,
-            hasEditBtn: true,
-            hasDeleteBtn: true
-        }
-        this.state = {};
+        this.state = {
+            selectedRows: [],
+            actionGroupConfig: {
+                hasAddBtn: true,
+                hasEditBtn: false,
+                hasDeleteBtn: false
+            },
+            customersDataResult: []
+        };
         this.isSearched = false;
-    }
 
-    componentWillMount() {
-        const mountState = {};
-        mountState.searchResult = this.customersDataResult;
+        this.checkboxSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                let tempArray = [];
+                _.forEach(selectedRows, (selectRow) => {
+                    tempArray.push({ id: selectRow.id });
+                });
+                this.setState({
+                    selectedRows: tempArray
+                });
+            }
+        };
     }
 
     componentWillReceiveProps(nextProps) {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === 'CUSTOMER_SEARCH') {
-            this.customersDataResult = nextProps.CustomerSearchReducer.customersDataResult;
+            this.setState({
+                customersDataResult: nextProps.CustomerSearchReducer.customersDataResult
+            });
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.dialogStatus = {
                 data: nextProps.CustomerSearchReducer.customersDetailResult,
@@ -46,30 +56,34 @@ class CustomerSearch extends React.Component {
         }
     }
 
-    selectCheckBox(event) {
-        const name = event.target.value;
-        console.log(`*****Checkbox Name*****': ${name}, *****Checkbox Value*****': ${event.target.checked}`);
-        if (name === this.tableHeadCellId) {
-
-        } else {
-            this.setState({
-                [name]: event.target.checked
-            })
-            console.log(`*****States*****'`, this.state);
-        }
-    }
-
     render() {
         return (
             <Paper className="customerSearchPanel">
-                <CustomerSearchConditions 
+                <CustomerSearchConditions
                     onSearchCustomers={this.searchCustomerByCondition}
                 />
                 {
-                    this.customersDataResult.length !== 0
+                    this.state.customersDataResult.length !== 0
                         ? <div>
-                            <AzActionGroups {...this.actionGroupConfig} />
-                            <CustomerList lists={this.customersDataResult} onClickIdLink={this.searchCustomerByCondition}/>
+                            <AzActionGroups {
+                                ...(() => {
+                                    if (this.state.selectedRows.length !== 0) {
+                                        return {
+                                            hasEditBtn: true,
+                                            hasDeleteBtn: true
+                                        }
+                                    }
+                                    return {
+                                        hasEditBtn: false,
+                                        hasDeleteBtn: false
+                                    }
+                                })()
+                            } />
+                            <CustomerList
+                                lists={this.state.customersDataResult}
+                                onClickIdLink={this.searchCustomerByCondition}
+                                checkboxSelection={this.checkboxSelection}
+                            />
                         </div>
                         : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
@@ -89,13 +103,15 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         searchCustomerByCondition(conditions) {
+            this.setState({
+                selectedRows: []
+            });
             let searchConditions = {
                 searchType: conditions.searchType || 'CUSTOMER_SEARCH',
                 conditions: conditions.conditions || conditions
             }
-            
-            this.isSearched = true;
             searchCustomers(searchConditions).then((actionObject) => {
+                this.isSearched = true;
                 dispatch(actionObject);
             });
         }

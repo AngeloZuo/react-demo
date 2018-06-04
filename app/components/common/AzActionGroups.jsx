@@ -1,29 +1,20 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Button from 'antd/lib/button';
 
 const AzActionGroups = (props) => (
     <div className="">
         {
             props.hasAddBtn &&
-            <Button variant="fab" color="primary" mini aria-label="add">
-                <AddIcon />
-            </Button>
+            <Button type="primary" icon="plus">Add</Button>
         }
         {
             props.hasEditBtn &&
-            <Button variant="fab" color="primary" mini aria-label="edit" disabled={false}>
-                <EditIcon />
-            </Button>
+            <Button type="primary" icon="edit">Edit</Button>
         }
         {
             props.hasDeleteBtn &&
-            <Button variant="fab" color="secondary" mini aria-label="delete" disabled>
-                <DeleteIcon />
-            </Button>
+            <Button type="danger" icon="delete">Delete</Button>
         }
     </div>
 )
