@@ -1,21 +1,26 @@
 [{
     "id": "000001",
     "customerName": "Customer_A",
+    "memberPoints": "100",
     "createdData": "2018-05-01"
 }, {
     "id": "000002",
     "customerName": "Customer_B",
+    "memberPoints": "200",
     "createdData": "2018-05-02"
 }, {
     "id": "000003",
     "customerName": "Customer_C",
+    "memberPoints": "300",
     "createdData": "2018-05-03"
 }, {
     "id": "000004",
     "customerName": "Customer_D",
+    "memberPoints": "400",
     "createdData": "2018-05-04"
 }, {
     "id": "000005",
     "customerName": "Customer_E",
+    "memberPoints": "500",
     "createdData": "2018-05-05"
 }]

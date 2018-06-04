@@ -22,9 +22,6 @@ const TableList = (props) => {
                 },
             })}
         >
-            {/* <TableListHeader {...tabelHeaderProps} />
-            <TableListBody {...tabelBodyProps} />
-            {props.children} */}
         </Table>
     )
 };

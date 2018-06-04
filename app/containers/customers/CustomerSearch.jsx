@@ -17,6 +17,7 @@ class CustomerSearch extends React.Component {
 
         this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
+        this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.state = {
             selectedRows: [],
             actionGroupConfig: {
@@ -42,6 +43,12 @@ class CustomerSearch extends React.Component {
         };
     }
 
+    changeDialogStatus() {
+        this.setState({
+            visibleDialog: false
+        });
+    }
+
     componentWillReceiveProps(nextProps) {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === 'CUSTOMER_SEARCH') {
@@ -50,7 +57,7 @@ class CustomerSearch extends React.Component {
             });
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.dialogStatus = {
-                data: nextProps.CustomerSearchReducer.customersDetailResult,
+                data: nextProps.CustomerSearchReducer.customersDetailResult[0],
             };
             this.setState({
                 visibleDialog: true
@@ -82,7 +89,7 @@ class CustomerSearch extends React.Component {
                         : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
                 
-                <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} title="Customer Detail">
+                <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} onChangeDialogStatus={this.changeDialogStatus} title="Customer Detail">
                     <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
                 </AzDialog>
             </div>

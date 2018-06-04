@@ -1,53 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Input from 'antd/lib/input';
 import _ from "lodash";
-
-import CustomizeUtils from "../../utils/CustomizeUtils";
 
 export default class CustomerDetail extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            id: '',
-            customerName: '',
-            createdDate: ''
-        }
-    }
-
-    componentWillMount() {
-        this.setState(this.props.customerDetailData[0]);
     }
 
     render() {
-        const formControlUuid = CustomizeUtils.getUuid();
+        let customerData = this.props.customerDetailData;
         return (
-            this.props.customerDetailData.length !== 0 &&
             <div>
-                <FormControl disabled>
-                    <InputLabel htmlFor={"Id_" + this.state.id + "_" + formControlUuid}>ID: </InputLabel>
-                    <Input id={"Id_" + this.state.id + "_" + formControlUuid} value={this.state.id} />
-                </FormControl>
-                <FormControl disabled>
-                    <InputLabel htmlFor={"Name_" + this.state.customerName + "_" + formControlUuid}>Customer Name: </InputLabel>
-                    <Input id={"Name_" + this.state.customerName + "_" + formControlUuid} value={this.state.customerName} />
-                </FormControl>
-                <FormControl disabled>
-                    <InputLabel htmlFor={"Date_" + this.state.createdDate + "_" + formControlUuid}>Created Date: </InputLabel>
-                    <Input id={"Date_" + this.state.createdDate + "_" + formControlUuid} value={this.state.createdDate} />
-                </FormControl>
+                {_.forEach(customerData, (customerValue, customerKey) => 
+                    <div style={{ marginBottom: 16 }}>
+                        <Input key={customerKey + "_" + customerValue} disabled addonBefore={customerKey} defaultValue={customerValue} />
+                    </div>
+                )}
             </div>
         )
     }
 }
 
 CustomerDetail.propTypes = {
-    customerDetailData: PropTypes.array.isRequired
+    customerDetailData: PropTypes.object.isRequired
 }
 
 CustomerDetail.defaultProps = {
-    customerDetailData: []
+    customerDetailData: {}
 }

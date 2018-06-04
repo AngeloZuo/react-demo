@@ -14,7 +14,7 @@ export default class AzDialog extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.dialogStatus.visible) {
+        if (nextProps.visible) {
             this.setState({
                 visible: true
             })
@@ -25,24 +25,26 @@ export default class AzDialog extends React.Component {
         this.setState({
             visible: false
         })
+        this.props.onChangeDialogStatus();
     }
 
     handleOk() {
         this.setState({
             visible: false
         })
+        this.props.onChangeDialogStatus();
     }
 
     render() {
 
         return (
             <Modal
-                title={props.title}
-                visible={state.visible}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                title={this.props.title}
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
             >
-                {props.children}
+                {this.props.children}
             </Modal>
         )
     }
