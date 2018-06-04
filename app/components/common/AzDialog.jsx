@@ -1,64 +1,49 @@
 import React from "react";
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
+import Modal from "antd/lib/modal";
 
 export default class AzDialog extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            open: false
+            visible: false
         }
 
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.handleOk = this.handleOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.dialogStatus.open) {
-            this.handleOpen();
+        if (nextProps.dialogStatus.visible) {
+            this.setState({
+                visible: true
+            })
         }
     }
 
-    handleClose() {
+    handleCancel() {
         this.setState({
-            open: false
+            visible: false
         })
     }
 
-    handleOpen() {
+    handleOk() {
         this.setState({
-            open: true
+            visible: false
         })
     }
 
     render() {
+
         return (
-            this.state.open &&
-            <Dialog open={this.state.open} className={this.props.classes}>
-                {
-                    this.props.hasToolbar &&
-                    <AppBar position="static">
-                        <Toolbar>
-                            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-                                <CloseIcon />
-                            </IconButton>
-                            <Typography variant="title" color="inherit">
-                                Customer Detail
-                            </Typography>
-                            <Button color="inherit" onClick={this.handleClose}>
-                                Save
-                            </Button>
-                        </Toolbar>
-                    </AppBar>
-                }
-                {this.props.children}
-            </Dialog>
+            <Modal
+                title={props.title}
+                visible={state.visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                {props.children}
+            </Modal>
         )
     }
 }

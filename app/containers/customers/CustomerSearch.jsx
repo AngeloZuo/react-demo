@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Paper from '@material-ui/core/Paper';
 import _ from "lodash";
 
 import { searchCustomers } from "../../actions/customer/customerSearchActions";
@@ -25,7 +24,8 @@ class CustomerSearch extends React.Component {
                 hasEditBtn: false,
                 hasDeleteBtn: false
             },
-            customersDataResult: []
+            customersDataResult: [],
+            visibleDialog: false
         };
         this.isSearched = false;
 
@@ -51,14 +51,16 @@ class CustomerSearch extends React.Component {
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.dialogStatus = {
                 data: nextProps.CustomerSearchReducer.customersDetailResult,
-                open: true
             };
+            this.setState({
+                visibleDialog: true
+            });
         }
     }
 
     render() {
         return (
-            <Paper className="customerSearchPanel">
+            <div className="customerSearchPanel">
                 <CustomerSearchConditions
                     onSearchCustomers={this.searchCustomerByCondition}
                 />
@@ -66,18 +68,10 @@ class CustomerSearch extends React.Component {
                     this.state.customersDataResult.length !== 0
                         ? <div>
                             <AzActionGroups {
-                                ...(() => {
-                                    if (this.state.selectedRows.length !== 0) {
-                                        return {
-                                            hasEditBtn: true,
-                                            hasDeleteBtn: true
-                                        }
-                                    }
-                                    return {
-                                        hasEditBtn: false,
-                                        hasDeleteBtn: false
-                                    }
-                                })()
+                                ...(this.state.selectedRows.length !== 0
+                                    ? { hasEditBtn: true, hasDeleteBtn: true }
+                                    : { hasEditBtn: false, hasDeleteBtn: false }
+                                )
                             } />
                             <CustomerList
                                 lists={this.state.customersDataResult}
@@ -87,11 +81,11 @@ class CustomerSearch extends React.Component {
                         </div>
                         : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
-                {/* TODO: Refactor */}
-                <AzDialog classes="customerDetailAzDialog" dialogStatus={this.dialogStatus} hasToolbar={true}>
+                
+                <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} title="Customer Detail">
                     <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
                 </AzDialog>
-            </Paper>
+            </div>
         )
     }
 };

@@ -8,7 +8,12 @@ const CustomerList = (props) => {
     function getLinkElement(displayContent) {
         return <a
             href="javascript:void(0);"
-            onClick={() => props.onClickIdLink({id: displayContent})}
+            onClick={() => props.onClickIdLink({
+                searchType: 'CUSTOMER_DETAIL_SEARCH',
+                conditions: {
+                    id: displayContent
+                }
+            })}
         >
             {displayContent}
         </a>
@@ -29,7 +34,7 @@ const CustomerList = (props) => {
         dataIndex: 'memberPoints',
     }];
 
-    return <TableList lists={props.lists} tableConfig={tableConfig} checkboxSelection={props.checkboxSelection}/>;
+    return <TableList lists={props.lists} tableConfig={tableConfig} checkboxSelection={props.checkboxSelection} />;
 }
 
 export default CustomerList;
