@@ -15,7 +15,6 @@ class CustomerSearch extends React.Component {
     constructor(props) {
         super(props);
 
-        this.dialogStatus = {};
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.state = {
@@ -26,8 +25,25 @@ class CustomerSearch extends React.Component {
                 hasDeleteBtn: false
             },
             customersDataResult: [],
+            customerDetail: [],
             visibleDialog: false
         };
+
+        this.tableConfig = [{
+            title: 'ID',
+            dataIndex: 'id',
+            render: (displayContent) => this.getLinkElement(displayContent),
+        }, {
+            title: 'Customer Name',
+            dataIndex: 'customerName',
+        }, {
+            title: 'Created Date',
+            dataIndex: 'createdDate',
+        }, {
+            title: 'Member Points',
+            dataIndex: 'memberPoints',
+        }];
+
         this.isSearched = false;
 
         this.checkboxSelection = {
@@ -43,6 +59,20 @@ class CustomerSearch extends React.Component {
         };
     }
 
+    getLinkElement(displayContent) {
+        return <a
+            href="javascript:void(0);"
+            onClick={() => this.searchCustomerByCondition({
+                searchType: 'CUSTOMER_DETAIL_SEARCH',
+                conditions: {
+                    id: displayContent
+                }
+            })}
+        >
+            {displayContent}
+        </a>
+    }
+
     changeDialogStatus() {
         this.setState({
             visibleDialog: false
@@ -56,11 +86,9 @@ class CustomerSearch extends React.Component {
                 customersDataResult: nextProps.CustomerSearchReducer.customersDataResult
             });
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
-            this.dialogStatus = {
-                data: nextProps.CustomerSearchReducer.customersDetailResult[0],
-            };
             this.setState({
-                visibleDialog: true
+                visibleDialog: true,
+                customerDetail: nextProps.CustomerSearchReducer.customersDetailResult
             });
         }
     }
@@ -82,7 +110,7 @@ class CustomerSearch extends React.Component {
                             } />
                             <CustomerList
                                 lists={this.state.customersDataResult}
-                                onClickIdLink={this.searchCustomerByCondition}
+                                tableConfig={this.tableConfig}
                                 checkboxSelection={this.checkboxSelection}
                             />
                         </div>
@@ -90,7 +118,7 @@ class CustomerSearch extends React.Component {
                 }
                 
                 <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} onChangeDialogStatus={this.changeDialogStatus} title="Customer Detail">
-                    <CustomerDetail customerDetailData={this.dialogStatus.data}></CustomerDetail>
+                    <CustomerDetail customerDetailData={this.state.customerDetail} tableConfig={this.tableConfig}></CustomerDetail>
                 </AzDialog>
             </div>
         )

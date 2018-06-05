@@ -9,23 +9,33 @@ export default class CustomerDetail extends React.Component {
     }
 
     render() {
-        let customerData = this.props.customerDetailData;
+        let customerDetailData = this.props.customerDetailData;
+
         return (
             <div>
-                {_.forEach(customerData, (customerValue, customerKey) => 
-                    <div style={{ marginBottom: 16 }}>
-                        <Input key={customerKey + "_" + customerValue} disabled addonBefore={customerKey} defaultValue={customerValue} />
-                    </div>
-                )}
+                {
+                    customerDetailData.map((customerDetail) => {
+                        let elements = [];
+                        
+                        _.forEach(customerDetail, (customerValue, customerKey) =>
+                            elements.push(<div key={customerKey + "_" + customerValue} style={{ marginBottom: 16 }}>
+                                <Input disabled addonBefore={customerKey} defaultValue={customerValue} />
+                            </div>)
+                        )
+                        return elements;
+                    })
+                }
             </div>
         )
     }
 }
 
 CustomerDetail.propTypes = {
-    customerDetailData: PropTypes.object.isRequired
+    customerDetailData: PropTypes.array.isRequired,
+    onChangeDialogStatus: PropTypes.func.isRequired
 }
 
 CustomerDetail.defaultProps = {
-    customerDetailData: {}
+    customerDetailData: [],
+    onChangeDialogStatus: function () { }
 }

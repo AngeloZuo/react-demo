@@ -15,12 +15,6 @@ const TableList = (props) => {
             rowSelection={checkboxSelection}
             columns={tableConfig}
             dataSource={lists}
-            onRow={(record) => ({
-                onClick: () => {
-                    {/* this.selectRow(record); */ }
-                    console.log("--------------");
-                },
-            })}
         >
         </Table>
     )
