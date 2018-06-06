@@ -16,13 +16,11 @@ const CustomerSearchConditions = (props) => (
                     <Field
                         type="text"
                         name="customerID"
-                        component={() => <Input placeholder="Please enter ID" />}
                         onChange={props.handleChange}
                     />
                     <Field
                         type="text"
                         name="customerName"
-                        component={() => <Input placeholder="Please enter name" />}
                         onChange={props.handleChange}
                     />
                 </div>
