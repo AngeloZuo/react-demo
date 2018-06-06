@@ -39,6 +39,7 @@ export default class AzDialog extends React.Component {
 
         return (
             <Modal
+                footer={null}
                 title={this.props.title}
                 visible={this.state.visible}
                 onOk={this.handleOk}

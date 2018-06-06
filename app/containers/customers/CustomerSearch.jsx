@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Button from 'antd/lib/button';
 import _ from "lodash";
 
 import { searchCustomers } from "../../actions/customer/customerSearchActions";
@@ -17,6 +18,8 @@ class CustomerSearch extends React.Component {
 
         this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
+        this.addCustomer = this.props.addCustomer.bind(this);
+        this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
         this.state = {
             selectedRows: [],
             actionGroupConfig: {
@@ -45,6 +48,7 @@ class CustomerSearch extends React.Component {
         }];
 
         this.isSearched = false;
+        this.dialogTitle = "";
 
         this.checkboxSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -74,6 +78,9 @@ class CustomerSearch extends React.Component {
     }
 
     changeDialogStatus() {
+        if (this.state.customerDetailFlag === "ADD_CUSTOMER") {
+
+        }
         this.setState({
             visibleDialog: false
         });
@@ -88,9 +95,20 @@ class CustomerSearch extends React.Component {
         } else if (searchType === 'CUSTOMER_DETAIL_SEARCH') {
             this.setState({
                 visibleDialog: true,
+                customerDetailFlag: "CUSTOMER_DETAIL_SEARCH",
                 customerDetail: nextProps.CustomerSearchReducer.customersDetailResult
             });
+            this.dialogTitle = "Customer Detail";
         }
+    }
+
+    openAddCustomerDialog() {
+        this.setState({
+            visibleDialog: true,
+            customerDetailFlag: "ADD_CUSTOMER",
+            customerDetail: [{ id: "", customerName: "", createdDate: "", memberPoints: "" }]
+        });
+        this.dialogTitle = "Add Customer";
     }
 
     render() {
@@ -99,6 +117,7 @@ class CustomerSearch extends React.Component {
                 <CustomerSearchConditions
                     onSearchCustomers={this.searchCustomerByCondition}
                 />
+                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>Add</Button>
                 {
                     this.state.customersDataResult.length !== 0
                         ? <div>
@@ -116,9 +135,9 @@ class CustomerSearch extends React.Component {
                         </div>
                         : this.isSearched && <div>Sorry, no results could be found ! </div>
                 }
-                
-                <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} onChangeDialogStatus={this.changeDialogStatus} title="Customer Detail">
-                    <CustomerDetail customerDetailData={this.state.customerDetail} tableConfig={this.tableConfig}></CustomerDetail>
+
+                <AzDialog classes="customerDetailAzDialog" visible={this.state.visibleDialog} onChangeDialogStatus={this.changeDialogStatus} title={this.dialogTitle}>
+                    <CustomerDetail customerDetailFlag={this.state.customerDetailFlag} customerDetailData={this.state.customerDetail} tableConfig={this.tableConfig} customerDetailAction={this.addCustomer}/>
                 </AzDialog>
             </div>
         )
@@ -143,6 +162,10 @@ function mapDispatchToProps(dispatch) {
                 this.isSearched = true;
                 dispatch(actionObject);
             });
+        },
+
+        addCustomer(customerDetail) {
+            console.log("+++", customerDetail);
         }
     }
 }
