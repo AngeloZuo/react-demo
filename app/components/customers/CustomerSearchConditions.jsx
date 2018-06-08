@@ -16,11 +16,13 @@ const CustomerSearchConditions = (props) => (
                     <Field
                         type="text"
                         name="customerID"
+                        placeholder="Please enter custormer id"
                         onChange={props.handleChange}
                     />
                     <Field
                         type="text"
                         name="customerName"
+                        placeholder="Please enter custormer name"
                         onChange={props.handleChange}
                     />
                 </div>
