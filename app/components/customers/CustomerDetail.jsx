@@ -3,9 +3,17 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field, withFormik } from "formik";
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
+import Spin from "antd/lib/spin";
+
 import _ from "lodash";
 
-const CustomerDetail = ({ values, handleSubmit, handleChange, isAddCustomer }) => {
+const CustomerDetail = ({
+    values,
+    handleSubmit,
+    handleChange,
+    isAddCustomer,
+    isAdding
+}) => {
     // component={() => <div style={{ marginBottom: 16 }}>
     //                                         <Input disabled={disableInput} addonBefore={customerKey} defaultValue={customerValue} />
     //                                     </div>}
@@ -27,29 +35,33 @@ const CustomerDetail = ({ values, handleSubmit, handleChange, isAddCustomer }) =
 
     return (
         <Form>
-            {elements}
-            {isAddCustomer && (
-                <Button
-                    type="primary"
-                    shape="circle"
-                    icon="check"
-                    onClick={e => {
-                        handleSubmit(e);
-                    }}
-                />
-            )}
+            <Spin spinning={isAdding} delay={500}>
+                {elements}
+                {isAddCustomer && (
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        icon="check"
+                        onClick={e => {
+                            handleSubmit(e);
+                        }}
+                    />
+                )}
+            </Spin>
         </Form>
     );
 };
 
 CustomerDetail.propTypes = {
     customerDetailData: PropTypes.array.isRequired,
-    onChangeDialogStatus: PropTypes.func.isRequired
+    onChangeDialogStatus: PropTypes.func.isRequired,
+    isAdding: PropTypes.bool
 };
 
 CustomerDetail.defaultProps = {
     customerDetailData: [],
-    onChangeDialogStatus: function() {}
+    onChangeDialogStatus: function() {},
+    isAdding: false
 };
 
 export default CustomerDetail;

@@ -1,7 +1,10 @@
 const Koa = require('koa');
 const app = new Koa();
+var bodyParser = require('koa-bodyparser');
 
 const combineRouters = require('./router');
+
+app.use(bodyParser());
 
 app.use(async (ctx, next) => {
     ctx.set('Access-Control-Allow-Origin', 'http://localhost:9090');

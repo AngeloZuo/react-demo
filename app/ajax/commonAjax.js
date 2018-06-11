@@ -6,8 +6,9 @@ export default class CommonAjax {
         return request.get(url).query(queryParams);
     }
 
-    post() {
-
+    post(url, postData) {
+        const request = SuperAgent;
+        return request.post(url).send(postData);
     }
 
     put() {

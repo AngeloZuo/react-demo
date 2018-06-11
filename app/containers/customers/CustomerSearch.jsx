@@ -5,7 +5,10 @@ import { Formik } from "formik";
 import Button from "antd/lib/button";
 import _ from "lodash";
 
-import { searchCustomers } from "../../actions/customer/customerSearchActions";
+import {
+    searchCustomers,
+    addNewCustomer
+} from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
 import AzDialog from "../../components/common/AzDialog";
@@ -31,7 +34,8 @@ class CustomerSearch extends React.Component {
             },
             customersDataResult: [],
             customerDetail: {},
-            visibleDialog: false
+            visibleDialog: false,
+            isAdding: false
         };
 
         this.tableConfig = [
@@ -132,7 +136,9 @@ class CustomerSearch extends React.Component {
             selectedRows,
             visibleDialog,
             customerDetailFlag,
-            customerDetail
+            customerDetail,
+            confirmLoading,
+            isAdding
         } = this.state;
         return (
             <div className="customerSearchPanel">
@@ -165,40 +171,43 @@ class CustomerSearch extends React.Component {
                     )
                 )}
 
-                <AzDialog
-                    classes="customerDetailAzDialog"
-                    visible={visibleDialog}
-                    onChangeDialogStatus={this.changeDialogStatus}
-                    title={this.dialogTitle}
-                >
-                    {visibleDialog &&
-                        (customerDetailFlag === "ADD_CUSTOMER" ? (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
-                                {props => (
-                                    <CustomerDetail
-                                        {...props}
-                                        tableConfig={this.tableConfig}
-                                        isAddCustomer={true}
-                                    />
-                                )}
-                            </Formik>
+                {visibleDialog && (
+                    <AzDialog
+                        classes="customerDetailAzDialog"
+                        visible={visibleDialog}
+                        onChangeDialogStatus={this.changeDialogStatus}
+                        title={this.dialogTitle}
+                        confirmLoading={confirmLoading}
+                    >
+                        {customerDetailFlag === "ADD_CUSTOMER" ? (
+                        <Formik
+                            initialValues={customerDetail}
+                            onSubmit={this.addCustomer}
+                        >
+                            {props => (
+                                <CustomerDetail
+                                    {...props}
+                                    tableConfig={this.tableConfig}
+                                    isAddCustomer={true}
+                                    isAdding={isAdding}
+                                />
+                            )}
+                        </Formik>
                         ) : (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
-                                {props => (
-                                    <CustomerDetail
-                                        {...props}
-                                        tableConfig={this.tableConfig}
-                                    />
-                                )}
-                            </Formik>
-                        ))}
-                </AzDialog>
+                        <Formik
+                            initialValues={customerDetail}
+                            onSubmit={this.addCustomer}
+                        >
+                            {props => (
+                                <CustomerDetail
+                                    {...props}
+                                    tableConfig={this.tableConfig}
+                                />
+                            )}
+                        </Formik>
+                        )}
+                    </AzDialog>
+                )}
             </div>
         );
     }
@@ -219,13 +228,25 @@ function mapDispatchToProps(dispatch) {
                 conditions: conditions.conditions || conditions
             };
             searchCustomers(searchConditions).then(actionObject => {
-                this.isSearched = true;
                 dispatch(actionObject);
             });
         },
 
         addCustomer(customerDetail) {
-            console.log("+++", customerDetail);
+            const self = this;
+            self.setState({
+                isAdding: true
+            });
+            addNewCustomer(customerDetail).then(() => {
+                self.setState({
+                    visibleDialog: false,
+                    isAdding: false
+                });
+                this.searchCustomerByCondition({
+                    searchType: "CUSTOMER_SEARCH",
+                    conditions: {}
+                })
+            });
         }
     };
 }

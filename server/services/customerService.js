@@ -24,7 +24,7 @@ function getCustomersDataFromFile() {
     }
 }
 
-function addCustomers(args) {
+function addCustomer(args) {
     try {
         return new Promise((resolve, reject) => {
             mongoDB.insertDocuments(args, (result) => {
@@ -39,5 +39,5 @@ function addCustomers(args) {
 module.exports = {
     getCustomersDataFromDB,
     getCustomersDataFromFile,
-    addCustomers
+    addCustomer
 };

@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const config = require("../config/config");
+const _ = require("lodash");
 
 const url = config.dbUrl;
 
@@ -7,8 +8,14 @@ const insertDocuments = (args, callback) => {
     const { dbName, customerCollection, addData } = args;
     createConnection(dbName, (db, closeConnection) => {
         const collection = db.collection(customerCollection);
-        collection.insertMany(addData, (err, result) => {
-            console.log(`Inserted ${addData.length} documents into the collection`);
+        let tempArray = [];
+        if(_.isArray(addData)) {
+            tempArray = addData;
+        } else {
+            tempArray.push(addData);
+        }
+        collection.insertMany(tempArray, (err, result) => {
+            console.log(`Inserted ${tempArray.length} documents into the collection`);
             callback(result);
             closeConnection();
         });

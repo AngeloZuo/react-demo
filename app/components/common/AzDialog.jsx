@@ -5,10 +5,6 @@ export default class AzDialog extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            visible: false
-        }
-
         this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     }
@@ -22,16 +18,10 @@ export default class AzDialog extends React.Component {
     }
 
     handleCancel() {
-        this.setState({
-            visible: false
-        })
         this.props.onChangeDialogStatus();
     }
 
     handleOk() {
-        this.setState({
-            visible: false
-        })
         this.props.onChangeDialogStatus();
     }
 
@@ -41,7 +31,7 @@ export default class AzDialog extends React.Component {
             <Modal
                 footer={null}
                 title={this.props.title}
-                visible={this.state.visible}
+                visible={this.props.visible}
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
             >

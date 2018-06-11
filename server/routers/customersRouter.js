@@ -1,16 +1,16 @@
-const route = require('koa-route');
+const Router = require('koa-router');
 const customerController = require("../controllers/customerController");
 
-const customerRouters = [
-    route.get('/getCustomers', async ctx => {
-        const customerData = await customerController.getCustomersByCondition(ctx.query);
-        ctx.body = customerData;
-    })
+var router = new Router();
 
-    // route.get('/setCustomers', async (ctx, id) => {
-    //     const result = await customerController.addCustomers();
-    //     ctx.body = result;
-    // })
-];
+router.get('/getCustomers', async ctx => {
+    const customerData = await customerController.getCustomersByCondition(ctx.query);
+    ctx.body = customerData;
+}),
 
-module.exports = customerRouters;
+router.post('/addCustomer', async (ctx, id) => {
+    const result = await customerController.addCustomer(ctx.request.body);
+    ctx.body = result;
+})
+
+module.exports = router.routes();
