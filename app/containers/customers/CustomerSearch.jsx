@@ -89,10 +89,8 @@ class CustomerSearch extends React.Component {
     }
 
     changeDialogStatus() {
-        if (this.state.customerDetailFlag === "ADD_CUSTOMER") {
-        }
         this.setState({
-            visibleDialog: false
+            visibleDialog: !this.state.visibleDialog
         });
     }
 
@@ -129,6 +127,13 @@ class CustomerSearch extends React.Component {
     }
 
     render() {
+        const {
+            customersDataResult,
+            selectedRows,
+            visibleDialog,
+            customerDetailFlag,
+            customerDetail
+        } = this.state;
         return (
             <div className="customerSearchPanel">
                 <CustomerSearchConditions
@@ -141,15 +146,15 @@ class CustomerSearch extends React.Component {
                 >
                     Add
                 </Button>
-                {this.state.customersDataResult.length !== 0 ? (
+                {customersDataResult.length !== 0 ? (
                     <div>
                         <AzActionGroups
-                            {...(this.state.selectedRows.length !== 0
+                            {...(selectedRows.length !== 0
                                 ? { hasEditBtn: true, hasDeleteBtn: true }
                                 : { hasEditBtn: false, hasDeleteBtn: false })}
                         />
                         <CustomerList
-                            lists={this.state.customersDataResult}
+                            lists={customersDataResult}
                             tableConfig={this.tableConfig}
                             checkboxSelection={this.checkboxSelection}
                         />
@@ -160,16 +165,16 @@ class CustomerSearch extends React.Component {
                     )
                 )}
 
-                {this.state.visibleDialog && (
-                    <AzDialog
-                        classes="customerDetailAzDialog"
-                        visible={this.state.visibleDialog}
-                        onChangeDialogStatus={this.changeDialogStatus}
-                        title={this.dialogTitle}
-                    >
-                        {this.state.customerDetailFlag === "ADD_CUSTOMER" ? (
+                <AzDialog
+                    classes="customerDetailAzDialog"
+                    visible={visibleDialog}
+                    onChangeDialogStatus={this.changeDialogStatus}
+                    title={this.dialogTitle}
+                >
+                    {visibleDialog &&
+                        (customerDetailFlag === "ADD_CUSTOMER" ? (
                             <Formik
-                                initialValues={this.state.customerDetail}
+                                initialValues={customerDetail}
                                 onSubmit={this.addCustomer}
                             >
                                 {props => (
@@ -182,7 +187,7 @@ class CustomerSearch extends React.Component {
                             </Formik>
                         ) : (
                             <Formik
-                                initialValues={this.state.customerDetail}
+                                initialValues={customerDetail}
                                 onSubmit={this.addCustomer}
                             >
                                 {props => (
@@ -192,9 +197,8 @@ class CustomerSearch extends React.Component {
                                     />
                                 )}
                             </Formik>
-                        )}
-                    </AzDialog>
-                )}
+                        ))}
+                </AzDialog>
             </div>
         );
     }
