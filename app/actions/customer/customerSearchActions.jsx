@@ -1,4 +1,3 @@
-import _ from "lodash";
 import CommonAjax from "../../ajax/commonAjax";
 import { DEV_SERVER_ADDRESS } from "../../config/config";
 

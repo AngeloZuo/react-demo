@@ -62,7 +62,7 @@ class CustomerSearch extends React.Component {
         this.dialogTitle = "";
 
         this.checkboxSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
+            onChange: (selectedRows) => {
                 let tempArray = [];
                 _.forEach(selectedRows, selectRow => {
                     tempArray.push({ id: selectRow.id });

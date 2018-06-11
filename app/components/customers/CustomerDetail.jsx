@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Formik, Form, Field, withFormik } from "formik";
+import { Form, Field } from "formik";
 import Button from "antd/lib/button";
 import Input from "antd/lib/input";
 import Spin from "antd/lib/spin";
@@ -10,32 +10,36 @@ import _ from "lodash";
 const CustomerDetail = ({
     values,
     handleSubmit,
-    handleChange,
     isAddCustomer,
     isAdding
 }) => {
-    // component={() => <div style={{ marginBottom: 16 }}>
-    //                                         <Input disabled={disableInput} addonBefore={customerKey} defaultValue={customerValue} />
-    //                                     </div>}
-
     let elements = [];
 
     _.forEach(values, (customerValue, customerKey) =>
         elements.push(
             <Field
                 key={customerKey + "_" + customerValue}
-                type="text"
-                disabled={!isAddCustomer}
                 name={customerKey}
                 placeholder={`Please enter ${customerKey}`}
-                onChange={handleChange}
+                component={({ field, ...props }) => {
+                    return (
+                        <div style={{ marginBottom: 16 }}>
+                            <Input
+                                {...field}
+                                {...props}
+                                disabled={!isAddCustomer}
+                                addonBefore={customerKey}
+                            />
+                        </div>
+                    );
+                }}
             />
         )
     );
 
     return (
         <Form>
-            <Spin spinning={isAdding} delay={500}>
+            <Spin spinning={isAdding}>
                 {elements}
                 {isAddCustomer && (
                     <Button
