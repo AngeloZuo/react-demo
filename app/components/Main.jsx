@@ -6,7 +6,6 @@ const Main = () => (
     <div className="main">
         {
             RouterConfig.routes.map((route, routeKey) => {
-                let tempComponent = route.component;
                 return <Route
                     exact
                     key={routeKey}

@@ -11,11 +11,12 @@ const CustomerDetail = ({
     values,
     handleSubmit,
     isAddCustomer,
-    isAdding
+    isAdding,
+    tableConfig
 }) => {
     let elements = [];
-
     _.forEach(values, (customerValue, customerKey) =>
+    
         elements.push(
             <Field
                 key={customerKey + "_" + customerValue}

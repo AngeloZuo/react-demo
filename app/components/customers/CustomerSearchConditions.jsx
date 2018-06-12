@@ -10,19 +10,19 @@ const CustomerSearchConditions = props => (
     <Formik
         initialValues={{ customerID: "", customerName: "" }}
         onSubmit={props.onSearchCustomers}
-        render={props => (
+        render={formikProps => (
             <Form noValidate className="customerSearchConditions">
                 <div>
                     <Field
                         type="text"
                         name="customerID"
                         placeholder="Please enter custormer id"
-                        component={({ field, ...props }) => {
+                        component={({ field, ...formProps }) => {
                             return (
-                                <div style={{ marginBottom: 16 }}>
+                                <div style={{ display: "inline-block", marginBottom: 16, marginRight: 16, width: "20%" }}>
                                     <Input
                                         {...field}
-                                        {...props}
+                                        {...formProps}
                                         addonBefore="Customer ID"
                                     />
                                 </div>
@@ -33,14 +33,12 @@ const CustomerSearchConditions = props => (
                         type="text"
                         name="customerName"
                         placeholder="Please enter custormer name"
-                        component={({ field, ...props }) => {
-                            console.log("==field==", field);
-                            console.log("==props==", props);
+                        component={({ field, ...formProps }) => {
                             return (
-                                <div style={{ marginBottom: 16 }}>
+                                <div style={{ display: "inline-block", marginBottom: 16, width: "20%" }}>
                                     <Input
                                         {...field}
-                                        {...props}
+                                        {...formProps}
                                         addonBefore="Customer Name"
                                     />
                                 </div>

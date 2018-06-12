@@ -25,6 +25,8 @@ class CustomerSearch extends React.Component {
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.addCustomer = this.props.addCustomer.bind(this);
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
+        this.onEditClick = this.onEditClick.bind(this);
+        this.onDeleteClick = this.onDeleteClick.bind(this);
         this.state = {
             selectedRows: [],
             actionGroupConfig: {
@@ -63,6 +65,7 @@ class CustomerSearch extends React.Component {
 
         this.checkboxSelection = {
             onChange: (selectedRows) => {
+                console.log("==selectedRows==", selectedRows);
                 let tempArray = [];
                 _.forEach(selectedRows, selectRow => {
                     tempArray.push({ id: selectRow.id });
@@ -129,6 +132,14 @@ class CustomerSearch extends React.Component {
         });
         this.dialogTitle = "Add Customer";
     }
+    
+    onEditClick() {
+        console.log("=onEditClick=", this.state.selectedRows);
+    }
+
+    onDeleteClick() {
+        console.log("=onDeleteClick=", this.state.selectedRows);
+    }
 
     render() {
         const {
@@ -157,7 +168,9 @@ class CustomerSearch extends React.Component {
                         <AzActionGroups
                             {...(selectedRows.length !== 0
                                 ? { hasEditBtn: true, hasDeleteBtn: true }
-                                : { hasEditBtn: false, hasDeleteBtn: false })}
+                                : { hasEditBtn: false, hasDeleteBtn: false })} 
+                            onEditClick={this.onEditClick} 
+                            onDeleteClick={this.onDeleteClick}
                         />
                         <CustomerList
                             lists={customersDataResult}
@@ -247,6 +260,10 @@ function mapDispatchToProps(dispatch) {
                     conditions: {}
                 })
             });
+        },
+
+        deleteCustomer(customerList) {
+
         }
     };
 }
