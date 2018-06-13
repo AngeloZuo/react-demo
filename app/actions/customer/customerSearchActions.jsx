@@ -22,6 +22,10 @@ export function addNewCustomer(customerInfo) {
     });
 }
 
-export function testActions(fakeReturn) {
-    return `You input ${fakeReturn}`;
+export function deleteCustomers(customerInfo) {
+    return new Promise((resolve, reject) => {
+        commonAjax.delete(`${DEV_SERVER_ADDRESS}deleteCustomers`, customerInfo).then((returnData) => {
+            resolve(returnData)
+        });
+    });
 }

@@ -24,6 +24,7 @@ const CustomerSearchConditions = props => (
                                         {...field}
                                         {...formProps}
                                         addonBefore="Customer ID"
+                                        onChange={formikProps.handleChange}
                                     />
                                 </div>
                             );
@@ -40,6 +41,7 @@ const CustomerSearchConditions = props => (
                                         {...field}
                                         {...formProps}
                                         addonBefore="Customer Name"
+                                        onChange={formikProps.handleChange}
                                     />
                                 </div>
                             );
@@ -51,7 +53,7 @@ const CustomerSearchConditions = props => (
                     shape="circle"
                     icon="search"
                     onClick={e => {
-                        props.handleSubmit(e);
+                        formikProps.handleSubmit(e);
                     }}
                 />
             </Form>

@@ -36,8 +36,25 @@ function addCustomer(args) {
     }
 }
 
+function deleteCustomers(args) {
+    try {
+        return new Promise((resolve, reject) => {
+            let customerListLength = args.customerList.length;
+            const resultMsg = `Delete ${customerListLength} items successfully!`
+            mongoDB.removeDocument(args, (result) => {
+                resolve({
+                    resultMsg: resultMsg
+                });
+            })
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = {
     getCustomersDataFromDB,
     getCustomersDataFromFile,
-    addCustomer
+    addCustomer,
+    deleteCustomers
 };

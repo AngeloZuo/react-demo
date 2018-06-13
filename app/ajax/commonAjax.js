@@ -15,7 +15,8 @@ export default class CommonAjax {
 
     }
 
-    delete() {
-
+    delete(url, postData) {
+        const request = SuperAgent;
+        return request.delete(url).send(postData);
     }
 }

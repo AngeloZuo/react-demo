@@ -11,7 +11,7 @@ const TableList = (props) => {
     const { tableConfig, lists, checkboxSelection } = props;
     return (
         <Table className="tableList"
-            rowKey="id"
+            rowKey="_id"
             rowSelection={checkboxSelection}
             columns={tableConfig}
             dataSource={lists}

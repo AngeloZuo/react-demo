@@ -57,13 +57,22 @@ const updateDocument = (db, callback) => {
     });
 }
 
-const removeDocument = (db, callback) => {
-    // Get the documents collection
-    const collection = db.collection('documents');
-    // Delete document where a is 3
-    collection.deleteMany({ a: 666 }, (err, result) => {
-        console.log("Removed the document with the field a equal to 3");
-        callback(result);
+const removeDocument = (args, callback) => {
+    const { dbName, customerCollection, customerList } = args;
+    createConnection(dbName, (db, closeConnection) => {
+        // Get the documents collection
+        const collection = db.collection(customerCollection);
+        // Find some documents
+        let customerListLength = customerList.length;
+        _.forEach(customerList, element => {
+            collection.deleteMany(element).then((result) => {
+                customerListLength--;
+                if (customerListLength === 0) {
+                    callback(result);
+                    closeConnection();
+                }
+            });
+        });
     });
 }
 
@@ -91,5 +100,6 @@ function createConnection(dbName, closeConnection) {
 
 module.exports = {
     findDocuments,
-    insertDocuments
+    insertDocuments,
+    removeDocument
 }

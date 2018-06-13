@@ -7,7 +7,8 @@ import _ from "lodash";
 
 import {
     searchCustomers,
-    addNewCustomer
+    addNewCustomer,
+    deleteCustomers
 } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
@@ -24,6 +25,8 @@ class CustomerSearch extends React.Component {
         );
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.addCustomer = this.props.addCustomer.bind(this);
+        this.deleteCustomer = this.props.deleteCustomer.bind(this);
+        
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
@@ -64,7 +67,7 @@ class CustomerSearch extends React.Component {
         this.dialogTitle = "";
 
         this.checkboxSelection = {
-            onChange: (selectedRows) => {
+            onChange: (selectedCell, selectedRows) => {
                 console.log("==selectedRows==", selectedRows);
                 let tempArray = [];
                 _.forEach(selectedRows, selectRow => {
@@ -139,6 +142,7 @@ class CustomerSearch extends React.Component {
 
     onDeleteClick() {
         console.log("=onDeleteClick=", this.state.selectedRows);
+        this.deleteCustomer();
     }
 
     render() {
@@ -262,8 +266,15 @@ function mapDispatchToProps(dispatch) {
             });
         },
 
-        deleteCustomer(customerList) {
-
+        deleteCustomer() {
+            const customerList = this.state.selectedRows;
+            console.log(customerList);
+            deleteCustomers(customerList).then((result) => {
+                this.searchCustomerByCondition({
+                    searchType: "CUSTOMER_SEARCH",
+                    conditions: {}
+                })
+            })
         }
     };
 }

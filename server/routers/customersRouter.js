@@ -6,10 +6,15 @@ var router = new Router();
 router.get('/getCustomers', async ctx => {
     const customerData = await customerController.getCustomersByCondition(ctx.query);
     ctx.body = customerData;
-}),
+})
 
 router.post('/addCustomer', async (ctx, id) => {
     const result = await customerController.addCustomer(ctx.request.body);
+    ctx.body = result;
+})
+
+router.delete('/deleteCustomers', async (ctx, id) => {
+    const result = await customerController.deleteCustomers(ctx.request.body);
     ctx.body = result;
 })
 

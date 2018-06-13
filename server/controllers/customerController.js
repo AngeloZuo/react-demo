@@ -28,12 +28,14 @@ function getCustomersByCondition(queryParams = {}) {
     });
 }
 
-function formatReturnData() {
-
-}
-
 function addCustomer (addData = {}) {
     return customerService.addCustomer({ dbName, customerCollection, addData }).then((data) => {
+        return data;
+    });
+}
+
+function deleteCustomers(customerList) { 
+    return customerService.deleteCustomers({ dbName, customerCollection, customerList }).then((data) => {
         return data;
     });
 }
@@ -41,5 +43,6 @@ function addCustomer (addData = {}) {
 module.exports = {
     getCustomers,
     getCustomersByCondition,
-    addCustomer
+    addCustomer,
+    deleteCustomers
 }
