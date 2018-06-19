@@ -7,7 +7,7 @@ const TableList = props => {
     return (
         <Table
             className="tableList"
-            rowKey="_id"
+            rowKey="id"
             rowSelection={checkboxSelection}
             columns={tableConfig}
             dataSource={lists}

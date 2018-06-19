@@ -16,16 +16,17 @@ import AzDialog from "../../components/common/AzDialog";
 import CustomerDetail from "../../components/customers/CustomerDetail";
 import AzActionGroups from "../../components/common/AzActionGroups";
 
+import FetchCustomerList from "./FetchCustomerList";
+
 class CustomerSearch extends React.Component {
     constructor(props) {
         super(props);
 
-        this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(
-            this
-        );
+        this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(this);
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.addCustomer = this.props.addCustomer.bind(this);
         this.deleteCustomer = this.props.deleteCustomer.bind(this);
+        this.testSearchCustomer = this.testSearchCustomer.bind(this);
 
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
@@ -40,7 +41,8 @@ class CustomerSearch extends React.Component {
             customersDataResult: [],
             customerDetail: {},
             visibleDialog: false,
-            isAdding: false
+            isAdding: false,
+            searchConditions: null
         };
 
         this.tableConfig = [
@@ -108,15 +110,13 @@ class CustomerSearch extends React.Component {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === "CUSTOMER_SEARCH") {
             this.setState({
-                customersDataResult:
-                    nextProps.CustomerSearchReducer.customersDataResult
+                customersDataResult: nextProps.CustomerSearchReducer.customersDataResult
             });
         } else if (searchType === "CUSTOMER_DETAIL_SEARCH") {
             this.setState({
                 visibleDialog: true,
                 customerDetailFlag: "CUSTOMER_DETAIL_SEARCH",
-                customerDetail:
-                    nextProps.CustomerSearchReducer.customersDetailResult[0]
+                customerDetail: nextProps.CustomerSearchReducer.customersDetailResult[0]
             });
             this.dialogTitle = "Customer Detail";
         }
@@ -144,6 +144,13 @@ class CustomerSearch extends React.Component {
         this.deleteCustomer();
     }
 
+    testSearchCustomer(conditions) {
+        console.log("=====", conditions);
+        this.setState({
+            searchConditions: conditions
+        });
+    }
+
     render() {
         const {
             customersDataResult,
@@ -156,16 +163,31 @@ class CustomerSearch extends React.Component {
         } = this.state;
         return (
             <div className="customerSearchPanel">
-                <CustomerSearchConditions
-                    onSearchCustomers={this.searchCustomerByCondition}
-                />
-                <Button
-                    type="primary"
-                    icon="plus"
-                    onClick={this.openAddCustomerDialog}
-                >
+                <CustomerSearchConditions onSearchCustomers={this.testSearchCustomer} />
+                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>
                     Add
                 </Button>
+                {this.state.searchConditions && (
+                    <FetchCustomerList conditions={this.state.searchConditions}>
+                        {({ loading, customers, error }) => {
+                            if (loading) {
+                                return <div>Loading</div>;
+                            }
+                            if (error) {
+                                return <div>Error</div>;
+                            }
+
+                            return (
+                                <CustomerList
+                                    lists={customers.searchList}
+                                    tableConfig={this.tableConfig}
+                                    checkboxSelection={this.checkboxSelection}
+                                />
+                            );
+                        }}
+                    </FetchCustomerList>
+                )}
+                
                 {customersDataResult.length !== 0 ? (
                     <div>
                         <AzActionGroups
@@ -182,9 +204,7 @@ class CustomerSearch extends React.Component {
                         />
                     </div>
                 ) : (
-                    this.isSearched && (
-                        <div>Sorry, no results could be found ! </div>
-                    )
+                    this.isSearched && <div>Sorry, no results could be found ! </div>
                 )}
 
                 {visibleDialog && (
@@ -196,10 +216,7 @@ class CustomerSearch extends React.Component {
                         confirmLoading={confirmLoading}
                     >
                         {customerDetailFlag === "ADD_CUSTOMER" ? (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
+                            <Formik initialValues={customerDetail} onSubmit={this.addCustomer}>
                                 {props => (
                                     <CustomerDetail
                                         {...props}
@@ -210,15 +227,9 @@ class CustomerSearch extends React.Component {
                                 )}
                             </Formik>
                         ) : (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
+                            <Formik initialValues={customerDetail} onSubmit={this.addCustomer}>
                                 {props => (
-                                    <CustomerDetail
-                                        {...props}
-                                        tableConfig={this.tableConfig}
-                                    />
+                                    <CustomerDetail {...props} tableConfig={this.tableConfig} />
                                 )}
                             </Formik>
                         )}
