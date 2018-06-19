@@ -2,23 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-import Grid from '@material-ui/core/Grid';
-import Home from '@material-ui/icons/Home';
+import { Layout, Icon } from "antd/dist/antd";
 
 import store from "./store";
 import Main from './components/Main';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
+import AzHeader from './components/header/AzHeader';
+import AzFooter from './components/footer/AzFooter';
 
 import './index.scss';
 
+const { Content } = Layout;
 const headerConfig = {
-    defaultTab: "Home",
+    defaultTab: 0,
     tabsList: [{
         labelPath: {
             pathname: '/'
         },
-        labelContent: <Home />,
+        labelContent: <Icon type="home" style={{ fontSize: 16, color: '#fff', marginRight: 0 }} />,
         labelValue: "Home"
     },
     {
@@ -40,11 +40,13 @@ const headerConfig = {
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter basename="/">
-            <div className="panel">
-                <Header headerConfig={headerConfig} />
-                <Main />
-                <Footer />
-            </div>
+            <Layout className="panel">
+                <AzHeader headerConfig={headerConfig} />
+                <Content style={{ padding: "0 50px", marginTop: 64 }}>
+                    <Main />
+                </Content>
+                <AzFooter />
+            </Layout>
         </BrowserRouter>
     </Provider>,
     document.querySelector("#root")

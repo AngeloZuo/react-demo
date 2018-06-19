@@ -141,7 +141,6 @@ class CustomerSearch extends React.Component {
     }
 
     onDeleteClick() {
-        console.log("=onDeleteClick=", this.state.selectedRows);
         this.deleteCustomer();
     }
 
@@ -232,7 +231,7 @@ class CustomerSearch extends React.Component {
 
 function mapStateToProps(state) {
     return state;
-}
+}   
 
 function mapDispatchToProps(dispatch) {
     return {
