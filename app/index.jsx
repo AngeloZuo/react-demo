@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-import { Layout, Icon } from "antd/dist/antd";
+import { Layout, Icon } from "antd";
 
 import store from "./store";
 import Main from './components/Main';

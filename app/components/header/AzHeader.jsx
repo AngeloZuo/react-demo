@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { Layout } from "antd/dist/antd";
+import { Layout } from "antd";
 
 import AzMenu from "../common/AzMenu";
 

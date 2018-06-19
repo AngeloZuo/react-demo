@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Menu } from "antd/dist/antd";
+import { Menu } from "antd";
 
 import CustomizeUtils from "../../utils/CustomizeUtils";
 

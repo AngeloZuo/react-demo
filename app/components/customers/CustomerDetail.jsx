@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Field } from "formik";
-import Button from "antd/lib/button";
-import Input from "antd/lib/input";
-import Spin from "antd/lib/spin";
+import { Button, Input, Spin } from "antd";
 
 import _ from "lodash";
 
@@ -16,7 +14,6 @@ const CustomerDetail = ({
 }) => {
     let elements = [];
     _.forEach(values, (customerValue, customerKey) =>
-    
         elements.push(
             <Field
                 key={customerKey + "_" + customerValue}

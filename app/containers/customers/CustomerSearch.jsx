@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import Button from "antd/lib/button";
+import { Button } from "antd";
 import _ from "lodash";
 
 import {
@@ -26,7 +26,7 @@ class CustomerSearch extends React.Component {
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.addCustomer = this.props.addCustomer.bind(this);
         this.deleteCustomer = this.props.deleteCustomer.bind(this);
-        
+
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
@@ -135,7 +135,7 @@ class CustomerSearch extends React.Component {
         });
         this.dialogTitle = "Add Customer";
     }
-    
+
     onEditClick() {
         console.log("=onEditClick=", this.state.selectedRows);
     }
@@ -171,8 +171,8 @@ class CustomerSearch extends React.Component {
                         <AzActionGroups
                             {...(selectedRows.length !== 0
                                 ? { hasEditBtn: true, hasDeleteBtn: true }
-                                : { hasEditBtn: false, hasDeleteBtn: false })} 
-                            onEditClick={this.onEditClick} 
+                                : { hasEditBtn: false, hasDeleteBtn: false })}
+                            onEditClick={this.onEditClick}
                             onDeleteClick={this.onDeleteClick}
                         />
                         <CustomerList
@@ -196,31 +196,31 @@ class CustomerSearch extends React.Component {
                         confirmLoading={confirmLoading}
                     >
                         {customerDetailFlag === "ADD_CUSTOMER" ? (
-                        <Formik
-                            initialValues={customerDetail}
-                            onSubmit={this.addCustomer}
-                        >
-                            {props => (
-                                <CustomerDetail
-                                    {...props}
-                                    tableConfig={this.tableConfig}
-                                    isAddCustomer={true}
-                                    isAdding={isAdding}
-                                />
-                            )}
-                        </Formik>
+                            <Formik
+                                initialValues={customerDetail}
+                                onSubmit={this.addCustomer}
+                            >
+                                {props => (
+                                    <CustomerDetail
+                                        {...props}
+                                        tableConfig={this.tableConfig}
+                                        isAddCustomer={true}
+                                        isAdding={isAdding}
+                                    />
+                                )}
+                            </Formik>
                         ) : (
-                        <Formik
-                            initialValues={customerDetail}
-                            onSubmit={this.addCustomer}
-                        >
-                            {props => (
-                                <CustomerDetail
-                                    {...props}
-                                    tableConfig={this.tableConfig}
-                                />
-                            )}
-                        </Formik>
+                            <Formik
+                                initialValues={customerDetail}
+                                onSubmit={this.addCustomer}
+                            >
+                                {props => (
+                                    <CustomerDetail
+                                        {...props}
+                                        tableConfig={this.tableConfig}
+                                    />
+                                )}
+                            </Formik>
                         )}
                     </AzDialog>
                 )}
@@ -231,7 +231,7 @@ class CustomerSearch extends React.Component {
 
 function mapStateToProps(state) {
     return state;
-}   
+}
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -261,19 +261,19 @@ function mapDispatchToProps(dispatch) {
                 this.searchCustomerByCondition({
                     searchType: "CUSTOMER_SEARCH",
                     conditions: {}
-                })
+                });
             });
         },
 
         deleteCustomer() {
             const customerList = this.state.selectedRows;
             console.log(customerList);
-            deleteCustomers(customerList).then((result) => {
+            deleteCustomers(customerList).then(result => {
                 this.searchCustomerByCondition({
                     searchType: "CUSTOMER_SEARCH",
                     conditions: {}
-                })
-            })
+                });
+            });
         }
     };
 }

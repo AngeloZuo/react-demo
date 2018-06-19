@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "antd/lib/modal";
+import { Modal } from "antd";
 
 export default class AzDialog extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export default class AzDialog extends React.Component {
         if (nextProps.visible) {
             this.setState({
                 visible: true
-            })
+            });
         }
     }
 
@@ -26,7 +26,6 @@ export default class AzDialog extends React.Component {
     }
 
     render() {
-
         return (
             <Modal
                 footer={null}
@@ -37,6 +36,6 @@ export default class AzDialog extends React.Component {
             >
                 {this.props.children}
             </Modal>
-        )
+        );
     }
 }
