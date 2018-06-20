@@ -1,5 +1,5 @@
 import Home from '../components/Home';
-import CustomerSearch from '../containers/customers/CustomerSearch';
+import CustomerContainer from '../containers/customers/CustomerContainer';
 import MemberPoints from '../components/memberPoints/MemberPoints';
 
 export const RouterConfig = {
@@ -10,7 +10,7 @@ export const RouterConfig = {
     },
     {
         url: '/customerSearch',
-        component: CustomerSearch
+        component: CustomerContainer
     },
     {
         url: '/memberPoints',
