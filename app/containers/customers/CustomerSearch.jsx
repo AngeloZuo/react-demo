@@ -145,7 +145,6 @@ class CustomerSearch extends React.Component {
     }
 
     testSearchCustomer(conditions) {
-        console.log("=====", conditions);
         this.setState({
             searchConditions: conditions
         });
@@ -159,7 +158,8 @@ class CustomerSearch extends React.Component {
             customerDetailFlag,
             customerDetail,
             confirmLoading,
-            isAdding
+            isAdding,
+            searchConditions
         } = this.state;
         return (
             <div className="customerSearchPanel">
@@ -167,8 +167,15 @@ class CustomerSearch extends React.Component {
                 <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>
                     Add
                 </Button>
-                {this.state.searchConditions && (
-                    <FetchCustomerList conditions={this.state.searchConditions}>
+                {selectedRows.length !== 0 && (
+                    <AzActionGroups
+                        {...{ hasEditBtn: true, hasDeleteBtn: true }}
+                        onEditClick={this.onEditClick}
+                        onDeleteClick={this.onDeleteClick}
+                    />
+                )}
+                {searchConditions && (
+                    <FetchCustomerList conditions={searchConditions}>
                         {({ loading, customers, error }) => {
                             if (loading) {
                                 return <div>Loading</div>;
@@ -187,8 +194,8 @@ class CustomerSearch extends React.Component {
                         }}
                     </FetchCustomerList>
                 )}
-                
-                {customersDataResult.length !== 0 ? (
+
+                {/* {customersDataResult.length !== 0 ? (
                     <div>
                         <AzActionGroups
                             {...(selectedRows.length !== 0
@@ -205,7 +212,7 @@ class CustomerSearch extends React.Component {
                     </div>
                 ) : (
                     this.isSearched && <div>Sorry, no results could be found ! </div>
-                )}
+                )} */}
 
                 {visibleDialog && (
                     <AzDialog

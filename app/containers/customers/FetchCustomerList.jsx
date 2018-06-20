@@ -9,19 +9,21 @@ class FetchCustomerList extends React.Component {
         error: null
     };
 
-    getCustomers() {
-        searchCustomers(this.props.conditions).then(data => {
+    getCustomers(conditions) {
+        searchCustomers(conditions).then(data => {
             this.setState({ customers: data, loading: false });
         });
     }
 
     componentDidMount() {
-        this.getCustomers();
+        this.getCustomers(this.props.conditions);
     }
 
-    componentWillReceiveProps() {
-        console.log("+++", this.props.conditions);
-        this.getCustomers();
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.conditions !== this.props.conditions) {
+            this.setState({ loading: true });
+            this.getCustomers(nextProps.conditions);
+        }
     }
 
     render() {

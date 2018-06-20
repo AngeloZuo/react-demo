@@ -5,9 +5,9 @@ const commonAjax = new CommonAjax();
 export function searchCustomers(searchConditions) {
     
     return new Promise((resolve, reject) => {
-        commonAjax.get(`${DEV_SERVER_ADDRESS}getCustomers`, searchConditions.conditions).then((customersData) => {
+        commonAjax.get(`${DEV_SERVER_ADDRESS}getCustomers`, searchConditions).then((customersData) => {
             resolve({
-                type: searchConditions.searchType,
+                // type: searchConditions.searchType,
                 searchList: customersData.body
             })
         });
