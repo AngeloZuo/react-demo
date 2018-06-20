@@ -1,12 +1,11 @@
 import React from "react";
 import { Modal } from "antd";
-
+import PropTypes from "prop-types";
 export default class AzDialog extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleOk = this.handleOk.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
+        this.handleModalStatus = this.handleModalStatus.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -17,11 +16,7 @@ export default class AzDialog extends React.Component {
         }
     }
 
-    handleCancel() {
-        this.props.onChangeDialogStatus();
-    }
-
-    handleOk() {
+    handleModalStatus() {
         this.props.onChangeDialogStatus();
     }
 
@@ -31,11 +26,19 @@ export default class AzDialog extends React.Component {
                 footer={null}
                 title={this.props.title}
                 visible={this.props.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
+                onOk={this.handleModalStatus}
+                onCancel={this.handleModalStatus}
             >
                 {this.props.children}
             </Modal>
         );
     }
 }
+
+AzDialog.propTypes = {
+    onChangeDialogStatus: PropTypes.func.isRequired
+};
+
+AzDialog.defaultProps = {
+    onChangeDialogStatus: function() {}
+};

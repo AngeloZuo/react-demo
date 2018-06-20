@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { searchCustomers } from "../../actions/customer/customerSearchActions";
 
-class FetchCustomerList extends React.Component {
+class FetchCustomer extends React.Component {
     state = {
         loading: true,
         customers: [],
@@ -32,12 +32,12 @@ class FetchCustomerList extends React.Component {
     }
 }
 
-FetchCustomerList.propTypes = {
+FetchCustomer.propTypes = {
     conditions: PropTypes.object.isRequired
 };
 
-FetchCustomerList.defaultProps = {
+FetchCustomer.defaultProps = {
     conditions: {}
 };
 
-export default FetchCustomerList;
+export default FetchCustomer;
