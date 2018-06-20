@@ -56,13 +56,11 @@ const CustomerDetail = ({
 
 CustomerDetail.propTypes = {
     customerDetailData: PropTypes.array.isRequired,
-    onChangeDialogStatus: PropTypes.func.isRequired,
     isAdding: PropTypes.bool
 };
 
 CustomerDetail.defaultProps = {
     customerDetailData: [],
-    onChangeDialogStatus: function() {},
     isAdding: false
 };
 

@@ -7,14 +7,14 @@ import _ from "lodash";
 
 const CustomerSearchConditions = props => (
     <Formik
-        initialValues={{ customerID: "", customerName: "" }}
+        initialValues={{ id: "", customerName: "" }}
         onSubmit={props.onSearchCustomers}
         render={formikProps => (
             <Form noValidate className="customerSearchConditions">
                 <div>
                     <Field
                         type="text"
-                        name="customerID"
+                        name="id"
                         placeholder="Please enter custormer id"
                         component={({ field, ...formProps }) => {
                             return (

@@ -1,31 +1,25 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Button } from "antd";
 import _ from "lodash";
 
-import {
-    searchCustomers,
-    addNewCustomer,
-    deleteCustomers
-} from "../../actions/customer/customerSearchActions";
+import { addNewCustomer } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
 import AzDialog from "../../components/common/AzDialog";
 import CustomerDetail from "../../components/customers/CustomerDetail";
 import AzActionGroups from "../../components/common/AzActionGroups";
 
+import FetchCustomer from "./FetchCustomer";
+
 class CustomerSearch extends React.Component {
     constructor(props) {
         super(props);
 
-        this.searchCustomerByCondition = this.props.searchCustomerByCondition.bind(
-            this
-        );
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
-        this.addCustomer = this.props.addCustomer.bind(this);
-        this.deleteCustomer = this.props.deleteCustomer.bind(this);
+        this.testSearchCustomer = this.testSearchCustomer.bind(this);
+        this.testAddCustomer = this.testAddCustomer.bind(this);
 
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
         this.onEditClick = this.onEditClick.bind(this);
@@ -38,9 +32,10 @@ class CustomerSearch extends React.Component {
                 hasDeleteBtn: false
             },
             customersDataResult: [],
-            customerDetail: {},
+            detailSearchConditions: null,
             visibleDialog: false,
-            isAdding: false
+            isAdding: false,
+            searchConditions: null
         };
 
         this.tableConfig = [
@@ -85,11 +80,11 @@ class CustomerSearch extends React.Component {
             <a
                 href="javascript:void(0);"
                 onClick={() =>
-                    this.searchCustomerByCondition({
-                        searchType: "CUSTOMER_DETAIL_SEARCH",
-                        conditions: {
+                    this.setState({
+                        detailSearchConditions: {
                             id: displayContent
-                        }
+                        },
+                        visibleDialog: true
                     })
                 }
             >
@@ -108,15 +103,13 @@ class CustomerSearch extends React.Component {
         const searchType = nextProps.CustomerSearchReducer.customerSearchType;
         if (searchType === "CUSTOMER_SEARCH") {
             this.setState({
-                customersDataResult:
-                    nextProps.CustomerSearchReducer.customersDataResult
+                customersDataResult: nextProps.CustomerSearchReducer.customersDataResult
             });
         } else if (searchType === "CUSTOMER_DETAIL_SEARCH") {
             this.setState({
                 visibleDialog: true,
                 customerDetailFlag: "CUSTOMER_DETAIL_SEARCH",
-                customerDetail:
-                    nextProps.CustomerSearchReducer.customersDetailResult[0]
+                customerDetail: nextProps.CustomerSearchReducer.customersDetailResult[0]
             });
             this.dialogTitle = "Customer Detail";
         }
@@ -144,47 +137,68 @@ class CustomerSearch extends React.Component {
         this.deleteCustomer();
     }
 
+    testSearchCustomer(conditions) {
+        this.setState({
+            searchConditions: conditions
+        });
+    }
+
+    testAddCustomer(customerInfo) {
+        this.setState({
+            isAdding: true
+        });
+        addNewCustomer(customerInfo).then(() => {
+            this.setState({
+                visibleDialog: false,
+                isAdding: false
+            });
+            this.testSearchCustomer({});
+        });
+    }
+
     render() {
         const {
-            customersDataResult,
+            customerDetail,
             selectedRows,
             visibleDialog,
             customerDetailFlag,
-            customerDetail,
+            detailSearchConditions,
             confirmLoading,
-            isAdding
+            isAdding,
+            searchConditions
         } = this.state;
         return (
             <div className="customerSearchPanel">
-                <CustomerSearchConditions
-                    onSearchCustomers={this.searchCustomerByCondition}
-                />
-                <Button
-                    type="primary"
-                    icon="plus"
-                    onClick={this.openAddCustomerDialog}
-                >
+                <CustomerSearchConditions onSearchCustomers={this.testSearchCustomer} />
+                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>
                     Add
                 </Button>
-                {customersDataResult.length !== 0 ? (
-                    <div>
-                        <AzActionGroups
-                            {...(selectedRows.length !== 0
-                                ? { hasEditBtn: true, hasDeleteBtn: true }
-                                : { hasEditBtn: false, hasDeleteBtn: false })}
-                            onEditClick={this.onEditClick}
-                            onDeleteClick={this.onDeleteClick}
-                        />
-                        <CustomerList
-                            lists={customersDataResult}
-                            tableConfig={this.tableConfig}
-                            checkboxSelection={this.checkboxSelection}
-                        />
-                    </div>
-                ) : (
-                    this.isSearched && (
-                        <div>Sorry, no results could be found ! </div>
-                    )
+                {selectedRows.length !== 0 && (
+                    <AzActionGroups
+                        {...{ hasEditBtn: true, hasDeleteBtn: true }}
+                        onEditClick={this.onEditClick}
+                        onDeleteClick={this.onDeleteClick}
+                    />
+                )}
+                {searchConditions && (
+                    <FetchCustomer conditions={searchConditions}>
+                        {({ loading, customers, error }) => {
+                            if (loading) {
+                                return <div>Loading</div>;
+                            }
+                            if (error) {
+                                return <div>Error</div>;
+                            }
+
+                            return (
+                                <CustomerList
+                                    lists={customers.searchList}
+                                    tableConfig={this.tableConfig}
+                                    checkboxSelection={this.checkboxSelection}
+                                />
+                            );
+                        }}
+                    </FetchCustomer>
                 )}
 
                 {visibleDialog && (
@@ -195,29 +209,39 @@ class CustomerSearch extends React.Component {
                         title={this.dialogTitle}
                         confirmLoading={confirmLoading}
                     >
-                        {customerDetailFlag === "ADD_CUSTOMER" ? (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
+                        {customerDetailFlag !== "ADD_CUSTOMER" ? (
+                            <FetchCustomer conditions={detailSearchConditions}>
+                                {({ loading, customers, error }) => {
+                                    if (loading) {
+                                        return <div>Loading</div>;
+                                    }
+                                    if (error) {
+                                        return <div>Error</div>;
+                                    }
+
+                                    return (
+                                        <Formik
+                                            initialValues={customers.searchList[0]}
+                                            onSubmit={() => {}}
+                                        >
+                                            {props => (
+                                                <CustomerDetail
+                                                    {...props}
+                                                    tableConfig={this.tableConfig}
+                                                />
+                                            )}
+                                        </Formik>
+                                    );
+                                }}
+                            </FetchCustomer>
+                        ) : (
+                            <Formik initialValues={customerDetail} onSubmit={this.testAddCustomer}>
                                 {props => (
                                     <CustomerDetail
                                         {...props}
                                         tableConfig={this.tableConfig}
                                         isAddCustomer={true}
                                         isAdding={isAdding}
-                                    />
-                                )}
-                            </Formik>
-                        ) : (
-                            <Formik
-                                initialValues={customerDetail}
-                                onSubmit={this.addCustomer}
-                            >
-                                {props => (
-                                    <CustomerDetail
-                                        {...props}
-                                        tableConfig={this.tableConfig}
                                     />
                                 )}
                             </Formik>
@@ -229,60 +253,8 @@ class CustomerSearch extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return state;
-}
+CustomerSearch.propTypes = {};
 
-function mapDispatchToProps(dispatch) {
-    return {
-        searchCustomerByCondition(conditions) {
-            this.setState({
-                selectedRows: []
-            });
-            let searchConditions = {
-                searchType: conditions.searchType || "CUSTOMER_SEARCH",
-                conditions: conditions.conditions || conditions
-            };
-            searchCustomers(searchConditions).then(actionObject => {
-                dispatch(actionObject);
-            });
-        },
+CustomerSearch.defaultProps = {};
 
-        addCustomer(customerDetail) {
-            const self = this;
-            self.setState({
-                isAdding: true
-            });
-            addNewCustomer(customerDetail).then(() => {
-                self.setState({
-                    visibleDialog: false,
-                    isAdding: false
-                });
-                this.searchCustomerByCondition({
-                    searchType: "CUSTOMER_SEARCH",
-                    conditions: {}
-                });
-            });
-        },
-
-        deleteCustomer() {
-            const customerList = this.state.selectedRows;
-            console.log(customerList);
-            deleteCustomers(customerList).then(result => {
-                this.searchCustomerByCondition({
-                    searchType: "CUSTOMER_SEARCH",
-                    conditions: {}
-                });
-            });
-        }
-    };
-}
-
-CustomerSearch.propTypes = {
-    searchCustomerByCondition: PropTypes.func.isRequired
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CustomerSearch);
+export default CustomerSearch;
