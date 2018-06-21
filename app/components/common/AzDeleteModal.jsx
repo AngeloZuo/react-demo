@@ -11,34 +11,42 @@ class AzDeleteModal extends React.Component {
         ModalText: ""
     };
 
-    openDeleteDialog() {
+    openDeleteDialog = () => {
         this.setState({
-            visible: true
+            visible: true,
+            ModalText: `Do you want to delete ${
+                this.props.deleteInfo.length
+            } item${this.props.deleteInfo.length > 1 ? "s" : ""}?`
         });
-    }
+    };
 
-    handleOk() {
+    handleOk = () => {
         this.setState({
             confirmLoading: true
         });
-        props.onDeleteClick();
-        this.setState({
-            visible: false,
-            confirmLoading: false
+        this.props.onDeleteClick(() => {
+            this.setState({
+                visible: false,
+                confirmLoading: false
+            });
         });
-    }
+    };
 
-    handleCancel() {
+    handleCancel = () => {
         this.setState({
             visible: false
         });
-    }
+    };
 
     render() {
         const { visible, confirmLoading, ModalText } = this.state;
         return (
             <div>
-                <Button type="danger" icon="delete" onClick={this.openDeleteDialog}>
+                <Button
+                    type="danger"
+                    icon="delete"
+                    onClick={this.openDeleteDialog}
+                >
                     Delete
                 </Button>
                 <Modal

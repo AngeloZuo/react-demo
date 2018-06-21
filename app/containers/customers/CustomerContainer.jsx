@@ -111,9 +111,10 @@ class CustomerContainer extends React.Component {
         console.log("=onEditClick=", this.state.selectedRows);
     }
 
-    onDeleteClick() {
+    onDeleteClick(callback) {
         const customerList = this.state.selectedRows;
         deleteCustomers(customerList).then(() => {
+            callback();
             this.testSearchCustomer({});
             this.setState({
                 selectedRows: []
@@ -146,8 +147,14 @@ class CustomerContainer extends React.Component {
         } = this.state;
         return (
             <div className="customerSearchPanel">
-                <CustomerSearchConditions onSearchCustomers={this.testSearchCustomer} />
-                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog} />
+                <CustomerSearchConditions
+                    onSearchCustomers={this.testSearchCustomer}
+                />
+                <Button
+                    type="primary"
+                    icon="plus"
+                    onClick={this.openAddCustomerDialog}
+                />
                 {selectedRows.length !== 0 && (
                     <AzActionGroups
                         {...{ hasEditBtn: true, hasDeleteBtn: true }}
