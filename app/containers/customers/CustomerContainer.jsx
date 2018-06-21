@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Button } from "antd";
 import _ from "lodash";
 
+import { deleteCustomers } from "../../actions/customer/customerSearchActions";
+
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
 import AzActionGroups from "../../components/common/AzActionGroups";
@@ -109,7 +111,13 @@ class CustomerContainer extends React.Component {
     }
 
     onDeleteClick() {
-        this.deleteCustomer();
+        const customerList = this.state.selectedRows;
+        deleteCustomers(customerList).then(result => {
+            this.testSearchCustomer({});
+            this.setState({
+                selectedRows: []
+            });
+        });
     }
 
     testSearchCustomer(conditions) {
@@ -118,8 +126,7 @@ class CustomerContainer extends React.Component {
         });
     }
 
-    afterAdded(addedMessage) {
-        console.log("===", addedMessage);
+    afterAdded() {
         this.setState({
             visibleDialog: false
         });
