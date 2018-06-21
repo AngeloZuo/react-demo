@@ -8,6 +8,7 @@ import { deleteCustomers } from "../../actions/customer/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
 import AzActionGroups from "../../components/common/AzActionGroups";
+import AzDeleteModal from "../../components/common/AzDeleteModal";
 
 import CustomerSearch from "./CustomerSearch";
 import CustomerAdd from "./CustomerAdd";
@@ -112,7 +113,7 @@ class CustomerContainer extends React.Component {
 
     onDeleteClick() {
         const customerList = this.state.selectedRows;
-        deleteCustomers(customerList).then(result => {
+        deleteCustomers(customerList).then(() => {
             this.testSearchCustomer({});
             this.setState({
                 selectedRows: []
@@ -146,15 +147,17 @@ class CustomerContainer extends React.Component {
         return (
             <div className="customerSearchPanel">
                 <CustomerSearchConditions onSearchCustomers={this.testSearchCustomer} />
-                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>
-                    Add
-                </Button>
+                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog} />
                 {selectedRows.length !== 0 && (
                     <AzActionGroups
                         {...{ hasEditBtn: true, hasDeleteBtn: true }}
                         onEditClick={this.onEditClick}
-                        onDeleteClick={this.onDeleteClick}
-                    />
+                    >
+                        <AzDeleteModal
+                            onDeleteClick={this.onDeleteClick}
+                            deleteInfo={selectedRows}
+                        />
+                    </AzActionGroups>
                 )}
 
                 {searchConditions && (
