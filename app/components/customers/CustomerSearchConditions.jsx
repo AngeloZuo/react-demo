@@ -59,15 +59,15 @@ const CustomerSearchConditions = props => (
                             );
                         }}
                     />
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        icon="search"
+                        onClick={e => {
+                            formikProps.handleSubmit(e);
+                        }}
+                    />
                 </div>
-                <Button
-                    type="primary"
-                    shape="circle"
-                    icon="search"
-                    onClick={e => {
-                        formikProps.handleSubmit(e);
-                    }}
-                />
             </Form>
         )}
     />

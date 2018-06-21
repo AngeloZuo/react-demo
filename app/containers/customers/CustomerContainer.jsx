@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import { Button } from "antd";
 import _ from "lodash";
 
+import { deleteCustomers } from "../../actions/customer/customerSearchActions";
+
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
 import AzActionGroups from "../../components/common/AzActionGroups";
+import AzDeleteModal from "../../components/common/AzDeleteModal";
 
 import CustomerSearch from "./CustomerSearch";
 import CustomerAdd from "./CustomerAdd";
@@ -108,8 +111,15 @@ class CustomerContainer extends React.Component {
         console.log("=onEditClick=", this.state.selectedRows);
     }
 
-    onDeleteClick() {
-        this.deleteCustomer();
+    onDeleteClick(callback) {
+        const customerList = this.state.selectedRows;
+        deleteCustomers(customerList).then(() => {
+            callback();
+            this.testSearchCustomer({});
+            this.setState({
+                selectedRows: []
+            });
+        });
     }
 
     testSearchCustomer(conditions) {
@@ -118,8 +128,7 @@ class CustomerContainer extends React.Component {
         });
     }
 
-    afterAdded(addedMessage) {
-        console.log("===", addedMessage);
+    afterAdded() {
         this.setState({
             visibleDialog: false
         });
@@ -138,16 +147,24 @@ class CustomerContainer extends React.Component {
         } = this.state;
         return (
             <div className="customerSearchPanel">
-                <CustomerSearchConditions onSearchCustomers={this.testSearchCustomer} />
-                <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog}>
-                    Add
-                </Button>
+                <CustomerSearchConditions
+                    onSearchCustomers={this.testSearchCustomer}
+                />
+                <Button
+                    type="primary"
+                    icon="plus"
+                    onClick={this.openAddCustomerDialog}
+                />
                 {selectedRows.length !== 0 && (
                     <AzActionGroups
                         {...{ hasEditBtn: true, hasDeleteBtn: true }}
                         onEditClick={this.onEditClick}
-                        onDeleteClick={this.onDeleteClick}
-                    />
+                    >
+                        <AzDeleteModal
+                            onDeleteClick={this.onDeleteClick}
+                            deleteInfo={selectedRows}
+                        />
+                    </AzActionGroups>
                 )}
 
                 {searchConditions && (
