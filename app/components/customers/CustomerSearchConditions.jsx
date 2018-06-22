@@ -8,7 +8,7 @@ import _ from "lodash";
 const CustomerSearchConditions = props => (
     <Formik
         initialValues={{ id: "", customerName: "" }}
-        onSubmit={props.onSearchCustomers}
+        onSubmit={props.getSearchConditions}
         render={formikProps => (
             <Form noValidate className="customerSearchConditions">
                 <div>
@@ -74,7 +74,11 @@ const CustomerSearchConditions = props => (
 );
 
 CustomerSearchConditions.propTypes = {
-    onSearchCustomers: PropTypes.func.isRequired
+    getSearchConditions: PropTypes.func.isRequired
 };
+
+CustomerSearchConditions.defaultProps = {
+    getSearchConditions: () => {}
+}
 
 export default CustomerSearchConditions;

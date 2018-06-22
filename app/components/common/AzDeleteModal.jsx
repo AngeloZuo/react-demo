@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Modal, Button } from "antd";
-
-const confirm = Modal.confirm;
-
 class AzDeleteModal extends React.Component {
     state = {
         visible: false,
@@ -24,12 +21,7 @@ class AzDeleteModal extends React.Component {
         this.setState({
             confirmLoading: true
         });
-        this.props.onDeleteClick(() => {
-            this.setState({
-                visible: false,
-                confirmLoading: false
-            });
-        });
+        this.props.onDeleteClick();
     };
 
     handleCancel = () => {
@@ -37,6 +29,15 @@ class AzDeleteModal extends React.Component {
             visible: false
         });
     };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.hasDeleted) {
+            this.setState({
+                visible: false,
+                confirmLoading: false
+            });
+        }
+    }
 
     render() {
         const { visible, confirmLoading, ModalText } = this.state;
@@ -65,12 +66,14 @@ class AzDeleteModal extends React.Component {
 
 AzDeleteModal.propTypes = {
     onDeleteClick: PropTypes.func.isRequired,
-    deleteInfo: PropTypes.array.isRequired
+    deleteInfo: PropTypes.array.isRequired,
+    hasDeleted: PropTypes.bool.isRequired
 };
 
 AzDeleteModal.defaultProps = {
     onDeleteClick: () => {},
-    deleteInfo: []
+    deleteInfo: [],
+    hasDeleted: false
 };
 
 export default AzDeleteModal;
