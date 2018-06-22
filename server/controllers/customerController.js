@@ -10,8 +10,6 @@ function getCustomers() {
 }
 
 function getCustomersByCondition(queryParams = {}) {
-    
-
     _.forEach(queryParams, (value, key) => {
         if (value !== '') {
             queryParams[key] = value;
@@ -21,9 +19,9 @@ function getCustomersByCondition(queryParams = {}) {
     });
 
     return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
-        _.forEach(data, (value, key) => {
-            _.unset(value, "_id");
-        });
+        // _.forEach(data, (value, key) => {
+        //     _.unset(value, "_id");
+        // });
         return data;
     });
 }
@@ -40,9 +38,16 @@ function deleteCustomers(customerList) {
     });
 }
 
+function updateCustomer(customerInfo) { 
+    return customerService.updateCustomer({ dbName, customerCollection, customerInfo }).then((data) => {
+        return data;
+    });
+}
+
 module.exports = {
     getCustomers,
     getCustomersByCondition,
     addCustomer,
-    deleteCustomers
+    deleteCustomers,
+    updateCustomer
 }

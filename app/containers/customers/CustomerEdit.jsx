@@ -1,37 +1,89 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
+import { Button } from "antd";
 
 import FetchCustomer from "./FetchCustomer";
 import CustomerDetail from "../../components/customers/CustomerDetail";
+import { update } from "../../actions/customer/customerSearchActions";
 
-const CustomerEdit = props => {
-    const { conditions, tableConfig } = props;
-    let isEditing = false;
+class CustomerEdit extends React.Component {
+    state = {
+        isEditing: false,
+        disabled: true
+    };
 
-    function updateCustomer(customerInfo) {
-        //TODO
+    updateCustomer = customerInfo => {
+        this.setState({
+            isEditing: true,
+            disabled: true
+        });
+        
+        update(customerInfo).then(() => {
+            this.setState({
+                isEditing: false
+            });
+            this.props.afterUpdated();
+        });
+        
+    };
+
+    readyToUpdate = () => {
+        this.setState({
+            disabled: false
+        });
+    };
+
+    render() {
+        const { conditions, tableConfig } = this.props;
+        const { isEditing, disabled } = this.state;
+        return (
+            <FetchCustomer conditions={conditions}>
+                {({ loading, customers, error }) => {
+                    if (loading) {
+                        return <div>Loading</div>;
+                    }
+                    if (error) {
+                        return <div>Error</div>;
+                    }
+
+                    return (
+                        <Formik
+                            initialValues={customers.searchList[0]}
+                            onSubmit={this.updateCustomer}
+                        >
+                            {formikProps => (
+                                <CustomerDetail
+                                    {...formikProps}
+                                    tableConfig={tableConfig}
+                                    isDisabled={disabled}
+                                    loading={isEditing}
+                                >
+                                    <Button
+                                        type="primary"
+                                        shape="circle"
+                                        icon="edit"
+                                        onClick={this.readyToUpdate}
+                                    />
+                                    {!disabled && (
+                                        <Button
+                                            type="primary"
+                                            shape="circle"
+                                            icon="check"
+                                            onClick={e => {
+                                                formikProps.handleSubmit(e);
+                                            }}
+                                        />
+                                    )}
+                                </CustomerDetail>
+                            )}
+                        </Formik>
+                    );
+                }}
+            </FetchCustomer>
+        );
     }
-
-    return (
-        <FetchCustomer conditions={conditions}>
-            {({ loading, customers, error }) => {
-                if (loading) {
-                    return <div>Loading</div>;
-                }
-                if (error) {
-                    return <div>Error</div>;
-                }
-
-                return (
-                    <Formik initialValues={customers.searchList[0]} onSubmit={() => {}}>
-                        {props => <CustomerDetail {...props} tableConfig={tableConfig} />}
-                    </Formik>
-                );
-            }}
-        </FetchCustomer>
-    );
-};
+}
 
 CustomerEdit.propTypes = {
     conditions: PropTypes.object.isRequired

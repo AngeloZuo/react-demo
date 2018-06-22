@@ -1,4 +1,6 @@
 const fs = require("fs-extra");
+const moment = require('moment');
+const _ = require("lodash");
 
 const mongoDB = require("../database/mongodb");
 
@@ -25,6 +27,18 @@ function getCustomersDataFromFile() {
 }
 
 function addCustomer(args) {
+    let tempArray = [];
+    let addData = args.addData;
+
+    addData["createdDate"] = moment().format();
+    if (_.isArray(addData)) {
+        tempArray = addData;
+    } else {
+        tempArray.push(addData);
+    }
+
+    args["dataList"] = tempArray;
+
     try {
         return new Promise((resolve, reject) => {
             mongoDB.insertDocuments(args, (result) => {
@@ -52,9 +66,25 @@ function deleteCustomers(args) {
     }
 }
 
+function updateCustomer(args) {
+    try {
+        return new Promise((resolve, reject) => {
+            const resultMsg = `Update data successfully!`
+            mongoDB.updateDocument(args, (result) => {
+                resolve({
+                    resultMsg: resultMsg
+                });
+            })
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = {
     getCustomersDataFromDB,
     getCustomersDataFromFile,
     addCustomer,
-    deleteCustomers
+    deleteCustomers,
+    updateCustomer
 };

@@ -11,8 +11,9 @@ export default class CommonAjax {
         return request.post(url).send(postData);
     }
 
-    put() {
-
+    update(url, postData) {
+        const request = SuperAgent;
+        return request.post(url).send(postData);
     }
 
     delete(url, postData) {

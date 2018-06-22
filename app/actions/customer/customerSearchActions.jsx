@@ -29,3 +29,11 @@ export function deleteCustomers(customerInfo) {
         });
     });
 }
+
+export function update(customerInfo) {
+    return new Promise((resolve, reject) => {
+        commonAjax.update(`${DEV_SERVER_ADDRESS}updateCustomer`, customerInfo).then((returnData) => {
+            resolve(returnData)
+        });
+    });
+}

@@ -1,35 +1,60 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
+import { Button } from "antd";
 
 import CustomerDetail from "../../components/customers/CustomerDetail";
 import { addNewCustomer } from "../../actions/customer/customerSearchActions";
 
-const CustomerAdd = props => {
-    const { initialCustomer, afterAdded, tableConfig } = props;
-    let isAdding = false;
+class CustomerAdd extends React.Component {
+    state = {
+        loading: false,
+        defaultCustomer: {
+            customerName: "",
+            phone: "",
+            idCard: "",
+            memberPoints: ""
+        }
+    };
 
-    function addCustomer(customerInfo) {
-        isAdding = true;
-        addNewCustomer(customerInfo).then(() => {
-            afterAdded();
-            isAdding = false;
+    addCustomer = customerInfo => {
+        this.setState({
+            loading: true
         });
-    }
+        addNewCustomer(customerInfo).then(() => {
+            this.setState({
+                loading: false
+            });
+            this.props.afterAdded();
+        });
+    };
 
-    return (
-        <Formik initialValues={initialCustomer} onSubmit={addCustomer}>
-            {formikProps => (
-                <CustomerDetail
-                    {...formikProps}
-                    tableConfig={tableConfig}
-                    isAddCustomer={true}
-                    isAdding={isAdding}
-                />
-            )}
-        </Formik>
-    );
-};
+    render() {
+        const { tableConfig } = this.props;
+        const { loading, defaultCustomer } = this.state;
+        return (
+            <Formik initialValues={defaultCustomer} onSubmit={this.addCustomer}>
+                {formikProps => (
+                    <CustomerDetail
+                        {...formikProps}
+                        tableConfig={tableConfig}
+                        isDisabled={false}
+                        loading={loading}
+                    >
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            icon="check"
+                            onClick={e => {
+                                formikProps.handleSubmit(e);
+                            }}
+                        />
+                    </CustomerDetail>
+                )}
+            </Formik>
+        );
+    }
+}
 
 CustomerAdd.propTypes = {
     initialCustomer: PropTypes.object.isRequired,
