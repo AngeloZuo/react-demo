@@ -21,6 +21,7 @@ class CustomerContainer extends React.Component {
         this.getLinkElement = this.getLinkElement.bind(this);
         this.afterAdded = this.afterAdded.bind(this);
         this.afterDelete = this.afterDelete.bind(this);
+        this.afterUpdated = this.afterUpdated.bind(this);
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
 
         this.state = {
@@ -54,7 +55,6 @@ class CustomerContainer extends React.Component {
 
         this.checkboxSelection = {
             onChange: (selectedCell, selectedRows) => {
-                console.log("==selectedRows==", selectedRows);
                 let tempArray = [];
                 _.forEach(selectedRows, selectRow => {
                     tempArray.push({ id: selectRow.id });
@@ -73,6 +73,7 @@ class CustomerContainer extends React.Component {
                 onClick={() => {
                     this.dialogTitle = "Edit Customer";
                     this.setState({
+                        customerDetailFlag: "",
                         detailSearchConditions: {
                             id: displayContent
                         },
@@ -125,6 +126,15 @@ class CustomerContainer extends React.Component {
         this.getSearchConditions({});
     }
 
+    afterUpdated() {
+        this.setState({
+            visibleDialog: false,
+            customerDetailFlag: "",
+            detailSearchConditions: null
+        });
+        this.getSearchConditions({});
+    }
+
     render() {
         const {
             customerDetail,
@@ -169,6 +179,7 @@ class CustomerContainer extends React.Component {
                             <CustomerEdit
                                 conditions={detailSearchConditions}
                                 tableConfig={this.tableConfig}
+                                afterUpdated={this.afterUpdated}
                             />
                         ) : (
                             <CustomerAdd

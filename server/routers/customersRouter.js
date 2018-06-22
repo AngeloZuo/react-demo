@@ -18,4 +18,9 @@ router.delete('/deleteCustomers', async (ctx, id) => {
     ctx.body = result;
 })
 
+router.post('/updateCustomer', async (ctx, id) => {
+    const result = await customerController.updateCustomer(ctx.request.body);
+    ctx.body = result;
+})
+
 module.exports = router.routes();

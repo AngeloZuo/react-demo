@@ -52,9 +52,25 @@ function deleteCustomers(args) {
     }
 }
 
+function updateCustomer(args) {
+    try {
+        return new Promise((resolve, reject) => {
+            const resultMsg = `Update data successfully!`
+            mongoDB.updateDocument(args, (result) => {
+                resolve({
+                    resultMsg: resultMsg
+                });
+            })
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 module.exports = {
     getCustomersDataFromDB,
     getCustomersDataFromFile,
     addCustomer,
-    deleteCustomers
+    deleteCustomers,
+    updateCustomer
 };

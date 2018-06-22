@@ -5,6 +5,7 @@ import { Button } from "antd";
 
 import FetchCustomer from "./FetchCustomer";
 import CustomerDetail from "../../components/customers/CustomerDetail";
+import { update } from "../../actions/customer/customerSearchActions";
 
 class CustomerEdit extends React.Component {
     state = {
@@ -13,17 +14,17 @@ class CustomerEdit extends React.Component {
     };
 
     updateCustomer = customerInfo => {
-        //TODO
         this.setState({
             isEditing: true,
             disabled: true
         });
-        console.log("==updateCustomer==", customerInfo);
-        setTimeout(() => {
+        
+        update(customerInfo).then(() => {
             this.setState({
                 isEditing: false
             });
-        }, 2000);
+            this.props.afterUpdated();
+        });
         
     };
 
