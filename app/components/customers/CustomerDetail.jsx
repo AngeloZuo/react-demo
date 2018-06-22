@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Field } from "formik";
-import { Button, Input, Spin } from "antd";
+import { Input, Spin } from "antd";
 
 import _ from "lodash";
 
 const CustomerDetail = ({
     values,
-    handleSubmit,
-    isAddCustomer,
-    isAdding,
-    tableConfig
+    isDisabled,
+    loading,
+    children
 }) => {
     let elements = [];
     _.forEach(values, (customerValue, customerKey) =>
@@ -25,7 +24,7 @@ const CustomerDetail = ({
                             <Input
                                 {...field}
                                 {...props}
-                                disabled={!isAddCustomer}
+                                disabled={isDisabled}
                                 addonBefore={customerKey}
                             />
                         </div>
@@ -37,18 +36,9 @@ const CustomerDetail = ({
 
     return (
         <Form>
-            <Spin spinning={isAdding}>
+            <Spin spinning={loading}>
                 {elements}
-                {isAddCustomer && (
-                    <Button
-                        type="primary"
-                        shape="circle"
-                        icon="check"
-                        onClick={e => {
-                            handleSubmit(e);
-                        }}
-                    />
-                )}
+                {children}
             </Spin>
         </Form>
     );
@@ -56,12 +46,14 @@ const CustomerDetail = ({
 
 CustomerDetail.propTypes = {
     customerDetailData: PropTypes.array.isRequired,
-    isAdding: PropTypes.bool
+    loading: PropTypes.bool,
+    isDisabled: PropTypes.bool
 };
 
 CustomerDetail.defaultProps = {
     customerDetailData: [],
-    isAdding: false
+    loading: false,
+    isDisabled: false
 };
 
 export default CustomerDetail;

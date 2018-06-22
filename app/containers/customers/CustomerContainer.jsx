@@ -3,12 +3,9 @@ import PropTypes from "prop-types";
 import { Button } from "antd";
 import _ from "lodash";
 
-import { deleteCustomers } from "../../actions/customer/customerSearchActions";
-
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
 import AzActionGroups from "../../components/common/AzActionGroups";
-import AzDeleteModal from "../../components/common/AzDeleteModal";
 
 import CustomerSearch from "./CustomerSearch";
 import CustomerAdd from "./CustomerAdd";
@@ -24,9 +21,8 @@ class CustomerContainer extends React.Component {
         this.getLinkElement = this.getLinkElement.bind(this);
         this.afterAdded = this.afterAdded.bind(this);
         this.afterDelete = this.afterDelete.bind(this);
-        this.onEditClick = this.onEditClick.bind(this);
         this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
-        
+
         this.state = {
             selectedRows: [],
             detailSearchConditions: null,
@@ -74,14 +70,15 @@ class CustomerContainer extends React.Component {
         return (
             <a
                 href="javascript:void(0);"
-                onClick={() =>
+                onClick={() => {
+                    this.dialogTitle = "Edit Customer";
                     this.setState({
                         detailSearchConditions: {
                             id: displayContent
                         },
                         visibleDialog: true
-                    })
-                }
+                    });
+                }}
             >
                 {displayContent}
             </a>
@@ -106,10 +103,6 @@ class CustomerContainer extends React.Component {
             }
         });
         this.dialogTitle = "Add Customer";
-    }
-
-    onEditClick() {
-        console.log("=onEditClick=", this.state.selectedRows);
     }
 
     getSearchConditions(conditions) {
