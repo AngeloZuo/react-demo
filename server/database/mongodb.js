@@ -5,17 +5,11 @@ const _ = require("lodash");
 const url = config.dbUrl;
 
 const insertDocuments = (args, callback) => {
-    const { dbName, customerCollection, addData } = args;
+    const { dbName, customerCollection, dataList } = args;
     createConnection(dbName, (db, closeConnection) => {
         const collection = db.collection(customerCollection);
-        let tempArray = [];
-        if (_.isArray(addData)) {
-            tempArray = addData;
-        } else {
-            tempArray.push(addData);
-        }
-        collection.insertMany(tempArray, (err, result) => {
-            console.log(`Inserted ${tempArray.length} documents into the collection`);
+        collection.insertMany(dataList, (err, result) => {
+            console.log(`Inserted ${dataList.length} documents into the collection`);
             callback(result);
             closeConnection();
         });

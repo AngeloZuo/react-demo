@@ -1,4 +1,6 @@
 const fs = require("fs-extra");
+const moment = require('moment');
+const _ = require("lodash");
 
 const mongoDB = require("../database/mongodb");
 
@@ -25,6 +27,18 @@ function getCustomersDataFromFile() {
 }
 
 function addCustomer(args) {
+    let tempArray = [];
+    let addData = args.addData;
+
+    addData["createdDate"] = moment().format();
+    if (_.isArray(addData)) {
+        tempArray = addData;
+    } else {
+        tempArray.push(addData);
+    }
+
+    args["dataList"] = tempArray;
+
     try {
         return new Promise((resolve, reject) => {
             mongoDB.insertDocuments(args, (result) => {

@@ -19,9 +19,9 @@ function getCustomersByCondition(queryParams = {}) {
     });
 
     return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
-        _.forEach(data, (value, key) => {
-            _.unset(value, "_id");
-        });
+        // _.forEach(data, (value, key) => {
+        //     _.unset(value, "_id");
+        // });
         return data;
     });
 }

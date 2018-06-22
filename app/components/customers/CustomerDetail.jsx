@@ -9,9 +9,22 @@ const CustomerDetail = ({
     values,
     isDisabled,
     loading,
-    children
+    children,
+    tableConfig
 }) => {
     let elements = [];
+
+    function getLabel(originLabel) {
+        let formatLabel = "";
+        _.forEach(tableConfig, (value) => {
+            if (value.dataIndex === originLabel) {
+                formatLabel = value.title;
+            }
+        });
+
+        return formatLabel;
+    }
+
     _.forEach(values, (customerValue, customerKey) =>
         elements.push(
             <Field
@@ -25,7 +38,7 @@ const CustomerDetail = ({
                                 {...field}
                                 {...props}
                                 disabled={isDisabled}
-                                addonBefore={customerKey}
+                                addonBefore={getLabel(customerKey)}
                             />
                         </div>
                     );

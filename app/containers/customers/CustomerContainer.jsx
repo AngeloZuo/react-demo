@@ -33,12 +33,16 @@ class CustomerContainer extends React.Component {
 
         this.tableConfig = [
             {
-                title: "ID",
-                dataIndex: "id"
-            },
-            {
                 title: "Customer Name",
                 dataIndex: "customerName"
+            },
+            {
+                title: "Phone Number",
+                dataIndex: "phone"
+            },
+            {
+                title: "ID Card",
+                dataIndex: "idCard"
             },
             {
                 title: "Created Date",
@@ -95,13 +99,7 @@ class CustomerContainer extends React.Component {
     openAddCustomerDialog() {
         this.setState({
             visibleDialog: true,
-            customerDetailFlag: "ADD_CUSTOMER",
-            customerDetail: {
-                id: "",
-                customerName: "",
-                createdDate: "",
-                memberPoints: ""
-            }
+            customerDetailFlag: "ADD_CUSTOMER"
         });
         this.dialogTitle = "Add Customer";
     }
@@ -137,7 +135,6 @@ class CustomerContainer extends React.Component {
 
     render() {
         const {
-            customerDetail,
             selectedRows,
             visibleDialog,
             customerDetailFlag,
@@ -183,7 +180,6 @@ class CustomerContainer extends React.Component {
                             />
                         ) : (
                             <CustomerAdd
-                                initialCustomer={customerDetail}
                                 tableConfig={this.tableConfig}
                                 afterAdded={this.afterAdded}
                             />

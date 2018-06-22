@@ -9,7 +9,7 @@ const CustomerSearch = props => {
     const { conditions, onLinkClick, onChbClick, tableConfig } = props;
 
     _.forEach(tableConfig, (tableCell, tableCellKey) => {
-        if (tableCell.dataIndex === "id") {
+        if (tableCell.dataIndex === "customerName") {
             tableCell["render"] = displayContent => onLinkClick(displayContent);
         }
     });
