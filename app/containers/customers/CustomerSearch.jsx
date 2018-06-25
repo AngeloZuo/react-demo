@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import { Spin } from "antd";
 
 import CustomerList from "../../components/customers/CustomerList";
 import FetchCustomer from "./FetchCustomer";
@@ -8,18 +9,15 @@ import FetchCustomer from "./FetchCustomer";
 const CustomerSearch = props => {
     const { conditions, onLinkClick, onChbClick, tableConfig } = props;
 
-    _.forEach(tableConfig, (tableCell, tableCellKey) => {
+    _.forEach(tableConfig, (tableCell) => {
         if (tableCell.dataIndex === "customerName") {
-            tableCell["render"] = displayContent => onLinkClick(displayContent);
+            tableCell["render"] = (displayContent, record) => onLinkClick(displayContent, record);
         }
     });
 
     return (
         <FetchCustomer conditions={conditions}>
             {({ loading, customers, error }) => {
-                if (loading) {
-                    return <div>Loading</div>;
-                }
                 if (error) {
                     return <div>Error</div>;
                 }
@@ -29,6 +27,8 @@ const CustomerSearch = props => {
                         lists={customers.searchList}
                         tableConfig={tableConfig}
                         checkboxSelection={onChbClick}
+                        loading={loading}
+                        pagination={true}
                     />
                 );
             }}

@@ -1,29 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Field } from "formik";
-import { Input, Spin } from "antd";
+import { Input, Spin, Alert } from "antd";
 
 import _ from "lodash";
 
-const CustomerDetail = ({
-    values,
-    isDisabled,
-    loading,
-    children,
-    tableConfig
-}) => {
+const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig, errors }) => {
     let elements = [];
 
     function getLabel(originLabel) {
         let formatLabel = "";
-        _.forEach(tableConfig, (value) => {
-            if (value.dataIndex === originLabel) {
-                formatLabel = value.title;
+        _.forEach(tableConfig, configValue => {
+            if (configValue.dataIndex === originLabel) {
+                formatLabel = configValue.title;
             }
         });
 
         return formatLabel;
     }
+
+    console.log("=errors=", errors);
 
     _.forEach(values, (customerValue, customerKey) =>
         elements.push(
@@ -40,6 +36,9 @@ const CustomerDetail = ({
                                 disabled={isDisabled}
                                 addonBefore={getLabel(customerKey)}
                             />
+                            {typeof errors[customerKey] === "string" ? (
+                                <Alert message={errors[customerKey]} type="error" showIcon />
+                            ) : null}
                         </div>
                     );
                 }}
@@ -58,13 +57,11 @@ const CustomerDetail = ({
 };
 
 CustomerDetail.propTypes = {
-    customerDetailData: PropTypes.array.isRequired,
     loading: PropTypes.bool,
     isDisabled: PropTypes.bool
 };
 
 CustomerDetail.defaultProps = {
-    customerDetailData: [],
     loading: false,
     isDisabled: false
 };

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
 import _ from "lodash";
+import * as yup from "yup";
 
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
@@ -28,7 +29,13 @@ class CustomerContainer extends React.Component {
             selectedRows: [],
             detailSearchConditions: null,
             visibleDialog: false,
-            searchConditions: null
+            searchConditions: null,
+            customerDetailConfig: {
+                customerName: "",
+                phone: "",
+                idCard: "",
+                memberPoints: ""
+            }
         };
 
         this.tableConfig = [
@@ -54,7 +61,6 @@ class CustomerContainer extends React.Component {
             }
         ];
 
-        this.isSearched = false;
         this.dialogTitle = "";
 
         this.checkboxSelection = {
@@ -68,9 +74,19 @@ class CustomerContainer extends React.Component {
                 });
             }
         };
+
+        this.customerInfoSchema = yup.object().shape({
+            customerName: yup.string().required("Customer Name is Required"),
+            phone: yup.number().required("Phone number is Required"),
+            idCard: yup.string().required("ID Card is Required"),
+            memberPoints: yup
+                .number()
+                .positive("Member Points Should be A Postive Number")
+                .required("Member Points is Required")
+        });
     }
 
-    getLinkElement(displayContent) {
+    getLinkElement(displayContent, record) {
         return (
             <a
                 href="javascript:void(0);"
@@ -79,7 +95,7 @@ class CustomerContainer extends React.Component {
                     this.setState({
                         customerDetailFlag: "",
                         detailSearchConditions: {
-                            id: displayContent
+                            id: record.id
                         },
                         visibleDialog: true
                     });
@@ -140,17 +156,15 @@ class CustomerContainer extends React.Component {
             customerDetailFlag,
             detailSearchConditions,
             confirmLoading,
-            searchConditions
+            searchConditions,
+            customerDetailConfig
         } = this.state;
         return (
             <div className="customerSearchPanel">
                 <CustomerSearchConditions getSearchConditions={this.getSearchConditions} />
                 <Button type="primary" icon="plus" onClick={this.openAddCustomerDialog} />
                 {selectedRows.length !== 0 && (
-                    <AzActionGroups
-                        {...{ hasEditBtn: true, hasDeleteBtn: true }}
-                        onEditClick={this.onEditClick}
-                    >
+                    <AzActionGroups>
                         <CustomerDelete deleteInfo={selectedRows} afterDelete={this.afterDelete} />
                     </AzActionGroups>
                 )}
@@ -176,12 +190,16 @@ class CustomerContainer extends React.Component {
                             <CustomerEdit
                                 conditions={detailSearchConditions}
                                 tableConfig={this.tableConfig}
+                                customerDetailConfig={customerDetailConfig}
                                 afterUpdated={this.afterUpdated}
+                                validationSchema={this.customerInfoSchema}
                             />
                         ) : (
                             <CustomerAdd
+                                customerDetailConfig={customerDetailConfig}
                                 tableConfig={this.tableConfig}
                                 afterAdded={this.afterAdded}
+                                validationSchema={this.customerInfoSchema}
                             />
                         )}
                     </AzDialog>

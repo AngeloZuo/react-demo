@@ -3,6 +3,7 @@ const moment = require('moment');
 const _ = require("lodash");
 
 const mongoDB = require("../database/mongodb");
+const utils = require("../util");
 
 function getCustomersDataFromDB(args) {
     try {
@@ -31,6 +32,7 @@ function addCustomer(args) {
     let addData = args.addData;
 
     addData["createdDate"] = moment().format();
+    addData["id"] = utils.getUuid();
     if (_.isArray(addData)) {
         tempArray = addData;
     } else {
