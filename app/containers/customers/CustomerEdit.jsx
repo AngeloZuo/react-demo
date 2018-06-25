@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Button } from "antd";
+import _ from "lodash";
 
 import FetchCustomer from "./FetchCustomer";
 import CustomerDetail from "../../components/customers/CustomerDetail";
@@ -10,22 +11,33 @@ import { update } from "../../actions/customer/customerSearchActions";
 class CustomerEdit extends React.Component {
     state = {
         isEditing: false,
-        disabled: true
+        disabled: true,
     };
 
-    updateCustomer = customerInfo => {
+    originCustomerData = null;
+
+    updateCustomer = (customerInfo) => {
         this.setState({
             isEditing: true,
             disabled: true
         });
         
-        update(customerInfo).then(() => {
+        let modifiedCustomer = {
+            id: this.originCustomerData.id
+        };
+
+        _.forEach(customerInfo, (value, key) => {
+            if (customerInfo[key] !== this.originCustomerData[key]) {
+                modifiedCustomer[key] = value;
+            }
+        });
+
+        update(modifiedCustomer).then(() => {
             this.setState({
                 isEditing: false
             });
             this.props.afterUpdated();
         });
-        
     };
 
     readyToUpdate = () => {
@@ -35,7 +47,7 @@ class CustomerEdit extends React.Component {
     };
 
     render() {
-        const { conditions, tableConfig } = this.props;
+        const { conditions, tableConfig, customerDetailConfig } = this.props;
         const { isEditing, disabled } = this.state;
         return (
             <FetchCustomer conditions={conditions}>
@@ -47,11 +59,15 @@ class CustomerEdit extends React.Component {
                         return <div>Error</div>;
                     }
 
+                    this.originCustomerData = customers.searchList[0];
+                    let detailValues = Object.assign({}, customers.searchList[0]);
+                    let tempObj = {};
+                    _.forEach(customerDetailConfig, (configValue, key) => {
+                        tempObj[key] = detailValues[key];
+                    });
+
                     return (
-                        <Formik
-                            initialValues={customers.searchList[0]}
-                            onSubmit={this.updateCustomer}
-                        >
+                        <Formik initialValues={tempObj} onSubmit={this.updateCustomer}>
                             {formikProps => (
                                 <CustomerDetail
                                     {...formikProps}
@@ -86,11 +102,20 @@ class CustomerEdit extends React.Component {
 }
 
 CustomerEdit.propTypes = {
-    conditions: PropTypes.object.isRequired
+    conditions: PropTypes.object.isRequired,
+    customerDetailConfig: PropTypes.object.isRequired,
+    tableConfig: PropTypes.array.isRequired
 };
 
 CustomerEdit.defaultProps = {
-    conditions: {}
+    conditions: {},
+    customerDetailConfig: {
+        id: "",
+        customerName: "",
+        createdDate: "",
+        memberPoints: ""
+    },
+    tableConfig: []
 };
 
 export default CustomerEdit;

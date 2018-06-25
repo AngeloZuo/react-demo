@@ -8,9 +8,9 @@ import FetchCustomer from "./FetchCustomer";
 const CustomerSearch = props => {
     const { conditions, onLinkClick, onChbClick, tableConfig } = props;
 
-    _.forEach(tableConfig, (tableCell, tableCellKey) => {
+    _.forEach(tableConfig, (tableCell) => {
         if (tableCell.dataIndex === "customerName") {
-            tableCell["render"] = displayContent => onLinkClick(displayContent);
+            tableCell["render"] = (displayContent, record) => onLinkClick(displayContent, record);
         }
     });
 

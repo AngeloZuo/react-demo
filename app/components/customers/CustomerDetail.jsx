@@ -5,20 +5,14 @@ import { Input, Spin } from "antd";
 
 import _ from "lodash";
 
-const CustomerDetail = ({
-    values,
-    isDisabled,
-    loading,
-    children,
-    tableConfig
-}) => {
+const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig }) => {
     let elements = [];
 
     function getLabel(originLabel) {
         let formatLabel = "";
-        _.forEach(tableConfig, (value) => {
-            if (value.dataIndex === originLabel) {
-                formatLabel = value.title;
+        _.forEach(tableConfig, configValue => {
+            if (configValue.dataIndex === originLabel) {
+                formatLabel = configValue.title;
             }
         });
 
@@ -58,13 +52,11 @@ const CustomerDetail = ({
 };
 
 CustomerDetail.propTypes = {
-    customerDetailData: PropTypes.array.isRequired,
     loading: PropTypes.bool,
     isDisabled: PropTypes.bool
 };
 
 CustomerDetail.defaultProps = {
-    customerDetailData: [],
     loading: false,
     isDisabled: false
 };

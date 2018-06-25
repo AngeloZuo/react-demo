@@ -8,13 +8,7 @@ import { addNewCustomer } from "../../actions/customer/customerSearchActions";
 
 class CustomerAdd extends React.Component {
     state = {
-        loading: false,
-        defaultCustomer: {
-            customerName: "",
-            phone: "",
-            idCard: "",
-            memberPoints: ""
-        }
+        loading: false
     };
 
     addCustomer = customerInfo => {
@@ -30,10 +24,10 @@ class CustomerAdd extends React.Component {
     };
 
     render() {
-        const { tableConfig } = this.props;
-        const { loading, defaultCustomer } = this.state;
+        const { tableConfig, customerDetailConfig } = this.props;
+        const { loading } = this.state;
         return (
-            <Formik initialValues={defaultCustomer} onSubmit={this.addCustomer}>
+            <Formik initialValues={customerDetailConfig} onSubmit={this.addCustomer}>
                 {formikProps => (
                     <CustomerDetail
                         {...formikProps}
@@ -57,13 +51,13 @@ class CustomerAdd extends React.Component {
 }
 
 CustomerAdd.propTypes = {
-    initialCustomer: PropTypes.object.isRequired,
+    customerDetailConfig: PropTypes.object.isRequired,
     afterAdded: PropTypes.func.isRequired,
     tableConfig: PropTypes.array.isRequired
 };
 
 CustomerAdd.defaultProps = {
-    initialCustomer: {
+    customerDetailConfig: {
         id: "",
         customerName: "",
         createdDate: "",

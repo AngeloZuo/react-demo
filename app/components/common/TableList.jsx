@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Table } from "antd";
 
 const TableList = props => {
-    const { tableConfig, lists, checkboxSelection } = props;
+    const { tableConfig, lists, checkboxSelection, rowKey } = props;
     return (
         <Table
             className="tableList"
-            rowKey="id"
+            rowKey={rowKey}
             rowSelection={checkboxSelection}
             columns={tableConfig}
             dataSource={lists}
@@ -16,7 +16,17 @@ const TableList = props => {
 };
 
 TableList.propTypes = {
-    tableConfig: PropTypes.array.isRequired
+    tableConfig: PropTypes.array.isRequired,
+    lists: PropTypes.array.isRequired,
+    checkboxSelection: PropTypes.object.isRequired,
+    rowKey: PropTypes.string
+};
+
+TableList.defaultProps = {
+    tableConfig: [],
+    lists: [],
+    checkboxSelection: {},
+    rowKey: "id"
 };
 
 export default TableList;
