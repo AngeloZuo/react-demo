@@ -24,10 +24,14 @@ class CustomerAdd extends React.Component {
     };
 
     render() {
-        const { tableConfig, customerDetailConfig } = this.props;
+        const { tableConfig, customerDetailConfig, validationSchema } = this.props;
         const { loading } = this.state;
         return (
-            <Formik initialValues={customerDetailConfig} onSubmit={this.addCustomer}>
+            <Formik
+                validationSchema={validationSchema}
+                initialValues={customerDetailConfig}
+                onSubmit={this.addCustomer}
+            >
                 {formikProps => (
                     <CustomerDetail
                         {...formikProps}
@@ -58,9 +62,9 @@ CustomerAdd.propTypes = {
 
 CustomerAdd.defaultProps = {
     customerDetailConfig: {
-        id: "",
         customerName: "",
-        createdDate: "",
+        phone: "",
+        idCard: "",
         memberPoints: ""
     },
     afterAdded: () => {},

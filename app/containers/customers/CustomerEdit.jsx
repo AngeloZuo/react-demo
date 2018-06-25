@@ -11,17 +11,17 @@ import { update } from "../../actions/customer/customerSearchActions";
 class CustomerEdit extends React.Component {
     state = {
         isEditing: false,
-        disabled: true,
+        disabled: true
     };
 
     originCustomerData = null;
 
-    updateCustomer = (customerInfo) => {
+    updateCustomer = customerInfo => {
         this.setState({
             isEditing: true,
             disabled: true
         });
-        
+
         let modifiedCustomer = {
             id: this.originCustomerData.id
         };
@@ -47,7 +47,7 @@ class CustomerEdit extends React.Component {
     };
 
     render() {
-        const { conditions, tableConfig, customerDetailConfig } = this.props;
+        const { conditions, tableConfig, customerDetailConfig, validationSchema } = this.props;
         const { isEditing, disabled } = this.state;
         return (
             <FetchCustomer conditions={conditions}>
@@ -67,7 +67,11 @@ class CustomerEdit extends React.Component {
                     });
 
                     return (
-                        <Formik initialValues={tempObj} onSubmit={this.updateCustomer}>
+                        <Formik
+                            validationSchema={validationSchema}
+                            initialValues={tempObj}
+                            onSubmit={this.updateCustomer}
+                        >
                             {formikProps => (
                                 <CustomerDetail
                                     {...formikProps}
@@ -110,9 +114,9 @@ CustomerEdit.propTypes = {
 CustomerEdit.defaultProps = {
     conditions: {},
     customerDetailConfig: {
-        id: "",
         customerName: "",
-        createdDate: "",
+        phone: "",
+        idCard: "",
         memberPoints: ""
     },
     tableConfig: []

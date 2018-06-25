@@ -13,21 +13,21 @@ According to use React and eco-system techniques in this project to know well th
 * Development Server: [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 * Nodejs Server: [Koa](https://koajs.com/)
 * Database: [MongoDB](https://docs.mongodb.com/)
+* Form and Validation: [Formik](), [Yup]()
 
 ### Current Status
 
-I have finished the first step. Setup the environment and make project run. Add some basic components of React and Redux.
-Add "Create", "Retrive", "Delete" functions, only "Update" function doesn't work.
+I have finished CRUD functions and added validations.
 
 #### *Customer Search*
 
 Currently Customer Search only contains one button for searching, one search result list.
 
 ### Next Step
-* Add "Update" function.
+* Add Auth.
 * Add Unit tests for React and Koa.
 * Fix defects.
+* Add Style.
 
 
 ### Refactor all the time
-* Refactor without Redux when searching data.

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
 import _ from "lodash";
+import * as yup from "yup";
 
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import AzDialog from "../../components/common/AzDialog";
@@ -73,6 +74,16 @@ class CustomerContainer extends React.Component {
                 });
             }
         };
+
+        this.customerInfoSchema = yup.object().shape({
+            customerName: yup.string().required("Customer Name is Required"),
+            phone: yup.number().required("Phone number is Required"),
+            idCard: yup.string().required("ID Card is Required"),
+            memberPoints: yup
+                .number()
+                .positive("Member Points Should be A Postive Number")
+                .required("Member Points is Required")
+        });
     }
 
     getLinkElement(displayContent, record) {
@@ -181,12 +192,14 @@ class CustomerContainer extends React.Component {
                                 tableConfig={this.tableConfig}
                                 customerDetailConfig={customerDetailConfig}
                                 afterUpdated={this.afterUpdated}
+                                validationSchema={this.customerInfoSchema}
                             />
                         ) : (
                             <CustomerAdd
                                 customerDetailConfig={customerDetailConfig}
                                 tableConfig={this.tableConfig}
                                 afterAdded={this.afterAdded}
+                                validationSchema={this.customerInfoSchema}
                             />
                         )}
                     </AzDialog>

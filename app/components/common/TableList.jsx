@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Table } from "antd";
 
 const TableList = props => {
-    const { tableConfig, lists, checkboxSelection, rowKey } = props;
+    const { tableConfig, lists, checkboxSelection, rowKey, loading, pagination } = props;
     return (
         <Table
             className="tableList"
@@ -11,6 +11,8 @@ const TableList = props => {
             rowSelection={checkboxSelection}
             columns={tableConfig}
             dataSource={lists}
+            loading={loading}
+            pagination={pagination}
         />
     );
 };
