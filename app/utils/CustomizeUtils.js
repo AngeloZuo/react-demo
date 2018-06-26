@@ -1,3 +1,4 @@
+import { setLocale } from "yup/lib/customLocale";
 export default class CustomizeUtils {
     static getLinkConfigObj(object) {
         return {
@@ -17,7 +18,7 @@ export default class CustomizeUtils {
         }
     }
 
-    static getUuid(object) {
+    static getUuid() {
         const chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
         for (let i = 0, len = chars.length; i < len; i += 1) {
             switch (chars[i]) {
@@ -30,5 +31,20 @@ export default class CustomizeUtils {
             }
         }
         return chars.join("");
+    }
+
+    static setYupLocale() {
+        setLocale({
+            mixed: {
+                notType: ({ path, type, originalValue }) => {
+                    switch (type) {
+                        case "number":
+                            return `You typed ${originalValue}, ${path} should be a Number.`;
+                        default:
+                            return "Invalid format!";
+                    }
+                }
+            }
+        });
     }
 }

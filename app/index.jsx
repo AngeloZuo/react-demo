@@ -1,40 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Layout, Icon } from "antd";
 
+import CustomizeUtils from "./utils/CustomizeUtils";
 import store from "./store";
-import Main from './components/Main';
-import AzHeader from './components/header/AzHeader';
-import AzFooter from './components/footer/AzFooter';
+import Main from "./components/Main";
+import AzHeader from "./components/header/AzHeader";
+import AzFooter from "./components/footer/AzFooter";
 
-import './index.scss';
+import "./index.scss";
+
+// Override Yup function for displaying meaningful error message
+CustomizeUtils.setYupLocale();
 
 const { Content } = Layout;
 const headerConfig = {
     defaultTab: 0,
-    tabsList: [{
-        labelPath: {
-            pathname: '/'
+    tabsList: [
+        {
+            labelPath: {
+                pathname: "/"
+            },
+            labelContent: (
+                <Icon type="home" style={{ fontSize: 16, color: "#fff", marginRight: 0 }} />
+            ),
+            labelValue: "Home"
         },
-        labelContent: <Icon type="home" style={{ fontSize: 16, color: '#fff', marginRight: 0 }} />,
-        labelValue: "Home"
-    },
-    {
-        labelPath: {
-            pathname: '/customerSearch'
+        {
+            labelPath: {
+                pathname: "/customerSearch"
+            },
+            labelContent: "Customer Search",
+            labelValue: "Customer Search"
         },
-        labelContent: "Customer Search",
-        labelValue: "Customer Search"
-    },
-    {
-        labelPath: {
-            pathname: '/memberPoints'
-        },
-        labelContent: 'Member Points',
-        labelValue: 'Member Points'
-    }]
+        {
+            labelPath: {
+                pathname: "/memberPoints"
+            },
+            labelContent: "Member Points",
+            labelValue: "Member Points"
+        }
+    ]
 };
 
 ReactDOM.render(
