@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import _ from "lodash";
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
-import CustomizeUtils from "../../utils/CustomizeUtils";
 import formatTableCellUtil from "../../utils/tableCellUtil";
 
 const TableListCell = (props) => {
     let { tableCellClass, tableCellList } = props;
     return (
         tableCellList.map((tableCellValue, tableCellIndex) => {
-            let tableRowUuid = CustomizeUtils.getUuid();
             return (() => (
                 <TableRow key={`${tableCellClass}_row_${tableRowUuid}`}>
                     {
