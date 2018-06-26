@@ -52,12 +52,12 @@ class CustomerContainer extends React.Component {
                 dataIndex: "idCard"
             },
             {
-                title: "Created Date",
-                dataIndex: "createdDate"
-            },
-            {
                 title: "Member Points",
                 dataIndex: "memberPoints"
+            },
+            {
+                title: "Created Date",
+                dataIndex: "createdDate"
             }
         ];
 
