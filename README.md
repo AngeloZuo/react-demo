@@ -8,12 +8,12 @@ According to use React and eco-system techniques in this project to know well th
 
 ### Techniques
 
-* Front-end: [React](https://reactjs.org/), [react-router](https://reacttraining.com/react-router/web/guides/philosophy), [Redux](http://www.redux.org.cn/)... (More techniques please check [package.json](https://github.com/AngeloZuo/react-demo/blob/master/package.json))
+* Front-end libraries: [React](https://reactjs.org/), [react-router](https://reacttraining.com/react-router/web/guides/philosophy), [Redux](http://www.redux.org.cn/)... (More techniques please check [package.json](https://github.com/AngeloZuo/react-demo/blob/master/package.json))
 * UI Framework: [Ant Design](https://ant.design/)
 * Development Server: [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 * Nodejs Server: [Koa](https://koajs.com/)
 * Database: [MongoDB](https://docs.mongodb.com/)
-* Form and Validation: [Formik](), [Yup]()
+* Form and Validation: [Formik](https://github.com/jaredpalmer/formik), [Yup](https://github.com/jquense/yup)
 
 ### Current Status
 

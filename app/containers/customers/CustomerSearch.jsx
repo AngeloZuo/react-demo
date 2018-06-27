@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { Spin } from "antd";
 
 import CustomerList from "../../components/customers/CustomerList";
 import FetchCustomer from "./FetchCustomer";

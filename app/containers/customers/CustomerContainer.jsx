@@ -52,12 +52,12 @@ class CustomerContainer extends React.Component {
                 dataIndex: "idCard"
             },
             {
-                title: "Created Date",
-                dataIndex: "createdDate"
-            },
-            {
                 title: "Member Points",
                 dataIndex: "memberPoints"
+            },
+            {
+                title: "Created Date",
+                dataIndex: "createdDate"
             }
         ];
 
@@ -81,7 +81,7 @@ class CustomerContainer extends React.Component {
             idCard: yup.string().required("ID Card is Required"),
             memberPoints: yup
                 .number()
-                .positive("Member Points Should be A Postive Number")
+                .positive("Member Points Should be a Postive Number")
                 .required("Member Points is Required")
         });
     }

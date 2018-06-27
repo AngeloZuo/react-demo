@@ -1,0 +1,16 @@
+.authPage_container {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    color: white;
+    padding: 0 10px;
+    &:hover {
+        background: #1890ff;
+    }
+    .authPage_userIcon {
+        margin-right: 10px
+    }
+    .authPage_iconContent {
+        margin: 0;
+    }
+}

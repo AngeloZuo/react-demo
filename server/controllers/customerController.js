@@ -18,7 +18,7 @@ function getCustomersByCondition(queryParams = {}) {
         }
     });
 
-    return customerService.getCustomersDataFromDB({ dbName, customerCollection, queryParams }).then((data) => {
+    return customerService.getCustomersDataFromDB({ dbName, collectionName: customerCollection, queryParams }).then((data) => {
         // _.forEach(data, (value, key) => {
         //     _.unset(value, "_id");
         // });
@@ -27,19 +27,19 @@ function getCustomersByCondition(queryParams = {}) {
 }
 
 function addCustomer (addData = {}) {
-    return customerService.addCustomer({ dbName, customerCollection, addData }).then((data) => {
+    return customerService.addCustomer({ dbName, collectionName: customerCollection, addData }).then((data) => {
         return data;
     });
 }
 
 function deleteCustomers(customerList) { 
-    return customerService.deleteCustomers({ dbName, customerCollection, customerList }).then((data) => {
+    return customerService.deleteCustomers({ dbName, collectionName: customerCollection, customerList }).then((data) => {
         return data;
     });
 }
 
 function updateCustomer(customerInfo) { 
-    return customerService.updateCustomer({ dbName, customerCollection, customerInfo }).then((data) => {
+    return customerService.updateCustomer({ dbName, collectionName: customerCollection, customerInfo }).then((data) => {
         return data;
     });
 }

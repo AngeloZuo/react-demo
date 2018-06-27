@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 
-import CustomizeUtils from "../../utils/CustomizeUtils";
-
 const AzMenu = (props) => {
     const { defaultTab, onChange, tabsList } = props;
 

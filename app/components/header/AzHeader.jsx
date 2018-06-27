@@ -1,9 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Layout } from "antd";
 
 import AzMenu from "../common/AzMenu";
+import AuthPage from "../auth/AuthPage";
 
 const { Header } = Layout;
 
@@ -28,6 +28,7 @@ export default class AzHeader extends React.Component {
                     onChange={this.handleChange}
                     tabsList={this.props.headerConfig.tabsList}
                 />
+                <AuthPage />
             </Header>
         );
     }
