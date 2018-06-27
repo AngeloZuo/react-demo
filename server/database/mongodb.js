@@ -5,9 +5,9 @@ const _ = require("lodash");
 const url = config.dbUrl;
 
 const insertDocuments = (args, callback) => {
-    const { dbName, customerCollection, dataList } = args;
+    const { dbName, collectionName, dataList } = args;
     createConnection(dbName, (db, closeConnection) => {
-        const collection = db.collection(customerCollection);
+        const collection = db.collection(collectionName);
         collection.insertMany(dataList, (err, result) => {
             console.log(`Inserted ${dataList.length} documents into the collection`);
             callback(result);
@@ -17,10 +17,10 @@ const insertDocuments = (args, callback) => {
 };
 
 const findDocuments = (args, callback) => {
-    const { dbName, customerCollection, queryParams } = args;
+    const { dbName, collectionName, queryParams } = args;
     createConnection(dbName, (db, closeConnection) => {
         // Get the documents collection
-        const collection = db.collection(customerCollection);
+        const collection = db.collection(collectionName);
         // Find some documents
         collection.find(queryParams).toArray((err, docs) => {
             callback(docs);
@@ -29,22 +29,11 @@ const findDocuments = (args, callback) => {
     });
 };
 
-const findDocumentsByCondition = (db, callback) => {
-    // Get the documents collection
-    const collection = db.collection("documents");
-    // Find some documents
-    collection.find({ a: 3 }).toArray((err, docs) => {
-        console.log("Found the following records");
-        console.log(docs);
-        callback(docs);
-    });
-};
-
 const updateDocument = (args, callback) => {
-    const { dbName, customerCollection, customerInfo } = args;
+    const { dbName, collectionName, customerInfo } = args;
     createConnection(dbName, (db, closeConnection) => {
         // Get the documents collection
-        const collection = db.collection(customerCollection);
+        const collection = db.collection(collectionName);
         collection.updateOne({ id: customerInfo.id }, { $set: customerInfo }, (err, result) => {
             console.log(`Updated ${customerInfo.id} info into the collection`);
             callback(result);
@@ -54,10 +43,10 @@ const updateDocument = (args, callback) => {
 };
 
 const removeDocument = (args, callback) => {
-    const { dbName, customerCollection, customerList } = args;
+    const { dbName, collectionName, customerList } = args;
     createConnection(dbName, (db, closeConnection) => {
         // Get the documents collection
-        const collection = db.collection(customerCollection);
+        const collection = db.collection(collectionName);
         // Find some documents
         let customerListLength = customerList.length;
         _.forEach(customerList, element => {
@@ -69,13 +58,6 @@ const removeDocument = (args, callback) => {
                 }
             });
         });
-    });
-};
-
-const indexCollection = (db, callback) => {
-    db.collection("documents").createIndex({ a: 1 }, null, (err, results) => {
-        console.log(results);
-        callback();
     });
 };
 
