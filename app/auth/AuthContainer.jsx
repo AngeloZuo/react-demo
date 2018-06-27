@@ -14,7 +14,6 @@ class AuthContainer extends React.Component {
             confirming: true
         });
         authRequest(userInfo).then(result => {
-            console.log("=result=", result.isAuth);
             if (result.isAuth) {
                 this.setState({
                     isAuthenticated: true,
@@ -24,7 +23,6 @@ class AuthContainer extends React.Component {
                 this.props.afterLogin(userInfo.name);
             } else {
                 this.setState({
-                    isAuthenticated: false,
                     confirming: false,
                     errorMsg: "Login failed, please check your user name and password!"
                 });
@@ -33,7 +31,9 @@ class AuthContainer extends React.Component {
     };
 
     logout = () => {
-        console.log("Logout");
+        this.setState({
+            isAuthenticated: false
+        });
     };
 
     render() {

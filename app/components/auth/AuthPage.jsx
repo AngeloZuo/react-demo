@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "antd";
+import { Icon, Popconfirm } from "antd";
 
 import AzDialog from "../common/AzDialog";
 import AuthContainer from "../../auth/AuthContainer";
@@ -31,11 +31,23 @@ class AuthPage extends React.Component {
                 {({ login, logout, isAuthenticated, errorMsg, confirming }) => {
                     return (
                         <div className="authPage_container">
-                            <div onClick={this.changeDialogStatus}>
+                            <div>
                                 <Icon className="authPage_userIcon" type="user" />
-                                <label className="authPage_iconContent">
-                                    {isAuthenticated ? userName : "Log in"}
-                                </label>
+                                <span className="authPage_iconContent">
+                                    {isAuthenticated ? (
+                                        <Popconfirm
+                                            title="Do you want to log out?"
+                                            onConfirm={logout}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            placement="bottom"
+                                        >
+                                            <span>{userName}</span>
+                                        </Popconfirm>
+                                    ) : (
+                                        <span onClick={this.changeDialogStatus}>Log in</span>
+                                    )}
+                                </span>
                             </div>
 
                             <AzDialog
