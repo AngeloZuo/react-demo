@@ -1,9 +1,9 @@
 const mongoDB = require("../database/mongodb");
 
-function authUser(args) {
+const authUser = args => {
     try {
         return new Promise((resolve, reject) => {
-            mongoDB.findDocuments(args, (docs) => {
+            mongoDB.findDocuments(args, docs => {
                 if (docs.length === 0) {
                     resolve({
                         isAuth: false
@@ -13,12 +13,12 @@ function authUser(args) {
                         isAuth: true
                     });
                 }
-            })
+            });
         });
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 module.exports = {
     authUser

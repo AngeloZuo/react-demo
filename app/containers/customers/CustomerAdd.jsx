@@ -11,16 +11,15 @@ class CustomerAdd extends React.Component {
         loading: false
     };
 
-    addCustomer = customerInfo => {
+    addCustomer = async customerInfo => {
         this.setState({
             loading: true
         });
-        addNewCustomer(customerInfo).then(() => {
-            this.setState({
-                loading: false
-            });
-            this.props.afterAdded();
+        await addNewCustomer(customerInfo);
+        this.setState({
+            loading: false
         });
+        this.props.afterAdded();
     };
 
     render() {

@@ -30,7 +30,7 @@ class AuthPage extends React.Component {
             <AuthContainer afterLogin={this.afterLogin}>
                 {({ login, logout, isAuthenticated, errorMsg, confirming }) => {
                     return (
-                        <div className="authPage_container">
+                        <div className={isAuthenticated ? "authPage_container authPage_logged" : "authPage_container"}>
                             <div>
                                 <Icon className="authPage_userIcon" type="user" />
                                 <span className="authPage_iconContent">

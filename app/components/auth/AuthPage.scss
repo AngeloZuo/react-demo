@@ -4,13 +4,14 @@
     top: 0;
     color: white;
     padding: 0 10px;
-    &:hover {
+    &:hover, &.authPage_logged {
         background: #1890ff;
     }
     .authPage_userIcon {
         margin-right: 10px
     }
     .authPage_iconContent {
+        display: inline-block;
         margin: 0;
     }
 }

@@ -2,9 +2,13 @@
     "presets": [
         "env",
         "react",
+        "es2015",
         "stage-0"
     ],
     "plugins": [
-        ["import", { "libraryName": "antd"}]
-      ]
+        ["import", {
+            "libraryName": "antd"
+        }],
+        "transform-runtime"
+    ]
 }

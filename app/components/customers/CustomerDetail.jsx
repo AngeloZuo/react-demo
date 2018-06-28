@@ -19,8 +19,6 @@ const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig, er
         return formatLabel;
     }
 
-    console.log("=errors=", errors);
-
     _.forEach(values, (customerValue, customerKey) =>
         elements.push(
             <Field

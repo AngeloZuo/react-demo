@@ -4,45 +4,49 @@ const config = require("../config/config");
 
 const { dbName, customerCollection } = config;
 
-function getCustomers() {
+const getCustomers = () => {
     return customerService.getCustomersDataFromFile();
-    // return customerService.getCustomersDataFromDB();
-}
+};
 
-function getCustomersByCondition(queryParams = {}) {
+const getCustomersByCondition = async (queryParams = {}) => {
     _.forEach(queryParams, (value, key) => {
-        if (value !== '') {
+        if (value !== "") {
             queryParams[key] = value;
         } else {
             _.unset(queryParams, key);
         }
     });
 
-    return customerService.getCustomersDataFromDB({ dbName, collectionName: customerCollection, queryParams }).then((data) => {
-        // _.forEach(data, (value, key) => {
-        //     _.unset(value, "_id");
-        // });
-        return data;
+    return await customerService.getCustomersDataFromDB({
+        dbName,
+        collectionName: customerCollection,
+        queryParams
     });
-}
+};
 
-function addCustomer (addData = {}) {
-    return customerService.addCustomer({ dbName, collectionName: customerCollection, addData }).then((data) => {
-        return data;
+const addCustomer = async (addData = {}) => {
+    return await customerService.addCustomer({
+        dbName,
+        collectionName: customerCollection,
+        addData
     });
-}
+};
 
-function deleteCustomers(customerList) { 
-    return customerService.deleteCustomers({ dbName, collectionName: customerCollection, customerList }).then((data) => {
-        return data;
+const deleteCustomers = async customerList => {
+    return await customerService.deleteCustomers({
+        dbName,
+        collectionName: customerCollection,
+        customerList
     });
-}
+};
 
-function updateCustomer(customerInfo) { 
-    return customerService.updateCustomer({ dbName, collectionName: customerCollection, customerInfo }).then((data) => {
-        return data;
+const updateCustomer = async customerInfo => {
+    return await customerService.updateCustomer({
+        dbName,
+        collectionName: customerCollection,
+        customerInfo
     });
-}
+};
 
 module.exports = {
     getCustomers,
@@ -50,4 +54,4 @@ module.exports = {
     addCustomer,
     deleteCustomers,
     updateCustomer
-}
+};

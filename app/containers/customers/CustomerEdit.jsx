@@ -16,7 +16,7 @@ class CustomerEdit extends React.Component {
 
     originCustomerData = null;
 
-    updateCustomer = customerInfo => {
+    updateCustomer = async customerInfo => {
         this.setState({
             isEditing: true,
             disabled: true
@@ -32,12 +32,11 @@ class CustomerEdit extends React.Component {
             }
         });
 
-        update(modifiedCustomer).then(() => {
-            this.setState({
-                isEditing: false
-            });
-            this.props.afterUpdated();
+        await update(modifiedCustomer);
+        this.setState({
+            isEditing: false
         });
+        this.props.afterUpdated();
     };
 
     readyToUpdate = () => {
