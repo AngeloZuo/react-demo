@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { Button, Input, Icon, Spin, Alert } from "antd";
 import PropTypes from "prop-types";
 
-const createInputElem = (prefix, eventhandler, { field, ...formProps }) => {
+const createInputElem = (prefix, { field, placeholder, type }) => {
     return (
         <div
             style={{
@@ -13,80 +13,81 @@ const createInputElem = (prefix, eventhandler, { field, ...formProps }) => {
                 width: "100%"
             }}
         >
-            <Input {...field} {...formProps} prefix={prefix} onChange={eventhandler} />
+            <Input {...field} type={type} placeholder={placeholder} prefix={prefix} />
         </div>
     );
 };
 
 class AuthSection extends React.Component {
     render() {
-        const { onLogin, onLogout, confirming, errorMsg } = this.props;
+        const { onLogin, confirming, errorMsg } = this.props;
         return (
             <Spin spinning={confirming}>
                 <Formik
                     initialValues={{ name: "", password: "" }}
                     onSubmit={onLogin}
-                    render={({ handleChange, handleSubmit }) => (
-                        <Form noValidate className="">
-                            <div>
-                                {typeof errorMsg === "string" ? (
-                                    <Alert
-                                        style={{ marginBottom: "10px" }}
-                                        message={errorMsg}
-                                        type="error"
-                                        showIcon
+                    render={({ handleSubmit }) => {
+                        return (
+                            <Form noValidate className="">
+                                <div>
+                                    {typeof errorMsg === "string" ? (
+                                        <Alert
+                                            style={{ marginBottom: "10px" }}
+                                            message={errorMsg}
+                                            type="error"
+                                            showIcon
+                                        />
+                                    ) : null}
+
+                                    <Field
+                                        type="text"
+                                        name="name"
+                                        render={({ field }) => {
+                                            const prefixIcon = (
+                                                <Icon
+                                                    type="user"
+                                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                                />
+                                            );
+                                            return createInputElem(prefixIcon, {
+                                                field,
+                                                type: "text",
+                                                placeholder: "Please enter user name"
+                                            });
+                                        }}
                                     />
-                                ) : null}
 
-                                <Field
-                                    type="text"
-                                    name="name"
-                                    placeholder="Please enter your name"
-                                    component={({ field, ...formProps }) => {
-                                        const prefixIcon = (
-                                            <Icon
-                                                type="user"
-                                                style={{ color: "rgba(0,0,0,.25)" }}
-                                            />
-                                        );
-                                        return createInputElem(prefixIcon, handleChange, {
-                                            field,
-                                            ...formProps
-                                        });
-                                    }}
-                                />
+                                    <Field
+                                        type="text"
+                                        name="password"
+                                        render={({ field }) => {
+                                            const prefixIcon = (
+                                                <Icon
+                                                    type="lock"
+                                                    style={{ color: "rgba(0,0,0,.25)" }}
+                                                />
+                                            );
+                                            return createInputElem(prefixIcon, {
+                                                field,
+                                                type: "password",
+                                                placeholder: "Please enter your passsword"
+                                            });
+                                        }}
+                                    />
 
-                                <Field
-                                    type="text"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Please enter your passsword"
-                                    component={({ field, ...formProps }) => {
-                                        const prefixIcon = (
-                                            <Icon
-                                                type="lock"
-                                                style={{ color: "rgba(0,0,0,.25)" }}
-                                            />
-                                        );
-                                        return createInputElem(prefixIcon, handleChange, {
-                                            field,
-                                            ...formProps
-                                        });
-                                    }}
-                                />
-
-                                <Button
-                                    type="primary"
-                                    icon="check"
-                                    onClick={e => {
-                                        handleSubmit(e);
-                                    }}
-                                >
-                                    Login
-                                </Button>
-                            </div>
-                        </Form>
-                    )}
+                                    <Button
+                                        type="primary"
+                                        icon="check"
+                                        onClick={e => {
+                                            handleSubmit(e);
+                                        }}
+                                    >
+                                        Login
+                                    </Button>
+                                </div>
+                            </Form>
+                        );
+                    }}
                 />
             </Spin>
         );

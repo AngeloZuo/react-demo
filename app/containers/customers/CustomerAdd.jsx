@@ -30,8 +30,7 @@ class CustomerAdd extends React.Component {
                 validationSchema={validationSchema}
                 initialValues={customerDetailConfig}
                 onSubmit={this.addCustomer}
-            >
-                {formikProps => (
+                render={formikProps => (
                     <CustomerDetail
                         {...formikProps}
                         tableConfig={tableConfig}
@@ -48,7 +47,7 @@ class CustomerAdd extends React.Component {
                         />
                     </CustomerDetail>
                 )}
-            </Formik>
+            />
         );
     }
 }

@@ -13,7 +13,7 @@ const getCustomersDataFromDB = args => {
             });
         });
     } catch (error) {
-        console.error(error);
+        reject(error);
     }
 };
 

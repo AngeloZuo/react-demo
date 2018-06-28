@@ -6,8 +6,6 @@ import { Input, Spin, Alert } from "antd";
 import _ from "lodash";
 
 const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig, errors }) => {
-    let elements = [];
-
     function getLabel(originLabel) {
         let formatLabel = "";
         _.forEach(tableConfig, configValue => {
@@ -19,38 +17,35 @@ const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig, er
         return formatLabel;
     }
 
-    _.forEach(values, (customerValue, customerKey) =>
-        elements.push(
-            <Field
-                key={customerKey + "_" + customerValue}
-                name={customerKey}
-                placeholder={`Please enter ${customerKey}`}
-                component={({ field, ...props }) => {
-                    return (
-                        <div style={{ marginBottom: 16 }}>
-                            <Input
-                                {...field}
-                                {...props}
-                                disabled={isDisabled}
-                                addonBefore={getLabel(customerKey)}
-                            />
-                            {typeof errors[customerKey] === "string" ? (
-                                <Alert message={errors[customerKey]} type="error" showIcon />
-                            ) : null}
-                        </div>
-                    );
-                }}
-            />
-        )
-    );
+    let elements = Object.keys(values).map(customerKey => (
+        <Field
+            key={customerKey}
+            name={customerKey}
+            render={({ field }) => {
+                return (
+                    <div style={{ marginBottom: 16 }}>
+                        <Input
+                            {...field}
+                            disabled={isDisabled}
+                            addonBefore={getLabel(customerKey)}
+                            placeholder={`Please enter ${customerKey}`}
+                        />
+                        {typeof errors[customerKey] === "string" ? (
+                            <Alert message={errors[customerKey]} type="error" showIcon />
+                        ) : null}
+                    </div>
+                );
+            }}
+        />
+    ));
 
     return (
-        <Form>
-            <Spin spinning={loading}>
+        <Spin spinning={loading}>
+            <Form>
                 {elements}
                 {children}
-            </Spin>
-        </Form>
+            </Form>
+        </Spin>
     );
 };
 
