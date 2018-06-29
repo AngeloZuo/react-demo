@@ -6,15 +6,11 @@ const mongoDB = require("../database/mongodb");
 const utils = require("../util");
 
 const getCustomersDataFromDB = args => {
-    try {
-        return new Promise((resolve, reject) => {
-            mongoDB.findDocuments(args, docs => {
-                resolve(docs);
-            });
+    return new Promise((resolve, reject) => {
+        mongoDB.findDocuments(args, (docs, err) => {
+            err ? reject(err) : resolve(docs);
         });
-    } catch (error) {
-        reject(error);
-    }
+    });
 };
 
 const getCustomersDataFromFile = () => {
@@ -40,46 +36,30 @@ const addCustomer = args => {
 
     args["dataList"] = tempArray;
 
-    try {
-        return new Promise((resolve, reject) => {
-            mongoDB.insertDocuments(args, result => {
-                resolve(result);
-            });
+    return new Promise((resolve, reject) => {
+        mongoDB.insertDocuments(args, (docs, err) => {
+            err ? reject(err) : resolve(docs);
         });
-    } catch (error) {
-        console.error(error);
-    }
+    });
 };
 
 const deleteCustomers = args => {
-    try {
-        return new Promise((resolve, reject) => {
-            let customerListLength = args.customerList.length;
-            const resultMsg = `Delete ${customerListLength} items successfully!`;
-            mongoDB.removeDocument(args, result => {
-                resolve({
-                    resultMsg: resultMsg
-                });
-            });
+    return new Promise((resolve, reject) => {
+        let customerListLength = args.customerList.length;
+        const resultMsg = `Delete ${customerListLength} items successfully!`;
+        mongoDB.removeDocument(args, (docs, err) => {
+            err ? reject(err) : resolve({ resultMsg: resultMsg });
         });
-    } catch (error) {
-        console.error(error);
-    }
+    });
 };
 
 const updateCustomer = args => {
-    try {
-        return new Promise((resolve, reject) => {
-            const resultMsg = `Update data successfully!`;
-            mongoDB.updateDocument(args, result => {
-                resolve({
-                    resultMsg: resultMsg
-                });
-            });
+    return new Promise((resolve, reject) => {
+        const resultMsg = `Update data successfully!`;
+        mongoDB.updateDocument(args, (docs, err) => {
+            err ? reject(err) : resolve({ resultMsg: resultMsg });
         });
-    } catch (error) {
-        console.error(error);
-    }
+    });
 };
 
 module.exports = {

@@ -17,11 +17,15 @@ const getCustomersByCondition = async (queryParams = {}) => {
         }
     });
 
-    return await customerService.getCustomersDataFromDB({
-        dbName,
-        collectionName: customerCollection,
-        queryParams
-    });
+    try {
+        return await customerService.getCustomersDataFromDB({
+            dbName,
+            collectionName: customerCollection,
+            queryParams
+        });
+    } catch (err) {
+        return err;
+    }
 };
 
 const addCustomer = async (addData = {}) => {

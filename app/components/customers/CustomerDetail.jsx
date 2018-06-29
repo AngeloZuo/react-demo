@@ -4,8 +4,10 @@ import { Form, Field } from "formik";
 import { Input, Spin, Alert } from "antd";
 
 const CustomerDetail = ({ values, isDisabled, loading, children, tableConfig, errors }) => {
-    const getLabel = originLabel =>
-        tableConfig.find(element => element.dataIndex === originLabel).title;
+    const getLabel = originLabel => {
+        const foundItem = tableConfig.find(element => element.dataIndex === originLabel);
+        return foundItem ? foundItem.title : "";
+    };
 
     return (
         <Spin spinning={loading}>
