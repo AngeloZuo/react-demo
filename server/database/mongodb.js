@@ -23,7 +23,7 @@ const findDocuments = (args, callback) => {
         const collection = db.collection(collectionName);
         // Find some documents
         collection.find(queryParams).toArray((err, docs) => {
-            callback(docs);
+            callback(docs, err);
             closeConnection();
         });
     });

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import { Button, Input } from "antd";
 
-const createInputElem = (addonBefore, eventhandler, { field, ...formProps }) => {
+const createInputElem = (addonBefore, { field, placeholder }) => {
     return (
         <div
             style={{
@@ -13,7 +13,7 @@ const createInputElem = (addonBefore, eventhandler, { field, ...formProps }) => 
                 width: "20%"
             }}
         >
-            <Input {...field} {...formProps} addonBefore={addonBefore} onChange={eventhandler} />
+            <Input {...field} placeholder={placeholder} addonBefore={addonBefore} />
         </div>
     );
 };
@@ -22,30 +22,28 @@ const CustomerSearchConditions = props => (
     <Formik
         initialValues={{ customerName: "", phone: "" }}
         onSubmit={props.getSearchConditions}
-        render={({ handleChange, handleSubmit }) => (
+        render={({ handleSubmit }) => (
             <Form noValidate className="customerSearchConditions">
                 <div>
                     <Field
                         type="text"
                         name="customerName"
-                        placeholder="Please enter custormer name"
-                        component={({ field, ...formProps }) => {
-                            return createInputElem("Customer Name", handleChange, {
+                        render={({ field }) => {
+                            return createInputElem("Customer Name", {
                                 field,
-                                ...formProps
-                            });
+                                placeholder: "Please enter custormer name",
+                            })
                         }}
                     />
-                    
+
                     <Field
                         type="text"
                         name="phone"
-                        placeholder="Please enter phone number"
-                        component={({ field, ...formProps }) => {
-                            return createInputElem("Phone Number", handleChange, {
+                        render={({ field }) => {
+                            return createInputElem("Phone Number", {
                                 field,
-                                ...formProps
-                            });
+                                placeholder: "Please enter phone number",
+                            })
                         }}
                     />
 

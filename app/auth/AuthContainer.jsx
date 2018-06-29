@@ -9,25 +9,24 @@ class AuthContainer extends React.Component {
         confirming: false
     };
 
-    login = userInfo => {
+    login = async userInfo => {
         this.setState({
             confirming: true
         });
-        authRequest(userInfo).then(result => {
-            if (result.isAuth) {
-                this.setState({
-                    isAuthenticated: true,
-                    confirming: false,
-                    errorMsg: null
-                });
-                this.props.afterLogin(userInfo.name);
-            } else {
-                this.setState({
-                    confirming: false,
-                    errorMsg: "Login failed, please check your user name and password!"
-                });
-            }
-        });
+        const result = await authRequest(userInfo);
+        if (result.isAuth) {
+            this.setState({
+                isAuthenticated: true,
+                confirming: false,
+                errorMsg: null
+            });
+            this.props.afterLogin(userInfo.name);
+        } else {
+            this.setState({
+                confirming: false,
+                errorMsg: "Login failed, please check your user name and password!"
+            });
+        }
     };
 
     logout = () => {

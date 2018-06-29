@@ -11,16 +11,15 @@ class CustomerAdd extends React.Component {
         loading: false
     };
 
-    addCustomer = customerInfo => {
+    addCustomer = async customerInfo => {
         this.setState({
             loading: true
         });
-        addNewCustomer(customerInfo).then(() => {
-            this.setState({
-                loading: false
-            });
-            this.props.afterAdded();
+        await addNewCustomer(customerInfo);
+        this.setState({
+            loading: false
         });
+        this.props.afterAdded();
     };
 
     render() {
@@ -31,8 +30,7 @@ class CustomerAdd extends React.Component {
                 validationSchema={validationSchema}
                 initialValues={customerDetailConfig}
                 onSubmit={this.addCustomer}
-            >
-                {formikProps => (
+                render={formikProps => (
                     <CustomerDetail
                         {...formikProps}
                         tableConfig={tableConfig}
@@ -49,7 +47,7 @@ class CustomerAdd extends React.Component {
                         />
                     </CustomerDetail>
                 )}
-            </Formik>
+            />
         );
     }
 }

@@ -9,10 +9,9 @@ class FetchCustomer extends React.Component {
         error: null
     };
 
-    getCustomers(conditions) {
-        searchCustomers(conditions).then(data => {
-            this.setState({ customers: data, loading: false });
-        });
+    async getCustomers(conditions) {
+        const data = await searchCustomers(conditions);
+        this.setState({ customers: data, loading: false });
     }
 
     componentDidMount() {
