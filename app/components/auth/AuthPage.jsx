@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Icon, Popconfirm } from "antd";
 
 import AzDialog from "../common/AzDialog";
@@ -30,8 +30,14 @@ class AuthPage extends React.Component {
             <AuthContainer afterLogin={this.afterLogin}>
                 {({ login, logout, isAuthenticated, errorMsg, confirming }) => {
                     return (
-                        <div className={isAuthenticated ? "authPage_container authPage_logged" : "authPage_container"}>
-                            <div>
+                        <div
+                            className={
+                                isAuthenticated
+                                    ? "authPage_container authPage_logged"
+                                    : "authPage_container"
+                            }
+                        >
+                            <Fragment>
                                 <Icon className="authPage_userIcon" type="user" />
                                 <span className="authPage_iconContent">
                                     {isAuthenticated ? (
@@ -48,7 +54,7 @@ class AuthPage extends React.Component {
                                         <span onClick={this.changeDialogStatus}>Log in</span>
                                     )}
                                 </span>
-                            </div>
+                            </Fragment>
 
                             <AzDialog
                                 classes=""

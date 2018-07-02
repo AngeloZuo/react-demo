@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Modal, Button } from "antd";
 class AzDeleteModal extends React.Component {
@@ -11,9 +11,9 @@ class AzDeleteModal extends React.Component {
     openDeleteDialog = () => {
         this.setState({
             visible: true,
-            ModalText: `Do you want to delete ${
-                this.props.deleteInfo.length
-            } item${this.props.deleteInfo.length > 1 ? "s" : ""}?`
+            ModalText: `Do you want to delete ${this.props.deleteInfo.length} item${
+                this.props.deleteInfo.length > 1 ? "s" : ""
+            }?`
         });
     };
 
@@ -42,12 +42,8 @@ class AzDeleteModal extends React.Component {
     render() {
         const { visible, confirmLoading, ModalText } = this.state;
         return (
-            <div>
-                <Button
-                    type="danger"
-                    icon="delete"
-                    onClick={this.openDeleteDialog}
-                >
+            <Fragment>
+                <Button type="danger" icon="delete" onClick={this.openDeleteDialog}>
                     Delete
                 </Button>
                 <Modal
@@ -59,7 +55,7 @@ class AzDeleteModal extends React.Component {
                 >
                     <p>{ModalText}</p>
                 </Modal>
-            </div>
+            </Fragment>
         );
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form, Field } from "formik";
 import { Button, Input } from "antd";
@@ -24,15 +24,15 @@ const CustomerSearchConditions = props => (
         onSubmit={props.getSearchConditions}
         render={({ handleSubmit }) => (
             <Form noValidate className="customerSearchConditions">
-                <div>
+                <Fragment>
                     <Field
                         type="text"
                         name="customerName"
                         render={({ field }) => {
                             return createInputElem("Customer Name", {
                                 field,
-                                placeholder: "Please enter custormer name",
-                            })
+                                placeholder: "Please enter custormer name"
+                            });
                         }}
                     />
 
@@ -42,8 +42,8 @@ const CustomerSearchConditions = props => (
                         render={({ field }) => {
                             return createInputElem("Phone Number", {
                                 field,
-                                placeholder: "Please enter phone number",
-                            })
+                                placeholder: "Please enter phone number"
+                            });
                         }}
                     />
 
@@ -55,7 +55,7 @@ const CustomerSearchConditions = props => (
                             handleSubmit(e);
                         }}
                     />
-                </div>
+                </Fragment>
             </Form>
         )}
     />

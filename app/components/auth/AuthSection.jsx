@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Formik, Form, Field } from "formik";
 import { Button, Input, Icon, Spin, Alert } from "antd";
 import PropTypes from "prop-types";
@@ -29,7 +29,7 @@ class AuthSection extends React.Component {
                     render={({ handleSubmit }) => {
                         return (
                             <Form noValidate className="">
-                                <div>
+                                <Fragment>
                                     {typeof errorMsg === "string" ? (
                                         <Alert
                                             style={{ marginBottom: "10px" }}
@@ -84,7 +84,7 @@ class AuthSection extends React.Component {
                                     >
                                         Login
                                     </Button>
-                                </div>
+                                </Fragment>
                             </Form>
                         );
                     }}

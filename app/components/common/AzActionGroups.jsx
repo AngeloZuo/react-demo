@@ -1,12 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 const AzActionGroups = props => {
-    return (
-        <div className="">
-            {props.children}
-        </div>
-    );
+    return <Fragment>{props.children}</Fragment>;
 };
 
 AzActionGroups.propTypes = {
