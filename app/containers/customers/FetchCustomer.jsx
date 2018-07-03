@@ -12,6 +12,7 @@ class FetchCustomer extends React.Component {
     async getCustomers(conditions) {
         const data = await searchCustomers(conditions);
         this.setState({ customers: data, loading: false });
+        this.props.afterSearch();
     }
 
     componentDidMount() {
@@ -19,7 +20,7 @@ class FetchCustomer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.conditions !== this.props.conditions) {
+        if (nextProps.isSearching) {
             this.setState({ loading: true });
             this.getCustomers(nextProps.conditions);
         }
@@ -32,11 +33,15 @@ class FetchCustomer extends React.Component {
 }
 
 FetchCustomer.propTypes = {
-    conditions: PropTypes.object.isRequired
+    conditions: PropTypes.object.isRequired,
+    afterSearch: PropTypes.func,
+    isSearching: PropTypes.bool
 };
 
 FetchCustomer.defaultProps = {
-    conditions: {}
+    conditions: {},
+    afterSearch: () => {},
+    isSearching: false
 };
 
 export default FetchCustomer;

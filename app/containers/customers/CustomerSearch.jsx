@@ -6,16 +6,15 @@ import CustomerList from "../../components/customers/CustomerList";
 import FetchCustomer from "./FetchCustomer";
 
 const CustomerSearch = props => {
-    const { conditions, onLinkClick, onChbClick, tableConfig } = props;
+    const { conditions, onLinkClick, onChbClick, tableConfig, afterSearch, isSearching } = props;
 
-    _.forEach(tableConfig, (tableCell) => {
-        if (tableCell.dataIndex === "customerName") {
-            tableCell["render"] = (displayContent, record) => onLinkClick(displayContent, record);
-        }
-    });
+    const foundItem = tableConfig.find(element => element.dataIndex === "customerName");
+    foundItem
+        ? (foundItem["render"] = (displayContent, record) => onLinkClick(displayContent, record))
+        : null;
 
     return (
-        <FetchCustomer conditions={conditions}>
+        <FetchCustomer conditions={conditions} afterSearch={afterSearch} isSearching={isSearching}>
             {({ loading, customers, error }) => {
                 if (error) {
                     return <div>Error</div>;

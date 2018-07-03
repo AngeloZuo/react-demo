@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import _ from "lodash";
 
 import FetchCustomer from "./FetchCustomer";
@@ -14,7 +14,7 @@ class CustomerEdit extends React.Component {
         disabled: true
     };
 
-    originCustomerData = null;
+    editCustomerId = null;
 
     updateCustomer = async customerInfo => {
         this.setState({
@@ -22,14 +22,8 @@ class CustomerEdit extends React.Component {
             disabled: true
         });
 
-        let modifiedCustomer = {
-            id: this.originCustomerData.id
-        };
-
-        _.forEach(customerInfo, (value, key) => {
-            if (customerInfo[key] !== this.originCustomerData[key]) {
-                modifiedCustomer[key] = value;
-            }
+        const modifiedCustomer = Object.assign(customerInfo, {
+            id: this.editCustomerId
         });
 
         await update(modifiedCustomer);
@@ -52,17 +46,22 @@ class CustomerEdit extends React.Component {
             <FetchCustomer conditions={conditions}>
                 {({ loading, customers, error }) => {
                     if (loading) {
-                        return <div>Loading</div>;
+                        return (
+                            <div style={{ width: "100%", textAlign: "center" }}>
+                                <Spin />
+                            </div>
+                        );
                     }
                     if (error) {
                         return <div>Error</div>;
                     }
 
-                    this.originCustomerData = customers.searchList[0];
-                    let detailValues = Object.assign({}, customers.searchList[0]);
+                    const customerData = customers.searchList[0];
+                    this.editCustomerId = customerData.id;
                     let tempObj = {};
-                    _.forEach(customerDetailConfig, (configValue, key) => {
-                        tempObj[key] = detailValues[key];
+
+                    Object.keys(customerDetailConfig).find(prop => {
+                        tempObj[prop] = customerData[prop];
                     });
 
                     return (

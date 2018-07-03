@@ -20,6 +20,7 @@ class CustomerContainer extends React.Component {
         this.changeDialogStatus = this.changeDialogStatus.bind(this);
         this.getSearchConditions = this.getSearchConditions.bind(this);
         this.getLinkElement = this.getLinkElement.bind(this);
+        this.afterSearch = this.afterSearch.bind(this);
         this.afterAdded = this.afterAdded.bind(this);
         this.afterDelete = this.afterDelete.bind(this);
         this.afterUpdated = this.afterUpdated.bind(this);
@@ -29,6 +30,7 @@ class CustomerContainer extends React.Component {
             selectedRows: [],
             detailSearchConditions: null,
             visibleDialog: false,
+            isSearching: false,
             searchConditions: null,
             customerDetailConfig: {
                 customerName: "",
@@ -77,7 +79,7 @@ class CustomerContainer extends React.Component {
 
         this.customerInfoSchema = yup.object().shape({
             customerName: yup.string().required("Customer Name is Required"),
-            phone: yup.number().required("Phone number is Required"),
+            phone: yup.string().required("Phone number is Required"),
             idCard: yup.string().required("ID Card is Required"),
             memberPoints: yup
                 .number()
@@ -122,7 +124,14 @@ class CustomerContainer extends React.Component {
 
     getSearchConditions(conditions) {
         this.setState({
-            searchConditions: conditions
+            searchConditions: conditions,
+            isSearching: true
+        });
+    }
+
+    afterSearch() {
+        this.setState({
+            isSearching: false
         });
     }
 
@@ -157,7 +166,8 @@ class CustomerContainer extends React.Component {
             detailSearchConditions,
             confirmLoading,
             searchConditions,
-            customerDetailConfig
+            customerDetailConfig,
+            isSearching
         } = this.state;
         return (
             <div className="customerSearchPanel">
@@ -175,6 +185,8 @@ class CustomerContainer extends React.Component {
                         conditions={searchConditions}
                         onLinkClick={this.getLinkElement}
                         onChbClick={this.checkboxSelection}
+                        isSearching={isSearching}
+                        afterSearch={this.afterSearch}
                     />
                 )}
 
