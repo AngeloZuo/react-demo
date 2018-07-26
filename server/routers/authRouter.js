@@ -4,8 +4,8 @@ var router = new Router();
 const authController = require("../controllers/authController");
 
 router.post("/auth", async ctx => {
-    const result = await authController.authUser(ctx.request.body);
-    ctx.body = result;
+  const result = await authController.authUser(ctx.request.body);
+  ctx.body = result;
 });
 
 module.exports = router.routes();

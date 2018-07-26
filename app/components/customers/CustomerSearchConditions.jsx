@@ -4,69 +4,69 @@ import { Formik, Form, Field } from "formik";
 import { Button, Input } from "antd";
 
 const createInputElem = (addonBefore, { field, placeholder }) => {
-    return (
-        <div
-            style={{
-                display: "inline-block",
-                marginBottom: 16,
-                marginRight: 16,
-                width: "20%"
-            }}
-        >
-            <Input {...field} placeholder={placeholder} addonBefore={addonBefore} />
-        </div>
-    );
+  return (
+    <div
+      style={{
+        display: "inline-block",
+        marginBottom: 16,
+        marginRight: 16,
+        width: "20%"
+      }}
+    >
+      <Input {...field} placeholder={placeholder} addonBefore={addonBefore} />
+    </div>
+  );
 };
 
 const CustomerSearchConditions = props => (
-    <Formik
-        initialValues={{ customerName: "", phone: "" }}
-        onSubmit={props.getSearchConditions}
-        render={({ handleSubmit }) => (
-            <Form noValidate className="customerSearchConditions">
-                <Fragment>
-                    <Field
-                        type="text"
-                        name="customerName"
-                        render={({ field }) => {
-                            return createInputElem("Customer Name", {
-                                field,
-                                placeholder: "Please enter custormer name"
-                            });
-                        }}
-                    />
+  <Formik
+    initialValues={{ customerName: "", phone: "" }}
+    onSubmit={props.getSearchConditions}
+    render={({ handleSubmit }) => (
+      <Form noValidate className="customerSearchConditions">
+        <Fragment>
+          <Field
+            type="text"
+            name="customerName"
+            render={({ field }) => {
+              return createInputElem("Customer Name", {
+                field,
+                placeholder: "Please enter custormer name"
+              });
+            }}
+          />
 
-                    <Field
-                        type="text"
-                        name="phone"
-                        render={({ field }) => {
-                            return createInputElem("Phone Number", {
-                                field,
-                                placeholder: "Please enter phone number"
-                            });
-                        }}
-                    />
+          <Field
+            type="text"
+            name="phone"
+            render={({ field }) => {
+              return createInputElem("Phone Number", {
+                field,
+                placeholder: "Please enter phone number"
+              });
+            }}
+          />
 
-                    <Button
-                        type="primary"
-                        shape="circle"
-                        icon="search"
-                        onClick={e => {
-                            handleSubmit(e);
-                        }}
-                    />
-                </Fragment>
-            </Form>
-        )}
-    />
+          <Button
+            type="primary"
+            shape="circle"
+            icon="search"
+            onClick={e => {
+              handleSubmit(e);
+            }}
+          />
+        </Fragment>
+      </Form>
+    )}
+  />
 );
 
 CustomerSearchConditions.propTypes = {
-    getSearchConditions: PropTypes.func.isRequired
+  getSearchConditions: PropTypes.func.isRequired
 };
 
 CustomerSearchConditions.defaultProps = {
-    getSearchConditions: () => {}
+  getSearchConditions: () => {}
 };
 
 export default CustomerSearchConditions;

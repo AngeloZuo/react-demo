@@ -5,39 +5,39 @@ import AzDeleteModal from "../../components/common/AzDeleteModal";
 import { deleteCustomers } from "../../actions/customer/customerSearchActions";
 
 class CustomerDelete extends React.Component {
-    state = {
-        hasDeleted: false
-    };
+  state = {
+    hasDeleted: false
+  };
 
-    onDeleteClick = async () => {
-        const customerList = this.props.deleteInfo;
-        await deleteCustomers(customerList);
-        this.setState({
-            hasDeleted: true
-        });
-        this.props.afterDelete();
-    };
+  onDeleteClick = async () => {
+    const customerList = this.props.deleteInfo;
+    await deleteCustomers(customerList);
+    this.setState({
+      hasDeleted: true
+    });
+    this.props.afterDelete();
+  };
 
-    render() {
-        const { deleteInfo } = this.props;
-        return (
-            <AzDeleteModal
-                onDeleteClick={this.onDeleteClick}
-                deleteInfo={deleteInfo}
-                hasDeleted={this.state.hasDeleted}
-            />
-        );
-    }
+  render() {
+    const { deleteInfo } = this.props;
+    return (
+      <AzDeleteModal
+        onDeleteClick={this.onDeleteClick}
+        deleteInfo={deleteInfo}
+        hasDeleted={this.state.hasDeleted}
+      />
+    );
+  }
 }
 
 CustomerDelete.propTypes = {
-    afterDelete: PropTypes.func.isRequired,
-    deleteInfo: PropTypes.array.isRequired
+  afterDelete: PropTypes.func.isRequired,
+  deleteInfo: PropTypes.array.isRequired
 };
 
 CustomerDelete.defaultProps = {
-    afterDelete: () => {},
-    deleteInfo: []
+  afterDelete: () => {},
+  deleteInfo: []
 };
 
 export default CustomerDelete;
