@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { authRequest } from "../actions/authActions";
+import { authRequest } from "../../actions/authActions";
 class AuthContainer extends React.Component {
     state = {
         isAuthenticated: false,

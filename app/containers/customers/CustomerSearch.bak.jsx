@@ -9,7 +9,7 @@ import {
     searchCustomers,
     addNewCustomer,
     deleteCustomers
-} from "../../actions/customer/customerSearchActions";
+} from "../../actions/customerSearchActions";
 import CustomerSearchConditions from "../../components/customers/CustomerSearchConditions";
 import CustomerList from "../../components/customers/CustomerList";
 import AzDialog from "../../components/common/AzDialog";

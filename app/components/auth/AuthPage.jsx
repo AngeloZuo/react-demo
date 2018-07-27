@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Icon, Popconfirm } from "antd";
 
 import AzDialog from "../common/AzDialog";
-import AuthContainer from "../../auth/AuthContainer";
+import AuthContainer from "../../containers/auth/AuthContainer";
 import AuthSection from "./AuthSection";
 class AuthPage extends React.Component {
     state = {

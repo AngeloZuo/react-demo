@@ -1,5 +1,5 @@
-import CommonAjax from "../../ajax/commonAjax";
-import { DEV_SERVER_ADDRESS } from "../../config/config";
+import CommonAjax from "../ajax/commonAjax";
+import { DEV_SERVER_ADDRESS } from "../config/config";
 
 const commonAjax = new CommonAjax();
 const searchCustomers = (searchConditions) => {

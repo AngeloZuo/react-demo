@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { searchCustomers } from "../../actions/customer/customerSearchActions";
+import { searchCustomers } from "../../actions/customerSearchActions";
 
 class FetchCustomer extends React.Component {
     state = {

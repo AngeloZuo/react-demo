@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import AzDeleteModal from "../../components/common/AzDeleteModal";
-import { deleteCustomers } from "../../actions/customer/customerSearchActions";
+import { deleteCustomers } from "../../actions/customerSearchActions";
 
 class CustomerDelete extends React.Component {
     state = {

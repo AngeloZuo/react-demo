@@ -6,7 +6,7 @@ import _ from "lodash";
 
 import FetchCustomer from "./FetchCustomer";
 import CustomerDetail from "../../components/customers/CustomerDetail";
-import { update } from "../../actions/customer/customerSearchActions";
+import { update } from "../../actions/customerSearchActions";
 
 class CustomerEdit extends React.Component {
     state = {

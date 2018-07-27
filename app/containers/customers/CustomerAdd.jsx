@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Button } from "antd";
 
 import CustomerDetail from "../../components/customers/CustomerDetail";
-import { addNewCustomer } from "../../actions/customer/customerSearchActions";
+import { addNewCustomer } from "../../actions/customerSearchActions";
 
 class CustomerAdd extends React.Component {
     state = {
