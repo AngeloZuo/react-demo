@@ -1,20 +1,20 @@
 .customerSearchPanel {
-    width: $HunderdPercent;
-    height: $HunderdPercent;
-    padding: 16px;
+  width: $HunderdPercent;
+  height: $HunderdPercent;
+  padding: 16px;
 
-    .customerSearchConditions {
-        .customerSearchConditions_Inputbox:not(:first-child) {
-            width: 200px;
-            margin-left: 16px;
-        }
+  .customerSearchConditions {
+    .customerSearchConditions_Inputbox:not(:first-child) {
+      width: 200px;
+      margin-left: 16px;
     }
+  }
 }
 .customerDetailAzDialog {
-    width: 100%;
-    margin: 0;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 0;
+  width: 100%;
+  margin: 0;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
 }
