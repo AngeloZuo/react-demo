@@ -33,6 +33,13 @@ const headerConfig = {
       },
       labelContent: "Member Points",
       labelValue: "Member Points"
+    },
+    {
+      labelPath: {
+        pathname: "/projectsGraphic"
+      },
+      labelContent: "Projects Graphic",
+      labelValue: "Projects Graphic"
     }
   ]
 };
