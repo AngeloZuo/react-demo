@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React from "react";
+import BarChart from "../charts/BarChart";
 
 const ProjectCard = props => {
   const { project } = props;
   return (
-    <Fragment>
+    <div>
       <label>{project.name}</label>
       <p>{project.description}</p>
-    </Fragment>
+      <BarChart {...props}/>
+    </div>
   );
 };
 
