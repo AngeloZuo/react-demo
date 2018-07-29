@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 
-const AzMenu = props => {
-  const { defaultTab, onChange, tabsList } = props;
-
+const AzMenu = ({ defaultTab, onChange, tabsList }) => {
   return (
     <Menu
       theme="dark"

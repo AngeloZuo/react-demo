@@ -10,8 +10,8 @@ class CustomerDelete extends React.Component {
   };
 
   onDeleteClick = async () => {
-    const customerList = this.props.deleteInfo;
-    await deleteCustomers(customerList);
+    const { deleteInfo } = this.props;
+    await deleteCustomers(deleteInfo);
     this.setState({
       hasDeleted: true
     });

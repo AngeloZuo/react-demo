@@ -4,8 +4,7 @@ const _ = require("lodash");
 
 const url = config.dbUrl;
 
-const insertDocuments = (args, callback) => {
-  const { dbName, collectionName, dataList } = args;
+const insertDocuments = ({ dbName, collectionName, dataList }, callback) => {
   createConnection(dbName, (db, closeConnection) => {
     const collection = db.collection(collectionName);
     collection.insertMany(dataList, (err, result) => {
@@ -16,8 +15,7 @@ const insertDocuments = (args, callback) => {
   });
 };
 
-const findDocuments = (args, callback) => {
-  const { dbName, collectionName, queryParams } = args;
+const findDocuments = ({ dbName, collectionName, queryParams }, callback) => {
   createConnection(dbName, (db, closeConnection) => {
     // Get the documents collection
     const collection = db.collection(collectionName);
@@ -29,8 +27,7 @@ const findDocuments = (args, callback) => {
   });
 };
 
-const updateDocument = (args, callback) => {
-  const { dbName, collectionName, customerInfo } = args;
+const updateDocument = ({ dbName, collectionName, customerInfo }, callback) => {
   createConnection(dbName, (db, closeConnection) => {
     // Get the documents collection
     const collection = db.collection(collectionName);
@@ -46,8 +43,7 @@ const updateDocument = (args, callback) => {
   });
 };
 
-const removeDocument = (args, callback) => {
-  const { dbName, collectionName, customerList } = args;
+const removeDocument = ({ dbName, collectionName, customerList }, callback) => {
   createConnection(dbName, (db, closeConnection) => {
     // Get the documents collection
     const collection = db.collection(collectionName);

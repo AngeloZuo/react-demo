@@ -31,7 +31,6 @@ class CustomerSearch extends React.Component {
     this.testSearchCustomer = this.testSearchCustomer.bind(this);
 
     this.openAddCustomerDialog = this.openAddCustomerDialog.bind(this);
-    this.onEditClick = this.onEditClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.state = {
       selectedRows: [],
@@ -72,7 +71,6 @@ class CustomerSearch extends React.Component {
 
     this.checkboxSelection = {
       onChange: (selectedCell, selectedRows) => {
-        console.log("==selectedRows==", selectedRows);
         let tempArray = [];
         _.forEach(selectedRows, selectRow => {
           tempArray.push({ id: selectRow.id });
@@ -108,17 +106,21 @@ class CustomerSearch extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const searchType = nextProps.CustomerSearchReducer.customerSearchType;
-    if (searchType === "CUSTOMER_SEARCH") {
+  componentWillReceiveProps({ CustomerSearchReducer }) {
+    const {
+      customerSearchType,
+      customersDataResult,
+      customersDetailResult
+    } = CustomerSearchReducer.customerSearchType;
+    if (customerSearchType === "CUSTOMER_SEARCH") {
       this.setState({
-        customersDataResult: nextProps.CustomerSearchReducer.customersDataResult
+        customersDataResult: customersDataResult
       });
-    } else if (searchType === "CUSTOMER_DETAIL_SEARCH") {
+    } else if (customerSearchType === "CUSTOMER_DETAIL_SEARCH") {
       this.setState({
         visibleDialog: true,
         customerDetailFlag: "CUSTOMER_DETAIL_SEARCH",
-        customerDetail: nextProps.CustomerSearchReducer.customersDetailResult[0]
+        customerDetail: customersDetailResult[0]
       });
       this.dialogTitle = "Customer Detail";
     }
@@ -138,16 +140,11 @@ class CustomerSearch extends React.Component {
     this.dialogTitle = "Add Customer";
   }
 
-  onEditClick() {
-    console.log("=onEditClick=", this.state.selectedRows);
-  }
-
   onDeleteClick() {
     this.deleteCustomer();
   }
 
   testSearchCustomer(conditions) {
-    console.log("=====", conditions);
     this.setState({
       searchConditions: conditions
     });
@@ -195,7 +192,6 @@ class CustomerSearch extends React.Component {
               {...(selectedRows.length !== 0
                 ? { hasEditBtn: true, hasDeleteBtn: true }
                 : { hasEditBtn: false, hasDeleteBtn: false })}
-              onEditClick={this.onEditClick}
               onDeleteClick={this.onDeleteClick}
             />
             <CustomerList

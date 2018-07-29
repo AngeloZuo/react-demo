@@ -2,15 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Table } from "antd";
 
-const TableList = props => {
-  const {
-    tableConfig,
-    lists,
-    checkboxSelection,
-    rowKey,
-    loading,
-    pagination
-  } = props;
+const TableList = ({
+  tableConfig,
+  lists,
+  checkboxSelection,
+  rowKey,
+  loading,
+  pagination
+}) => {
   return (
     <Table
       className="tableList"

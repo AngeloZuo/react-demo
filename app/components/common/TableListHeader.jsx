@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import TableHead from "@material-ui/core/TableHead";
 
 import TableListCell from "./TableListCell";
-const TableListHeader = props => (
+const TableListHeader = ({ tableHeader }) => (
   <TableHead className="tableListHeader">
     <TableListCell
-      tableCellList={props.tableHeader}
+      tableCellList={tableHeader}
       tableCellClass="tableHeaderCell"
     />
   </TableHead>

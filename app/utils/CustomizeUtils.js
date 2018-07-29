@@ -1,21 +1,21 @@
 import { setLocale } from "yup/lib/customLocale";
 import _ from "lodash";
 
-const getLinkConfigObj = object => {
+const getLinkConfigObj = ({ value, onActionFunc }) => {
   return {
     type: "link",
-    value: object.value,
-    onActionFunc: object.onActionFunc
+    value: value,
+    onActionFunc: onActionFunc
   };
 };
 
-const getCheckboxObj = object => {
+const getCheckboxObj = ({ id, checked, value, onActionFunc }) => {
   return {
     type: "checkbox",
-    id: object.id,
-    checked: object.checked,
-    value: object.value,
-    onActionFunc: object.onActionFunc
+    id: id,
+    checked: checked,
+    value: value,
+    onActionFunc: onActionFunc
   };
 };
 

@@ -30,8 +30,8 @@ class AzDeleteModal extends React.Component {
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.hasDeleted) {
+  componentWillReceiveProps({ hasDeleted }) {
+    if (hasDeleted) {
       this.setState({
         visible: false,
         confirmLoading: false

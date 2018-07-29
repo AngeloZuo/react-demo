@@ -8,7 +8,7 @@ const getCustomers = () => {
   return customerService.getCustomersDataFromFile();
 };
 
-const getCustomersByCondition = async (queryParams = {}) => {
+const getCustomersByCondition = (queryParams = {}) => {
   _.forEach(queryParams, (value, key) => {
     if (value !== "") {
       queryParams[key] = value;
@@ -18,7 +18,7 @@ const getCustomersByCondition = async (queryParams = {}) => {
   });
 
   try {
-    return await customerService.getCustomersDataFromDB({
+    return customerService.getCustomersDataFromDB({
       dbName,
       collectionName: customerCollection,
       queryParams
@@ -28,24 +28,24 @@ const getCustomersByCondition = async (queryParams = {}) => {
   }
 };
 
-const addCustomer = async (addData = {}) => {
-  return await customerService.addCustomer({
+const addCustomer = (addData = {}) => {
+  return customerService.addCustomer({
     dbName,
     collectionName: customerCollection,
     addData
   });
 };
 
-const deleteCustomers = async customerList => {
-  return await customerService.deleteCustomers({
+const deleteCustomers = customerList => {
+  return customerService.deleteCustomers({
     dbName,
     collectionName: customerCollection,
     customerList
   });
 };
 
-const updateCustomer = async customerInfo => {
-  return await customerService.updateCustomer({
+const updateCustomer = customerInfo => {
+  return customerService.updateCustomer({
     dbName,
     collectionName: customerCollection,
     customerInfo

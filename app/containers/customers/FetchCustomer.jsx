@@ -19,10 +19,10 @@ class FetchCustomer extends React.Component {
     this.getCustomers(this.props.conditions);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isSearching) {
+  componentWillReceiveProps({ isSearching, conditions }) {
+    if (isSearching) {
       this.setState({ loading: true });
-      this.getCustomers(nextProps.conditions);
+      this.getCustomers(conditions);
     }
   }
 
